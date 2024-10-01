@@ -2,15 +2,39 @@
 "use client";
 import { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import ProgressBar from "./progressBar/ProgressBar";
+import { LiaTimesSolid } from "react-icons/lia";
+import SelectionBox from "./SelectionBox";
+import ProgressBar from "./ProgressBar";
+import { CiPen } from "react-icons/ci";
 
 
+
+type tagType = {
+  name: string;
+  isSelected: boolean;
+};
+const personalities = [
+  { name: "informative", isSelected: false },
+  { name: "formal", isSelected: false },
+  { name: "storyteller", isSelected: false },
+];
+
+const tones = [
+  { name: "Professional", isSelected: false },
+  { name: "Factdriven", isSelected: false },
+  { name: "Knowledgeable", isSelected: false },
+];
 const Sidebar = () => {
   const [useCase, setUseCase] = useState("");
   const [keywords, setKeywords] = useState("");
   const [researchLevel, setResearchLevel] = useState(0);
-
-
+  const [personalityTags, setPersonalityTags] =
+    useState<tagType[]>(personalities);
+  const [toneTags, setToneTags] = useState<tagType[]>(tones);
+  const [selectedPersonalityTags, setSelectedPersonalityTags] = useState<
+    tagType[]
+  >([]);
+  const [selectedToneTags, setSelectedToneTags] = useState<tagType[]>([]);
   const [language, setLanguage] = useState("");
   const [personalityOpen, setPersonalityOpen] = useState(false);
   const [toneOpen, setToneOpen] = useState(false);
@@ -59,7 +83,11 @@ const Sidebar = () => {
   };
   // Check if all fields are filled
   const allFieldsFilled =
-    useCase && keywords && language;
+    useCase &&
+    keywords &&
+    personalityTags.length &&
+    toneTags.length &&
+    language;
 
   return (
     <div className="min-h-[85vh] w-full max-w-xs bg-gray-100 rounded-md border border-gray-300 p-4">
@@ -145,12 +173,26 @@ const Sidebar = () => {
           <label className="block font-medium">Set tone</label>
           {toneOpen ? <FiChevronUp /> : <FiChevronDown />}
         </div>
-      </div> */}
-      <ProgressBar/>
-
-    
-
-    
+        {toneOpen ? (
+          <SelectionBox
+            tags={toneTags}
+            placeholder="Search another tone"
+            handleSelect={handleToneSelect}
+          />
+        ) : (
+          <div className="flex flex-wrap">
+            {selectedToneTags.map((tag) => (
+              <div
+                key={tag.name}
+                className="flex flex-row items-center gap-2 border-2 border-gray-200 px-2 py-1 rounded-lg m-1 cursor-pointer"
+              >
+                <span>{tag.name}</span>
+                <LiaTimesSolid onClick={() => handleToneSelect(tag)} />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Language dropdown */}
       <div className="mb-4">
