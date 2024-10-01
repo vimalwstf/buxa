@@ -2,8 +2,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../authContext/Context";
+import { useRouter } from "next/navigation";
 
-// Define TypeScript type for form data
 interface FormData {
   firstName: string;
   lastName: string;
@@ -13,7 +16,7 @@ interface FormData {
 }
 
 const Register = () => {
-  // Use TypeScript for the state type
+  const { logIn, isLoggedIn } = useContext(AuthContext);
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -23,6 +26,7 @@ const Register = () => {
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const router = useRouter();
 
   // TypeScript typing for the input change handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,10 +37,21 @@ const Register = () => {
   };
 
   // TypeScript typing for form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
-    // Handle form submission, e.g., send data to backend API
+    const url =
+      "https://c285-2401-4900-8841-3999-354a-cbfb-b65e-665f.ngrok-free.app/api/users/register";
+
+    try {
+      const res = await axios.post(url, formData);
+      if (res.status === 201) logIn(res.data);
+      router.push("/");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.message || error.message);
+      }
+    }
   };
 
   // Toggle password visibility

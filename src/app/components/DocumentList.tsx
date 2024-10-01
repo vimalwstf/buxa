@@ -1,13 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "./Table";
 import { FaStar } from "react-icons/fa";
 import { CgFileAdd } from "react-icons/cg";
 import Editor from "./Editor";
+import axios from "axios";
+import { AuthContext } from "../authContext/Context";
 
 function DocumentList() {
   const [favouritesON, setfavouritesON] = useState(false);
+  const [documents, setDocuments] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userJson = localStorage.getItem("user");
+      if (userJson) {
+        const user = JSON.parse(userJson);
+        const accessToken = user.accessToken;
+        try {
+          const response = await axios.get(
+            "https://c285-2401-4900-8841-3999-354a-cbfb-b65e-665f.ngrok-free.app/api/documents",
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          console.log(response);
+          if (response.status === 200) {
+            // console.log(response.data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="m-2 text-gray-600">
@@ -40,7 +70,7 @@ function DocumentList() {
         </div>
       </div> */}
       <div>
-        <Editor/>
+        <Editor />
       </div>
     </div>
   );
