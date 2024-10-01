@@ -18,16 +18,16 @@ type AuthContextType = {
   firstName: string;
   lastName: string;
   email: string;
-  logOut: () => void; // Add logOut to the context definition
+  logOut: () => void;
   logIn: (userData: AuthResponseType) => void;
 };
-// Update the AuthContext type to include logOut
+
 export const AuthContext = createContext({
   isLoggedIn: false,
   firstName: "",
   lastName: "",
   email: "",
-  logOut: () => {}, // Provide a default no-op function
+  logOut: () => {},
   logIn: (userData: AuthResponseType) => {},
 });
 

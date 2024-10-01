@@ -28,7 +28,6 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
 
-  // TypeScript typing for the input change handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -36,7 +35,6 @@ const Register = () => {
     });
   };
 
-  // TypeScript typing for form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);

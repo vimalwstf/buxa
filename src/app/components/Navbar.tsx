@@ -39,7 +39,7 @@ const Navbar = () => {
           <img
             src="/logo.png"
             alt="logo"
-            className="rounded-full w-[150px] h-[150px]" // Added class for image size
+            className="rounded-full w-[150px] h-[150px]"
           />
         </div>
 
@@ -47,7 +47,7 @@ const Navbar = () => {
         <div className="flex space-x-4">
           <div
             className="relative flex items-center text-white space-x-2 hover:text-gray-300 cursor-pointer"
-            onClick={() => setDropdownOpen(!dropdownOpen)} // Moved onClick to the parent div
+            onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             <FaRegUser size={24} />
             <span className="text-xl font-bold">Account</span>
@@ -66,16 +66,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-
-      {/* Mobile View */}
-      <div className="block md:hidden">
-        <div className="mt-[90px] flex flex-col items-center space-y-4">
-          <div className="flex items-center space-x-2">
-            <RiHome3Line size={24} className="text-white" />
-            <span className="text-white text-xl">Dashboard</span>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

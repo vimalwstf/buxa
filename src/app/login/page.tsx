@@ -31,9 +31,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // Handle form submission, e.g., send data to backend API
-
+    // console.log(formData);
     const url =
       "https://c285-2401-4900-8841-3999-354a-cbfb-b65e-665f.ngrok-free.app/api/users/login";
 

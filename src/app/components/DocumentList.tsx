@@ -5,24 +5,47 @@ import Table from "./Table";
 import { FaStar } from "react-icons/fa";
 import { CgFileAdd } from "react-icons/cg";
 import Editor from "./Editor";
+import axios from "axios";
+import { AuthContext } from "../authContext/Context";
 
 function DocumentList() {
   const [favouritesON, setfavouritesON] = useState(false);
+  const [documents, setDocuments] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userJson = localStorage.getItem("user");
+      if (userJson) {
+        const user = JSON.parse(userJson);
+        const accessToken = user.accessToken;
+        try {
+          const response = await axios.get(
+            "https://c285-2401-4900-8841-3999-354a-cbfb-b65e-665f.ngrok-free.app/api/documents",
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          console.log(response);
+          if (response.status === 200) {
+            // console.log(response.data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="m-2 text-gray-600">
       <div className="flex items-center justify-between mb-4">
-        {openEditor ? (
-          <h2 className="text-2xl font-bold flex items-center gap-2 cursor-pointer">
-            <FaArrowLeft onClick={toggleEditor} />
-            New Document
-          </h2>
-        ) : (
-          <h2 className="text-2xl font-bold">Document List</h2>
-        )}
+        <h2 className="text-2xl font-bold">Document List</h2>
         <div className="flex gap-4">
           <button
-            onClick={() => setFavouritesON(!favouritesON)}
+            onClick={() => setfavouritesON(!favouritesON)}
             className={`${
               favouritesON ? "bg-[#474bff]" : "bg-gray-600"
             } text-white px-4 py-2 rounded-md shadow-md`}
@@ -31,7 +54,6 @@ function DocumentList() {
             <span className="sr-only sm:not-sr-only">Favourites</span>
           </button>
           <button
-            onClick={toggleEditor}
             style={{ backgroundColor: "#474bff" }}
             className="text-white px-4 py-2 text-sm rounded-md shadow-md hover:bg-blue-500"
           >
@@ -48,13 +70,8 @@ function DocumentList() {
         </div>
       </div> */}
       <div>
-        <Editor/>
+        <Editor />
       </div>
-      {openEditor && (
-        <div>
-          <Editor />
-        </div>
-      )}
     </div>
   );
 }
