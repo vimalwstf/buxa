@@ -2,14 +2,21 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useContext } from "react";
+import { AuthContext } from "../authContext/Context";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const { logIn } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -22,10 +29,23 @@ const Login = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // Handle form submission, e.g., send data to backend API
+    // console.log(formData);
+    const url =
+      "https://c285-2401-4900-8841-3999-354a-cbfb-b65e-665f.ngrok-free.app/api/users/login";
+
+    try {
+      const res = await axios.post(url, formData);
+      if (res.status == 200) {
+        logIn(res.data);
+        router.push("/");
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.message || error.message);
+      }
+    }
   };
 
   return (

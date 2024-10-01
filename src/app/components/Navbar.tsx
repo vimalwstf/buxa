@@ -3,13 +3,32 @@
 import React, { useState } from "react";
 import { RiHome3Line } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa";
-import { useRouter } from "next/navigation";  // Updated import
-
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { AuthContext } from "../authContext/Context";
+import { useContext } from "react";
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { logOut } = useContext(AuthContext);
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const userJson = localStorage.getItem("user");
+    if (userJson) {
+      const user = JSON.parse(userJson);
+      const url =
+        "https://c285-2401-4900-8841-3999-354a-cbfb-b65e-665f.ngrok-free.app/api/users/logout";
+      const refreshToken = user.refreshToken;
+      try {
+        const res = await axios.post(url, refreshToken);
+        if (res.status === 200) logOut();
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          console.log(error.response?.data?.message || error.message);
+        }
+      }
+    }
+
     router.push("/login");
   };
 
@@ -25,13 +44,14 @@ const Navbar = () => {
           /> */}
         <h2>UpWriter.AI</h2>
 
+          
         </div>
 
         {/* Navigation Links */}
         <div className="flex space-x-4">
           <div
             className="relative flex items-center text-white space-x-2 hover:text-gray-300 cursor-pointer"
-            onClick={() => setDropdownOpen(!dropdownOpen)}  // Moved onClick to the parent div
+            onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             <FaRegUser size={24} />
             <span className="text-xl font-bold">Account</span>
