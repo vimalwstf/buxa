@@ -9,7 +9,7 @@ function DocumentList() {
   const [favouritesON, setfavouritesON] = useState(false);
 
   return (
-    <div className="m-2 max-w-6xl text-gray-600">
+    <div className="m-2 text-gray-600">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">Document List</h2>
         <div className="flex gap-4">
