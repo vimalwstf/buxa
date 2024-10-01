@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
@@ -6,8 +5,6 @@ import { LiaTimesSolid } from "react-icons/lia";
 import SelectionBox from "./SelectionBox";
 import ProgressBar from "./ProgressBar";
 import { CiPen } from "react-icons/ci";
-
-
 
 type tagType = {
   name: string;
@@ -121,7 +118,7 @@ const Sidebar = () => {
       </div>
 
       {/* Research level slider */}
-      <ProgressBar/>
+      <ProgressBar />
 
       {/* Personality dropdown */}
       <div className="mb-4">
@@ -233,7 +230,7 @@ const Sidebar = () => {
         }`}
         disabled={!allFieldsFilled}
       >
-        <CiPen className="text-black"/>
+        <CiPen className="text-black" />
         Write for me
       </button>
     </div>
