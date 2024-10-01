@@ -23,7 +23,6 @@ const Dashboard = () => {
     };
 
     window.addEventListener('resize', handleResize);
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -31,11 +30,9 @@ const Dashboard = () => {
     };
   }, []);
 
-  // return isLoggedIn ? (
-  return (
+  return isLoggedIn ? (
     <main className="w-full p-4 ">
       <div className="flex gap-4">
-        {/* Sidebar: This will be shown/hidden based on the state and screen size */}
         <div
           className={`fixed inset-0 z-40 md:hidden ${
             isSidebarOpen ? "block" : "hidden"
@@ -46,18 +43,15 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Sidebar: Visible on larger screens */}
         <div className={`w-[300px] max-w-[400px] hidden md:block`}>
           <Sidebar />
         </div>
 
-        {/* Document List: Always visible */}
         <div className="flex-grow">
           <DocumentList />
         </div>
       </div>
 
-      {/* Pen Icon to toggle sidebar */}
       <div className="fixed bottom-2 right-0 m-4 z-50">
         <div
           className="bg-[#989898] rounded-lg shadow-lg p-3 cursor-pointer md:hidden"
@@ -67,10 +61,9 @@ const Dashboard = () => {
         </div>
       </div>
     </main>
-  )
-  // ) : (
-  //   <Login />
-  // );
+  ) : (
+    <Login />
+  );
 };
 
 export default Dashboard;

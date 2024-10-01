@@ -8,6 +8,7 @@ import { AuthContext } from "../authContext/Context";
 import { useRouter } from "next/navigation";
 
 
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -37,7 +38,6 @@ const Register = () => {
   };
 
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
@@ -161,7 +161,7 @@ const Register = () => {
       </div>
     </div>
   );
-};
+
 }
 
 export default Register;

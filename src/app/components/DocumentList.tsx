@@ -12,7 +12,6 @@ function DocumentList() {
   const [favouritesON, setFavouritesON] = useState(false);
   const [showDocuments, setShowDocuments] = useState(false);
 
-  // Toggles the document editor visibility
   const toggleShowDocuments = () => {
     setShowDocuments(!showDocuments);
   };
