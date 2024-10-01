@@ -90,7 +90,7 @@ function Th({
   return (
     <th
       scope="col"
-      className={`px-6 py-3 font-semibold text-gray-500 ${className}`}
+      className={`px-1 py-3 font-semibold text-gray-500 ${className}`}
     >
       {children}
     </th>

@@ -31,8 +31,9 @@ const Dashboard = () => {
     };
   }, []);
 
-  return isLoggedIn ? (
-    <main className="w-full p-6 md:mt-20 relative">
+  // return isLoggedIn ? (
+  return (
+    <main className="w-full p-4 ">
       <div className="flex gap-4">
         {/* Sidebar: This will be shown/hidden based on the state and screen size */}
         <div
@@ -66,9 +67,10 @@ const Dashboard = () => {
         </div>
       </div>
     </main>
-  ) : (
-    <Login />
-  );
+  )
+  // ) : (
+  //   <Login />
+  // );
 };
 
 export default Dashboard;

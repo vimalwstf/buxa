@@ -28,16 +28,18 @@ input[type='number'] {
 
 .quill
 {
+  border: none;
   width: 100%;
-  height: 72vh;
+  height: 65vh;
   /* border: 1px solid black; */
+  margin-bottom: 60px;
 }
 
-.ql-toolbar {
+/* .ql-toolbar {
 border-radius: 15px;
 padding: 5px;
 margin-top: 20px;
 margin-left: auto;
 margin-right: auto;
 width: max-content;
-}
+} */
