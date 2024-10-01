@@ -61,9 +61,9 @@ function Table({ favourites }: { favourites: boolean }) {
       <table className="min-w-full divide-y divide-gray-200">
         <thead>
           <tr>
-            <Th>Name</Th>
-            <Th>Words</Th>
-            <Th>Modified</Th>
+            <Th className="text-start">Name</Th>
+            <Th className="text-center">Words</Th>
+            <Th className="text-center">Modified</Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
@@ -82,13 +82,15 @@ function Table({ favourites }: { favourites: boolean }) {
 
 function Th({
   children,
+  className = "",
 }: Readonly<{
   children: React.ReactNode;
+  className?: string;
 }>) {
   return (
     <th
       scope="col"
-      className="px-6 py-3 text-start font-semibold text-s text-gray-500"
+      className={`px-6 py-3 font-semibold text-gray-500 ${className}`}
     >
       {children}
     </th>
