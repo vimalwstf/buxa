@@ -1,22 +1,19 @@
 "use client";
 import { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import ProgressBar from "./progressBar/ProgressBar";
-
+import ProgressBar from "./ProgressBar";
 
 const Sidebar = () => {
   const [useCase, setUseCase] = useState("");
   const [keywords, setKeywords] = useState("");
   const [researchLevel, setResearchLevel] = useState(0);
 
-
   const [language, setLanguage] = useState("");
 
   const [languageOpen, setLanguageOpen] = useState(false);
 
   // Check if all fields are filled
-  const allFieldsFilled =
-    useCase && keywords && language;
+  const allFieldsFilled = useCase && keywords && language;
 
   return (
     <div className="min-h-[85vh] w-full max-w-sm bg-gray-100 rounded-md border border-gray-300 p-4">
@@ -66,11 +63,7 @@ const Sidebar = () => {
           </span>
         </div>
       </div> */}
-      <ProgressBar/>
-
-    
-
-    
+      <ProgressBar />
 
       {/* Language dropdown */}
       <div className="mb-4">

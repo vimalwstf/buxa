@@ -60,7 +60,7 @@ function Table({ favourites }: { favourites: boolean }) {
     >
       <table className="min-w-full divide-y divide-gray-200">
         <thead>
-          <tr>
+          <tr >
             <Th>Name</Th>
             <Th>Words</Th>
             <Th>Modified</Th>
