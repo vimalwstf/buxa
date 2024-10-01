@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
-// Define TypeScript type for form data
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -13,7 +13,6 @@ interface FormData {
 }
 
 const Register = () => {
-  // Use TypeScript for the state type
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -32,7 +31,7 @@ const Register = () => {
     });
   };
 
-  // TypeScript typing for form submission
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);

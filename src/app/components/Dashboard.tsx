@@ -8,33 +8,28 @@ import { useState, useEffect } from "react";
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Function to toggle the Sidebar visibility
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Effect to handle window resize and reset sidebar state
   useEffect(() => {
     const handleResize = () => {
-      // If the screen is larger than 'md', close the sidebar
       if (window.innerWidth >= 768) {
         setIsSidebarOpen(false);
       }
     };
 
-    // Add event listener for window resize
     window.addEventListener('resize', handleResize);
 
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   return (
-    <main className="w-full p-6 md:mt-20 relative">
+    <main className="w-full sm:p-2 md:p-6 mt-2">
       <div className="flex gap-4">
-        {/* Sidebar: This will be shown/hidden based on the state and screen size */}
+       
         <div className={`fixed inset-0 z-40 md:hidden ${isSidebarOpen ? 'block' : 'hidden'}`}>
           <div className="relative w-full top-24 left-0">
             <Sidebar />
