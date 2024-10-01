@@ -47,22 +47,6 @@ const Sidebar = () => {
       </div>
 
       {/* Research level slider */}
-      {/* <div className="mb-4">
-        <label className="block font-medium mb-1">Research level</label>
-        <div className="flex items-center">
-          <input
-            type="range"
-            value={researchLevel}
-            onChange={(e) => setResearchLevel(Number(e.target.value))}
-            min="0"
-            max="100"
-            className="w-full"
-          />
-          <span className="ml-2 text-gray-600">
-            {researchLevel < 50 ? "Low" : "High"}
-          </span>
-        </div>
-      </div> */}
       <ProgressBar />
 
       {/* Language dropdown */}
