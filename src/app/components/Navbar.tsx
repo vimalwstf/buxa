@@ -67,6 +67,7 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="flex space-x-4">
+
           <div className="relative flex items-center text-white space-x-2 hover:text-gray-300 cursor-pointer">
             <FaRegUser size={24} />
             <span

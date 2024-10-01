@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import ProgressBar from "./progressBar/ProgressBar";
 
 
 const Sidebar = () => {
@@ -49,7 +50,7 @@ const Sidebar = () => {
       </div>
 
       {/* Research level slider */}
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label className="block font-medium mb-1">Research level</label>
         <div className="flex items-center">
           <input
@@ -64,7 +65,8 @@ const Sidebar = () => {
             {researchLevel < 50 ? "Low" : "High"}
           </span>
         </div>
-      </div>
+      </div> */}
+      <ProgressBar/>
 
     
 
