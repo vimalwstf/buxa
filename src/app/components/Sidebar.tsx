@@ -2,23 +2,23 @@
 import { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
+
 const Sidebar = () => {
   const [useCase, setUseCase] = useState("");
   const [keywords, setKeywords] = useState("");
   const [researchLevel, setResearchLevel] = useState(0);
-  const [personality, setPersonality] = useState("");
-  const [tone, setTone] = useState("");
+
+
   const [language, setLanguage] = useState("");
-  const [personalityOpen, setPersonalityOpen] = useState(false);
-  const [toneOpen, setToneOpen] = useState(false);
+
   const [languageOpen, setLanguageOpen] = useState(false);
 
   // Check if all fields are filled
   const allFieldsFilled =
-    useCase && keywords && personality && tone && language;
+    useCase && keywords && language;
 
   return (
-    <div className="min-h-[85vh] w-full max-w-xs bg-gray-100 rounded-md border border-gray-300 p-4">
+    <div className="min-h-[85vh] w-full max-w-sm bg-gray-100 rounded-md border border-gray-300 p-4">
       <h2 className="text-lg font-bold mb-4">Write with AI</h2>
 
       {/* Use case dropdown */}
@@ -66,59 +66,9 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Personality dropdown */}
-      <div className="mb-4">
-        <div
-          className="flex justify-between items-center cursor-pointer"
-          onClick={() => setPersonalityOpen(!personalityOpen)}
-        >
-          <label className="block font-medium">Set personality</label>
-          {personalityOpen ? <FiChevronUp /> : <FiChevronDown />}
-        </div>
-        {personalityOpen && (
-          <div className="mt-2 border border-gray-300 rounded-lg">
-            {["Professional", "Analytical", "Storyteller", "Persuasive"].map(
-              (p) => (
-                <button
-                  key={p}
-                  className={`block w-full text-left px-4 py-2 hover:bg-blue-100 ${
-                    personality === p ? "bg-blue-100" : ""
-                  }`}
-                  onClick={() => setPersonality(p)}
-                >
-                  {p}
-                </button>
-              )
-            )}
-          </div>
-        )}
-      </div>
+    
 
-      {/* Tone dropdown */}
-      <div className="mb-4">
-        <div
-          className="flex justify-between items-center cursor-pointer"
-          onClick={() => setToneOpen(!toneOpen)}
-        >
-          <label className="block font-medium">Set tone</label>
-          {toneOpen ? <FiChevronUp /> : <FiChevronDown />}
-        </div>
-        {toneOpen && (
-          <div className="mt-2 border border-gray-300 rounded-lg">
-            {["Knowledgeable", "Conversational", "Empathetic"].map((t) => (
-              <button
-                key={t}
-                className={`block w-full text-left px-4 py-2 hover:bg-blue-100 ${
-                  tone === t ? "bg-blue-100" : ""
-                }`}
-                onClick={() => setTone(t)}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+    
 
       {/* Language dropdown */}
       <div className="mb-4">

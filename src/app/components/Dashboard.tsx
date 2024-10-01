@@ -1,14 +1,16 @@
+import DocumentList from "./DocumentList";
 import Sidebar from "./Sidebar";
-
 
 const Dashboard = () => {
   return (
-    <main className="w-full max-w-6xl p-8 mt-20">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <Sidebar />
-        {/* <div className="col-span-2">
-          <Editor />
-        </div> */}
+    <main className="w-full  p-8 mt-20">
+      <div className="flex">
+        <div className="w-1/3">
+          <Sidebar />
+        </div>
+        <div className="flex-grow">
+          <DocumentList />
+        </div>
       </div>
     </main>
   );
