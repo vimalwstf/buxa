@@ -16,8 +16,8 @@ function TableRow({ data }: Props) {
         <span className="hidden sm:inline">{data.name}</span>
         <span className="sm:hidden">{data.name.slice(0, 10)}...</span>
       </Td>
-      <Td>{data.words}</Td>
-      <Td>
+      <Td className="text-center">{data.words}</Td>
+      <Td className="text-center">
         <span className="hidden sm:inline">{data.modified}</span>
         <span className="sm:hidden">{data.modified.slice(0, 10)}...</span>
       </Td>
