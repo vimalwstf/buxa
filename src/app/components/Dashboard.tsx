@@ -30,7 +30,8 @@ const Dashboard = () => {
     };
   }, []);
 
-  return isLoggedIn ? (
+  // return isLoggedIn ? (
+  return(
     <main className="w-full p-4 ">
       <div className="flex gap-4">
         <div
@@ -61,9 +62,10 @@ const Dashboard = () => {
         </div>
       </div>
     </main>
-  ) : (
-    <Login />
-  );
+  )
+  // ) : (
+  //   <Login />
+  // );
 };
 
 export default Dashboard;
