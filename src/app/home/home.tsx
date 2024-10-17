@@ -9,19 +9,44 @@ import Hero from "@/components/Hero";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import About from "@/components/About";
 import Features from "@/components/Features";
-import { logIn, UserType } from "@/lib/user/userSlice";
+import { logIn, logOut } from "@/lib/user/userSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-
+import { signOut } from "next-auth/react";
+import axios from "axios";
 export default function Home() {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const accessToken = session?.user?.accessToken;
-
+  // console.log("accessToken", accessToken);
   useEffect(() => {
-    if (!!accessToken) {
-      dispatch(logIn(session?.user?.userData as UserType));
-    }
-  }, [accessToken, session?.user?.userData, dispatch]);
+    const fetchUser = async () => {
+      if (accessToken) {
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "ngrok-skip-browser-warning": true,
+              },
+            }
+          );
+
+          if (response?.data?.status) {
+            dispatch(logIn(response?.data?.data));
+          } else {
+            if (response.status === 400) {
+              dispatch(logOut());
+              await signOut();
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchUser();
+  }, [accessToken, dispatch]);
 
   return <AppContent />;
 }

@@ -131,10 +131,16 @@ const Sidebar = ({
               },
             }
           );
+          // console.log(response.data);
           if (response?.data?.status) {
             dispatch(updateCredit(response?.data?.credits));
-            const data = response.data.data;
-            console.log(data);
+            const data = {
+              id: response.data.data.id,
+              name: response.data.data.content,
+              modified: response.data.data.updatedAt,
+              favourite: response.data.data.isFavorite,
+              words: response.data.data.wordCount,
+            };
             handleDocumentSubmit(data);
             // Reset all state variables
             setUseCase("");

@@ -87,7 +87,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           );
 
           result = response?.data;
-          console.log(result.data);
           initiateCashfreePayment(result.data);
         } else {
           setErrors({ credits: "User not authenticated" });
@@ -100,6 +99,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         console.error("Payment failed", error);
       } finally {
         setIsLoading(false);
+        toggleModal();
       }
     }
   };
@@ -111,7 +111,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     // console.log("paymentttt");
     const checkoutOptions = {
       paymentSessionId: data?.sessionId,
-      redirectTarget: "_modal",
+      // redirectTarget: "_modal",
       returnUrl: `${process.env.NEXT_PUBLIC_SOURCE_URL}/user/status/${data?.orderId}`,
     };
 

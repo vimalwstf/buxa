@@ -14,7 +14,7 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, account }) {
       if (account && account.access_token) {
-        console.log("access_token",account.access_token);
+        // console.log("access_token",account.access_token);
        try {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_SOURCE_URL}/user/google-login?token=${account.access_token}`,

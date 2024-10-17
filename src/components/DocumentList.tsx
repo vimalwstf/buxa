@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
@@ -24,6 +23,13 @@ function DocumentList({
 }) {
   const [favouritesON, setFavouritesON] = useState(false);
   const [showDocuments, setShowDocuments] = useState(false);
+  const [manualEditorText, setManualEditorText] = useState<DocumentInfo>({
+    id: "",
+    name: "",
+    words: 0,
+    modified: "",
+    favourite: false,
+  });
 
   if (favouritesON) {
     documents = documents.filter((doc) => doc.favourite);
@@ -32,9 +38,12 @@ function DocumentList({
   const toggleShowDocuments = () => {
     setShowDocuments(!showDocuments);
   };
+  const handleEditorTextChange = (content: string) => {
+    setManualEditorText({ ...manualEditorText, name: content });
+  };
 
   return (
-    <div >
+    <div>
       <div className="flex items-end justify-between mb-4">
         {showDocuments ? (
           ""
@@ -50,7 +59,9 @@ function DocumentList({
             <button
               onClick={() => setFavouritesON(!favouritesON)}
               className={`${
-                favouritesON ? "bg-primary-green text-black" : "bg-secondary-default text-white"
+                favouritesON
+                  ? "bg-primary-green text-black"
+                  : "bg-secondary-default text-white"
               }  px-4 py-2 rounded-md shadow-md flex items-center `}
             >
               <FaStar className="inline sm:mr-2" />
@@ -101,16 +112,18 @@ function DocumentList({
               New Document
             </h2>
           </div>
-          <button
-            className="text-black flex items-center gap-2 top-10 bg-primary-green  px-4 py-2 text-sm rounded-md shadow-md hover:bg-primary-green"
-        
-          >
+          <button className="text-black flex items-center gap-2 top-10 bg-primary-green  px-4 py-2 text-sm rounded-md shadow-md hover:bg-primary-green">
             <IoMdDocument />
             <span>Save</span>
           </button>
         </div>
       )}
-      {showDocuments && <Editor />}
+      {showDocuments && (
+        <Editor
+          value={manualEditorText.name}
+          onChange={handleEditorTextChange}
+        />
+      )}
     </div>
   );
 }

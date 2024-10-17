@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { EditorState, ContentState } from "draft-js";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 type EditorProps = {
-  value?: string;
+  value?: string; // htmlstring
   onChange?: (content: string) => void;
 };
 const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
@@ -14,17 +16,22 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
   const [isInitialized, setIsInitialized] = useState(false);
   useEffect(() => {
     if (value && !isInitialized) {
-      const contentState = ContentState.createFromText(value.toString());
-      const newEditorState = EditorState.createWithContent(contentState);
-      setEditorState(newEditorState);
-      setIsInitialized(true);
+      const contentBlock = htmlToDraft(value);
+      if (contentBlock) {
+        const contentState = ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        const editorState = EditorState.createWithContent(contentState);
+        setEditorState(editorState);
+        setIsInitialized(true);
+      }
     }
   }, [value, isInitialized]);
   const onEditorStateChange = (newState: EditorState) => {
     setEditorState(newState);
     if (onChange) {
-      const plainText = newState.getCurrentContent().getPlainText();
-      onChange(plainText);
+      const htmlText = draftToHtml(convertToRaw(newState.getCurrentContent()));
+      onChange(htmlText);
     }
   };
   return (

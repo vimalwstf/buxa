@@ -56,8 +56,8 @@ const MainNavbar = () => {
           <div
             className="flex items-center md:mt-0 mt-10  text-white space-x-2 cursor-pointer"
             onClick={() => {
-              setIsMenuOpen(!isMenuOpen);
-              toggleModal();
+              // setIsMenuOpen(!isMenuOpen);
+              // toggleModal();
             }}
           >
             <FaCreditCard size={24} className="text-primary-green" />

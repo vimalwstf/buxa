@@ -10,8 +10,6 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoMdDocument } from "react-icons/io";
 import { useSession } from "next-auth/react";
 import { useAppDispatch } from "@/lib/hooks";
-import { logIn, logOut } from "@/lib/user/userSlice";
-import { signOut } from "next-auth/react";
 
 type DataObject = {
   id: string;
@@ -86,40 +84,9 @@ const Dashboard = () => {
       }
     }
   };
-  //user fetch
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (accessToken) {
-        try {
-          const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "ngrok-skip-browser-warning": true,
-              },
-            }
-          );
-
-          if (response?.data?.status) {
-            dispatch(logIn(response?.data?.data));
-          } else {
-            if (response.status === 400) {
-              dispatch(logOut());
-              await signOut();
-            }
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    fetchUser();
-  }, [accessToken, dispatch]);
 
   //all documents fetch
   useEffect(() => {
-    console.log(accessToken);
     const fetchDocuments = async () => {
       if (accessToken) {
         try {
@@ -132,7 +99,6 @@ const Dashboard = () => {
               },
             }
           );
-          console.log("document data", response.data);
           if (response?.data?.status) {
             const data: DocumentInfo[] = response.data.data.map(
               (doc: DataObject) => {
@@ -166,14 +132,14 @@ const Dashboard = () => {
   };
 
   const handleEditorSubmit = async () => {
-    console.log(editorText, "...");
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${editorText?.id}`;
-
     if (accessToken) {
       try {
-        const res = await axios.put(
+        const res = await axios.post(
           url,
-          { content: editorText.name },
+          {
+            content: editorText.name,
+          },
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,

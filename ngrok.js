@@ -13,6 +13,6 @@ http
 ngrok
   .connect({
     addr: 3000,
-    authtoken: "",
+    authtoken: "2hSKQmMtodcLflMW8bPo2XNWQYu_6AM6ffRa41mqXojPMXBEj",
   })
   .then((listener) => console.log(`Ingress established at: ${listener.url()}`));
