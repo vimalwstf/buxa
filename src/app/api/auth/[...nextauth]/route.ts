@@ -14,39 +14,29 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, account }) {
       if (account && account.access_token) {
+        console.log("access_token",account.access_token);
        try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_SOURCE_URL}/auth/google-login?token=${account.access_token}`,
+          `${process.env.NEXT_PUBLIC_SOURCE_URL}/user/google-login?token=${account.access_token}`,
         );
-
-        if (res.data.status === true) {
+        if (res.data.status) {
             
-          const user = res?.data?.genToken?.user;
-          const accessToken = res?.data?.genToken?.accessToken;
-          // const refreshToken = res?.data?.genToken?.refreshToken;
-
-          // console.log("data", res.data)
-
-          token.userData = {
-            id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            credits: user.credits,
-            accessToken: accessToken,
-            // refreshToken: refreshToken,
-          };
+          const user = res?.data?.data;
+          const accessToken = res?.data?.accessToken;
+          token.userData = user;
+          token.accessToken = accessToken;
         }
-       } catch (error) {
-        console.error(error)
-       }
+       } catch (err) {
+        const error = err as Error;
+        console.error("Error:", error.message);
       }
-
+      }
       return token;
     },
 
     async session({ session, token }) {
-      if (token.userData) {
-        session.user = { ...session.user, ...token.userData };
+      if (token.accessToken) {
+        session.user = { userData: token.userData, accessToken: token.accessToken };
       }
       return session;
     },

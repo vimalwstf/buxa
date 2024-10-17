@@ -8,9 +8,9 @@ interface UserState {
 export type UserType = {
   id: string;
   credits: number;
-  name: string;
+  // name: string;
+  // image: string;
   email: string ;
-  image: string;
   firstName: string ;
   lastName: string;
 };

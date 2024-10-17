@@ -46,7 +46,7 @@ const Sidebar = ({
     modified: string;
     favourite: boolean;
     words: number;
-  }) => Promise<void>;
+  }) => void;
 }) => {
   const [useCase, setUseCase] = useState("");
   const [primaryKey, setPrimaryKey] = useState("");
@@ -65,14 +65,13 @@ const Sidebar = ({
   const dispatch = useAppDispatch();
 
   const { data: session } = useSession();
-
+  const accessToken = session?.user?.accessToken;
   const handlePersonalitySelect = (selectedTag: tagType) => {
     const updatedTags = personalityTags.map((tag) =>
       tag.name === selectedTag.name
         ? { ...tag, isSelected: !tag.isSelected }
         : tag
     );
-
     if (selectedTag.isSelected) {
       const updatedSelected = selectedPersonalityTags.filter(
         (tag) => tag.name !== selectedTag.name
@@ -110,7 +109,6 @@ const Sidebar = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const accessToken = session?.user?.accessToken;
 
     if (accessToken) {
       if (allFieldsFilled) {
@@ -133,17 +131,11 @@ const Sidebar = ({
               },
             }
           );
-          console.log("New Document", response.data);
-
           if (response?.data?.status) {
-            dispatch(updateCredit(response?.data?.data?.user?.credits));
-            const data = {
-              id: response?.data?.data?._id,
-              name: response?.data?.data?.content,
-              modified: response?.data?.data?.updatedAt,
-              favourite: response?.data?.data?.isFavorite,
-              words: response?.data?.data?.words,
-            };
+            dispatch(updateCredit(response?.data?.credits));
+            const data = response.data.data;
+            console.log(data);
+            handleDocumentSubmit(data);
             // Reset all state variables
             setUseCase("");
             setPrimaryKey("");
@@ -156,7 +148,6 @@ const Sidebar = ({
             enqueueSnackbar("Document generated successfully", {
               variant: "success",
             });
-            await handleDocumentSubmit(data);
           }
         } catch (error) {
           console.log(error);

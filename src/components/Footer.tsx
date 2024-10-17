@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Logo from "../../public/images/Buxa logo 2.svg";
 import Image from "next/image";
@@ -7,7 +8,7 @@ import Twitter from "../../public/images/social-media-logos/Twitter.svg";
 import Facebook from "../../public/images/social-media-logos/Facebook.svg";
 // import Linkedin from "../../public/images/social-media-logos/Linkedin.svg";
 import Youtube from "../../public/images/social-media-logos/Youtube.svg";
-import { useAppSelector } from "@/lib/hooks";
+
 const socialIcons = [
   { name: "Instagram", link: "", src: Instagram },
   { name: "Twitter", link: "", src: Twitter },
@@ -30,8 +31,7 @@ const company = [
 ];
 
 const Footer = () => {
-  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
-  return isLoggedIn ? (
+  return (
     <div className="container-wrapper py-10  ">
       <footer className=" bg-gray-900 content-container  rounded-xl text-white p-10 mb-10">
         <div className=" mx-auto md:flex   ">
@@ -53,8 +53,8 @@ const Footer = () => {
             <div className="md:w-1/5 flex flex-col items-center">
               <h3 className="font-bold text-xl">Quick Links</h3>
               <ul className="mt-2 space-y-4 ">
-                {quickLinks.map((item) => (
-                  <li key={item.link}>
+                {quickLinks.map((item, i) => (
+                  <li key={i}>
                     <Link href={item.link} className="text-white">
                       {item.item}
                     </Link>
@@ -65,8 +65,8 @@ const Footer = () => {
             <div className="md:w-1/5 flex flex-col items-center">
               <h3 className="font-bold text-xl">Company</h3>
               <ul className="mt-2 space-y-2">
-                {company.map((item) => (
-                  <li key={item.link}>
+                {company.map((item, i) => (
+                  <li key={i}>
                     <Link href={item.link} className="text-white">
                       {item.item}
                     </Link>
@@ -84,13 +84,9 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-4 flex justify-center md:justify-start items-center mb-10  gap-4">
-          {socialIcons.map((icon) => {
+          {socialIcons.map((icon, i) => {
             return (
-              <Link
-                href="icon.link"
-                key={icon.link}
-                className="text-white ml-4"
-              >
+              <Link href="icon.link" key={i} className="text-white ml-4">
                 <Image src={icon.src} width={20} height={20} alt={icon.name} />
               </Link>
             );
@@ -104,8 +100,6 @@ const Footer = () => {
         </div>
       </footer>
     </div>
-  ) : (
-    <></>
   );
 };
 

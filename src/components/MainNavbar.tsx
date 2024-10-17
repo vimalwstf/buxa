@@ -1,67 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import { FaCreditCard } from "react-icons/fa6";
-// import { useRouter } from "next/navigation";
-// import axios from "axios";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import PaymentModal from "./PaymentModal";
 import { signOut } from "next-auth/react";
 import { IoLogOut } from "react-icons/io5";
 import Image from "next/image";
 import logo from "../../public/logo.svg";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { logOut } from "@/lib/user/userSlice";
 
 const MainNavbar = () => {
-  // const [loading, setLoading] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const router = useRouter();
   const user = useAppSelector((state) => state.user.user);
-
-  // const { data: session } = useSession();
-  // const refreshToken = session?.user?.refreshToken;
-
+  const dispatch = useAppDispatch();
   const handleLogout = async () => {
-    logOut();
+    dispatch(logOut());
     await signOut();
-    // setLoading(true);
-
-    // const userJson = localStorage.getItem("user");
-
-    // if (refreshToken) {
-    //   const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/auth/logout`;
-
-    //   console.log("refresh", refreshToken);
-
-    //   try {
-    //     const res = await axios.post(url, { refreshToken });
-    //     if (res.status === 200) {
-    //       logOut();
-    //       await signOut(); // next-auth
-    //       setTimeout(() => {
-    //         router.push("/login");
-    //         // setLoading(false);
-    //       }, 100);
-    //     } else {
-    //       console.error("Logout failed with status:", res.status);
-    //       // setLoading(false);
-    //     }
-    //   } catch (error: unknown) {
-    //     if (axios.isAxiosError(error)) {
-    //       console.error(
-    //         "Error during logout API call:",
-    //         error.response?.data?.message || error.message
-    //       );
-    //     } else {
-    //       console.error("Unexpected error during logout:", error);
-    //     }
-    //     // setLoading(false);
-    //   }
-    // } else {
-    //   console.warn("No user found in localStorage to log out.");
-    //   // setLoading(false);
-    // }
   };
 
   // Handle opening and closing the modal

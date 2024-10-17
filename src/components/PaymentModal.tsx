@@ -29,10 +29,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     {}
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
-
   const options = [1, 10, 25, 50, 100];
 
   useEffect(() => {

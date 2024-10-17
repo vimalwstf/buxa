@@ -35,10 +35,10 @@ const LandingNavbar = () => {
         </div>
         <div>
           {" "}
-          <button className="bg-green-500 text-black hover:scale-90 text-xs sm:text-sm md:text-lg font-semibold p-1 sm:px-2 sm:py-1 md:px-4 md:py-2 rounded align-middle">
+          <span className="bg-green-500 text-black hover:scale-90 text-xs sm:text-sm md:text-lg font-semibold p-1 sm:px-2 sm:py-1 md:px-4 md:py-2 rounded align-middle">
             {/* <Link href={'/signup'}> Try Buxa.ai</Link> */}
             <GoogleSignup />
-          </button>
+          </span>
         </div>
       </div>
       <div

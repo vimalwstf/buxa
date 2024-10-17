@@ -10,25 +10,15 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoMdDocument } from "react-icons/io";
 import { useSession } from "next-auth/react";
 import { useAppDispatch } from "@/lib/hooks";
-import { updateCredit } from "@/lib/user/userSlice";
+import { logIn, logOut } from "@/lib/user/userSlice";
+import { signOut } from "next-auth/react";
+
 type DataObject = {
-  _id: string;
+  id: string;
   content: string;
-  metadata: Metadata;
-  isDeleted: boolean;
+  words: number;
   isFavorite: boolean;
-  createdAt: string;
   updatedAt: string;
-  __v: number;
-};
-type Metadata = {
-  useCase: string;
-  primaryKey: string;
-  researchLevel: number;
-  personality: string[];
-  tone: string[];
-  language: string;
-  _id: string;
 };
 
 export type DocumentInfo = {
@@ -53,7 +43,6 @@ const Dashboard = () => {
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
-
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
 
@@ -97,10 +86,42 @@ const Dashboard = () => {
       }
     }
   };
+  //user fetch
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUser = async () => {
       if (accessToken) {
-        console.log("Token", accessToken);
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "ngrok-skip-browser-warning": true,
+              },
+            }
+          );
+
+          if (response?.data?.status) {
+            dispatch(logIn(response?.data?.data));
+          } else {
+            if (response.status === 400) {
+              dispatch(logOut());
+              await signOut();
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchUser();
+  }, [accessToken, dispatch]);
+
+  //all documents fetch
+  useEffect(() => {
+    console.log(accessToken);
+    const fetchDocuments = async () => {
+      if (accessToken) {
         try {
           const response = await axios.get(
             `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents`,
@@ -111,20 +132,14 @@ const Dashboard = () => {
               },
             }
           );
-
+          console.log("document data", response.data);
           if (response?.data?.status) {
-            if (response?.data?.data.length > 0) {
-              console.log("docCredit", response?.data?.data[0]?.user?.credits);
-              dispatch(updateCredit(response?.data?.data[0]?.user?.credits));
-            }
-
             const data: DocumentInfo[] = response.data.data.map(
               (doc: DataObject) => {
-                // console.log("content:", doc.content)
                 return {
-                  id: doc._id,
+                  id: doc.id,
                   name: doc.content,
-                  words: "",
+                  words: doc.words,
                   modified: doc.updatedAt,
                   favourite: doc.isFavorite,
                 };
@@ -133,17 +148,17 @@ const Dashboard = () => {
             setDocuments(data);
           }
         } catch (error) {
-          console.log(error);
+          console.log("document fetch", error);
         }
       }
     };
-    fetchData();
+    fetchDocuments();
   }, [accessToken, dispatch]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-  const handleDocumentSubmit = async (data: DocumentInfo) => {
+  const handleDocumentSubmit = (data: DocumentInfo) => {
     setDocuments((prevDocuments) => [data, ...prevDocuments]);
     setEditorText(data);
     setShowEditor(true);
@@ -165,9 +180,6 @@ const Dashboard = () => {
             },
           }
         );
-
-        // console.log(res, "response in update", editorText);
-
         if (res.status === 200) {
           const updatedDocuments = [...documents];
           const index = updatedDocuments.findIndex(
@@ -182,8 +194,6 @@ const Dashboard = () => {
       }
     }
   };
-
-  // console.log(editorText, "editro text");
 
   const handleEditorTextChange = (content: string) => {
     setEditorText({ ...editorText, name: content });
