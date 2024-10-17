@@ -1,6 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import heroImg1 from "../../public/images/bg-images/hero-image-1.png";
+import lex from "../../public/images/brandLogos/lex.svg";
+import astrix from "../../public/images/brandLogos/astrix.svg";
+import btc from "../../public/images/brandLogos/btc.svg";
 
 const Hero = () => {
   return (
@@ -17,7 +20,7 @@ const Hero = () => {
         </h1>
       </section>
       <section className=" content-container flex  justify-around space-x-2 py-10">
-        <div className=" p-8 w-1/2 rounded-3xl text-center relative">
+        <div className=" p-8 rounded-3xl text-center relative">
           <Image
             src={heroImg1}
             alt="Description of the image"
@@ -46,11 +49,11 @@ const Hero = () => {
           {/* <div className="absolute top-0 right-0 w-0 h-0 border-t-[50px] border-t-transparent border-l-[50px] border-l-green-500"></div> */}
         </div>
       </section>
-      <div className="content-container flex gap-8 justify-between">
-        <h1>logoImg 1</h1>
-        <h1>logoImg 2</h1>
-        <h1>logoImg 3</h1>
-        <h1>logoImg 4</h1>
+      <div className="content-container flex  justify-between pt-6">
+        <Image src={astrix} alt="astrix logo" width={200} height={200} />
+
+        <Image src={btc} alt="btc logo" width={200} height={200} />
+        <Image src={lex} alt="lexai logo" width={200} height={200} />
       </div>
     </div>
   );
