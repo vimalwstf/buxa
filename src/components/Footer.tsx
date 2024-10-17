@@ -94,7 +94,7 @@ const Footer = () => {
         </div>
         <div className="text-center w-5/6  md:w-full opacity-50">
           <p className="">
-            Copyright © 2024 Wasserstoff AI Inc. All rights reserved. The
+            Copyright © 2024 <Link href='' className="border-b">Wasserstoff Innovation and Learning Labs Pvt Ltd</Link>. All rights reserved. The
             world&apos;s first AI writing app & keyboard powered by Open
             AI&apos;s API.
           </p>
