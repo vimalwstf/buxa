@@ -19,6 +19,7 @@ export default function Home() {
   const accessToken = session?.user?.accessToken;
   useEffect(() => {
     const fetchUser = async () => {
+      // console.log("accessToken", accessToken);
       if (accessToken) {
         try {
           const response = await axios.get(

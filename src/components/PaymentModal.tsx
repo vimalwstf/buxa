@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import axios from "axios";
@@ -39,6 +38,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       const cashfreeInstance = await load({
         mode: "sandbox", // Switch to 'production' for production
       });
+      console.log("cashfreeInstance", cashfreeInstance);
       setCashfree(cashfreeInstance);
     };
     loadCashfree();
@@ -116,20 +116,22 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       returnUrl: `${process.env.NEXT_PUBLIC_SOURCE_URL}/user/status/${data?.orderId}`,
     };
 
-    cashfree
-      .checkout(checkoutOptions)
-      .then((result: { status: number; error: { message: string } }) => {
-        if (result.status) {
-          if (result.status === 200) {
-            console.log("Payment successful, redirecting to localhost:3000");
-          } else if (result.error) {
-            setErrors({ credits: result.error.message });
-            console.log("Payment failed!");
+    if (cashfree) {
+      cashfree
+        .checkout(checkoutOptions)
+        .then((result: { status: number; error: { message: string } }) => {
+          if (result.status) {
+            if (result.status === 200) {
+              console.log("Payment successful, redirecting to localhost:3000");
+            } else if (result.error) {
+              setErrors({ credits: result.error.message });
+              console.log("Payment failed!");
+            }
+          } else {
+            console.log("Unexpected response format", result);
           }
-        } else {
-          console.log("Unexpected response format", result);
-        }
-      });
+        });
+    }
   };
 
   if (!isModalOpen) return null;

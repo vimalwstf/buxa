@@ -43,7 +43,6 @@ const Dashboard = () => {
   const accessToken = session?.user?.accessToken;
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
-
     if (accessToken) {
       try {
         const res = await axios.put(url, null, {
@@ -51,8 +50,12 @@ const Dashboard = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
+        const updatedDocuments = [...documents];
+        const index = updatedDocuments.findIndex((doc) => doc.id === id);
+        updatedDocuments[index].favourite = !updatedDocuments[index].favourite;
+        setDocuments(updatedDocuments);
         // console.log(res);
-        if (res.status === 200) {
+        if (res.status !== 200) {
           const updatedDocuments = [...documents];
           const index = updatedDocuments.findIndex((doc) => doc.id === id);
           updatedDocuments[index].favourite =
@@ -66,7 +69,6 @@ const Dashboard = () => {
   };
   const handleDeleteData = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
-
     if (accessToken) {
       try {
         const res = await axios.delete(url, {

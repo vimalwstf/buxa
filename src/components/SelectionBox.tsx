@@ -26,7 +26,7 @@ function SelectionBox({ tags, placeholder, handleSelect }: ComboBoxTagProps) {
 
   return (
     <div className="flex flex-col bg-black shadow-md rounded-md p-3">
-     <div className="flex items-center border border-gray-200  rounded-lg p-1 shadow-sm mb-2">
+      <div className="flex items-center border border-gray-200  rounded-lg p-1 shadow-sm mb-2">
         <IoSearch className="text-primary-green ml-2" />
         <input
           type="text"
@@ -48,23 +48,14 @@ function SelectionBox({ tags, placeholder, handleSelect }: ComboBoxTagProps) {
 
 function Tag({ tag, onClick }: { tag: tagType; onClick: () => void }) {
   return (
-    // <span
-    //   className={`font-medium text-white text-sm px-2 py-1  hover:bg-gray-200 rounded-md m-1 cursor-pointer ${
-    //     tag.isSelected ? "bg-primary-green text-black" : "bg-primary-light"
-    //   }`}
-    //   onClick={onClick}
-    // >
-    //   {tag.name}
-    // </span>
     <span
-  className={`font-medium hover:bg-gray-200 text-sm px-2 py-1 rounded-md m-1 cursor-pointer
+      className={`font-medium hover:bg-gray-200 text-sm px-2 py-1 rounded-md m-1 cursor-pointer
     ${tag.isSelected ? "bg-primary-green text-black" : "bg-black text-white"}
   `}
-  onClick={onClick}
->
-  {tag.name}
-</span>
-
+      onClick={onClick}
+    >
+      {tag.name}
+    </span>
   );
 }
 

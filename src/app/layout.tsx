@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import StoreProvider from "./StoreProvider";
 import Script from "next/script";
+import { getServerSession } from "next-auth";
+import Provider from "@/providers/Provider";
+import { AuthOptions } from "./api/auth/[...nextauth]/route";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -19,18 +22,20 @@ export const metadata: Metadata = {
   description: "AI writing assistant",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(AuthOptions);
+
   return (
     <html lang="en">
       <Script src="https://sdk.cashfree.com/js/v3/cashfree.js"></Script>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <StoreProvider>{children}</StoreProvider>
+        <Provider session={session}>{children}</Provider>
       </body>
     </html>
   );

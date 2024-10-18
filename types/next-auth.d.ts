@@ -10,7 +10,7 @@ type userData = {
   credits: number;
 };
 declare module "next-auth" {
-  interface Session {
+   interface Session {
     user: {
       userData: userData;
       accessToken: string;
