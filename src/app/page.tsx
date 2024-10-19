@@ -1,16 +1,17 @@
 "use client";
 
-import { SnackbarProvider } from "notistack";
-import dynamic from "next/dynamic";
-
-const Home = dynamic(() => import("./home/home"), {
-  ssr: false,
-});
+import Hero from "@/components/Hero";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import About from "@/components/About";
+import Features from "@/components/Features";
 
 export default function App() {
   return (
-    <SnackbarProvider maxSnack={3}>
-      <Home />
-    </SnackbarProvider>
+    <main>
+      <Hero />
+      <WhyChooseUs />
+      <About />
+      <Features />
+    </main>
   );
 }

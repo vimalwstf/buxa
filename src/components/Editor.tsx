@@ -13,9 +13,8 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
   );
-  const [isInitialized, setIsInitialized] = useState(false);
   useEffect(() => {
-    if (value && !isInitialized) {
+    if (value) {
       const contentBlock = htmlToDraft(value);
       if (contentBlock) {
         const contentState = ContentState.createFromBlockArray(
@@ -23,20 +22,25 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
         );
         const editorState = EditorState.createWithContent(contentState);
         setEditorState(editorState);
-        setIsInitialized(true);
       }
     }
-  }, [value, isInitialized]);
+  }, [value]);
+
   const onEditorStateChange = (newState: EditorState) => {
     setEditorState(newState);
+  };
+  const handleFocusChange = () => {
     if (onChange) {
-      const htmlText = draftToHtml(convertToRaw(newState.getCurrentContent()));
+      const htmlText = draftToHtml(
+        convertToRaw(editorState.getCurrentContent())
+      );
       onChange(htmlText);
     }
   };
   return (
     <div>
       <Editor
+        onBlur={handleFocusChange}
         editorState={editorState}
         wrapperClassName=""
         toolbarClassName="text-black"
