@@ -33,7 +33,7 @@ const company = [
 
 const Footer = () => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
-  return isLoggedIn ? (
+  return !isLoggedIn ? (
     <div className="container-wrapper py-10  ">
       <footer className=" bg-gray-900 content-container flex-col lg:flex-row rounded-xl text-white p-10 mb-10  text-center  sm:text-start">
         <div className=" mx-auto md:flex   ">
@@ -101,11 +101,7 @@ const Footer = () => {
         <div className="text-center md:w-full opacity-50">
           <p className="">
             Copyright © 2024{" "}
-            <Link
-              href="https://thewasserstoff.com/"
-              target="_blank"
-              className="border-b"
-            >
+            <Link href="" className="border-b">
               Wasserstoff Innovation and Learning Labs Pvt Ltd
             </Link>
             . All rights reserved. The world&apos;s first AI writing app &
