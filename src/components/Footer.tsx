@@ -8,6 +8,7 @@ import Twitter from "../../public/images/social-media-logos/Twitter.svg";
 import Facebook from "../../public/images/social-media-logos/Facebook.svg";
 // import Linkedin from "../../public/images/social-media-logos/Linkedin.svg";
 import Youtube from "../../public/images/social-media-logos/Youtube.svg";
+import { useAppSelector } from "@/lib/hooks";
 
 const socialIcons = [
   { name: "Instagram", link: "", src: Instagram },
@@ -31,7 +32,8 @@ const company = [
 ];
 
 const Footer = () => {
-  return (
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+  return !isLoggedIn ? (
     <div className="container-wrapper py-10  ">
       <footer className=" bg-gray-900 content-container  rounded-xl text-white p-10 mb-10">
         <div className=" mx-auto md:flex   ">
@@ -94,13 +96,18 @@ const Footer = () => {
         </div>
         <div className="text-center w-5/6  md:w-full opacity-50">
           <p className="">
-            Copyright © 2024 <Link href='' className="border-b">Wasserstoff Innovation and Learning Labs Pvt Ltd</Link>. All rights reserved. The
-            world&apos;s first AI writing app & keyboard powered by Open
-            AI&apos;s API.
+            Copyright © 2024{" "}
+            <Link href="" className="border-b">
+              Wasserstoff Innovation and Learning Labs Pvt Ltd
+            </Link>
+            . All rights reserved. The world&apos;s first AI writing app &
+            keyboard powered by Open AI&apos;s API.
           </p>
         </div>
       </footer>
     </div>
+  ) : (
+    <></>
   );
 };
 

@@ -5,6 +5,8 @@ import Script from "next/script";
 import { getServerSession } from "next-auth";
 import Provider from "@/providers/Provider";
 import { AuthOptions } from "./api/auth/[...nextauth]/route";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,7 +37,11 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider session={session}>{children}</Provider>
+        <Provider session={session}>
+          <Navbar />
+          {children}
+          <Footer />
+        </Provider>
       </body>
     </html>
   );

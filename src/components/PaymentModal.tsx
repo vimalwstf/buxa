@@ -24,6 +24,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   const [amount, setAmount] = useState<number>(0);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
   const [customerPhone, setCustomerPhone] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [cashfree, setCashfree] = useState<any>(null);
   const [errors, setErrors] = useState<{ phone?: string; credits?: string }>(
     {}
@@ -38,7 +39,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       const cashfreeInstance = await load({
         mode: "sandbox", // Switch to 'production' for production
       });
-      console.log("cashfreeInstance", cashfreeInstance);
       setCashfree(cashfreeInstance);
     };
     loadCashfree();
