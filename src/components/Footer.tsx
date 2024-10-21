@@ -8,7 +8,6 @@ import Twitter from "../../public/images/social-media-logos/Twitter.svg";
 import Facebook from "../../public/images/social-media-logos/Facebook.svg";
 // import Linkedin from "../../public/images/social-media-logos/Linkedin.svg";
 import Youtube from "../../public/images/social-media-logos/Youtube.svg";
-import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 const socialIcons = [

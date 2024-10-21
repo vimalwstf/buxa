@@ -4,7 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import { getServerSession } from "next-auth";
 import Provider from "@/providers/Provider";
-import { AuthOptions } from "./api/auth/[...nextauth]/route";
+import { AuthOptions } from "./api/auth/[...nextauth]/options";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
