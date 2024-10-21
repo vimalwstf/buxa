@@ -133,7 +133,7 @@ const Dashboard = () => {
     setIsSidebarOpen(false);
   };
 
-  const handleManualDocumentSubmit = (data: DocumentInfo) => {
+  const handleManualDocumentSave = (data: DocumentInfo) => {
     setDocuments((prevDocuments) => [data, ...prevDocuments]);
   };
 
@@ -230,7 +230,7 @@ const Dashboard = () => {
         ) : (
           <div className="flex-grow">
             <DocumentList
-              handleManualDocumentSubmit={handleManualDocumentSubmit}
+              handleManualDocumentSave={handleManualDocumentSave}
               setEditorText={setEditorText}
               setShowEditor={setShowEditor}
               documents={documents}
