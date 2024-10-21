@@ -8,7 +8,7 @@ import Twitter from "../../public/images/social-media-logos/Twitter.svg";
 import Facebook from "../../public/images/social-media-logos/Facebook.svg";
 // import Linkedin from "../../public/images/social-media-logos/Linkedin.svg";
 import Youtube from "../../public/images/social-media-logos/Youtube.svg";
-import { useAppSelector } from "@/lib/hooks";
+import { useSession } from "next-auth/react";
 
 const socialIcons = [
   { name: "Instagram", link: "", src: Instagram },
@@ -32,7 +32,9 @@ const company = [
 ];
 
 const Footer = () => {
-  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+  const { data: session } = useSession();
+  const isLoggedIn = !!session?.user?.accessToken;
+
   return !isLoggedIn ? (
     <div className="container-wrapper py-10  ">
       <footer className=" bg-gray-900 content-container flex-col lg:flex-row rounded-xl text-white p-10 mb-10  text-center  sm:text-start">

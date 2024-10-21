@@ -7,12 +7,14 @@ import { useAppDispatch } from "@/lib/hooks";
 import { signOut } from "next-auth/react";
 import axios from "axios";
 import ProtectedRoute from "../protected/ProtectedRoute";
+import Loader from "@/components/Loader";
 
 export default function Home() {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const accessToken = session?.user?.accessToken;
   const [isLoading, setIsLoading] = useState(true);
+
   //user fetch
   useEffect(() => {
     const fetchUser = async () => {
@@ -26,7 +28,7 @@ export default function Home() {
                 Authorization: `Bearer ${accessToken}`,
                 "ngrok-skip-browser-warning": true,
               },
-            }
+            },
           );
           if (response?.data?.status) {
             dispatch(logIn(response?.data?.data));
@@ -48,11 +50,7 @@ export default function Home() {
     fetchUser();
   }, [accessToken, dispatch]);
   if (isLoading) {
-    return (
-      <main>
-        <h1>Loading...</h1>
-      </main>
-    );
+    return <Loader />;
   }
   return <ProtectedRoute render={<Dashboard />} />;
 }
