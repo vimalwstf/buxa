@@ -7,30 +7,26 @@ import Image from "next/image";
 import Link from "next/link";
 import Hamburger from "../../public/images/Hamburger.svg";
 import GoogleSignup from "./GoogleSignup";
-import { useSession } from "next-auth/react";
-
 const LandingNavbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
-  const { data: session } = useSession();
-  const isLoggedIn = !!session?.user?.accessToken;
 
   return (
-    <header className="bg-gray-900/80 container-wrapper backdrop-blur-3xl md:static  z-20">
+    <header className="container-wrapper backdrop-blur-3xl sticky top-0 z-[99] h-[80px] items-center sm:h-[94px]">
       <div className="content-container bg-blue-80 flex justify-between py-4 md:py-6 items-center">
         {/* hamburger menu button */}
         <div
           className="md:hidden  "
           onClick={() => setMobileNavigation(!mobileNavigation)}
         >
-          <Image src={Hamburger} width={50} height={50} alt="" />
+          <Image src={Hamburger} width={40} height={40} alt="" />
         </div>
         <div className=" flex items-center text-2xl md:text-2xl w-24 sm:w-40 font-bold text-green-500">
           <Link className="" href="/">
-            <Image src={Logo} width={150} height={150} alt="" />
+            <Image src={Logo} width={130} height={130} alt="logo" />
           </Link>
         </div>
         <div className="hidden md:flex">
-          <nav className="space-x-10 m-auto md:text-xl lg:text-2xl">
+          <nav className="space-x-10 m-auto md:text-lg lg:text-xl">
             <Link className="hover:text-green-500" href="/resources">
               Resources
             </Link>
@@ -46,18 +42,17 @@ const LandingNavbar = () => {
           </nav>
         </div>
         <div>
-          {" "}
           <div className="bg-white rounded-full text-black hover:scale-90 text-xs sm:text-sm md:text-lg font-semibold p-1 sm:px-2 sm:py-1 md:px-4 md:py-2 align-middle">
-            {isLoggedIn ? <span>Logout</span> : <GoogleSignup />}
+            <GoogleSignup />
           </div>
         </div>
       </div>
       <div
         className={` content-container md:hidden ${
-          mobileNavigation ? "block" : "hidden"
+          mobileNavigation ? "block " : "hidden"
         }`}
       >
-        <nav className="  bg-neutral-800  rounded-xl text-xl ">
+        <nav className="rounded-xl text-lg bg-black ">
           <ul className="flex flex-col justify-center items-center gap-10 py-5">
             <li>
               <Link href="/resources">Resources</Link>
