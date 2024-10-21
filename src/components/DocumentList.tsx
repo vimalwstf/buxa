@@ -49,6 +49,9 @@ function DocumentList({
     setManualEditorText({ ...manualEditorText, name: content });
   };
   const handleMannualDocumentSave = async () => {
+    console.log(manualEditorText.name);
+    if (manualEditorText.name.trim() === "") return;
+
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/0`;
     if (accessToken) {
       try {
@@ -61,7 +64,7 @@ function DocumentList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         if (res.status === 200) {
           handleManualDocumentSubmit({

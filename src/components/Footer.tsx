@@ -9,6 +9,7 @@ import Facebook from "../../public/images/social-media-logos/Facebook.svg";
 // import Linkedin from "../../public/images/social-media-logos/Linkedin.svg";
 import Youtube from "../../public/images/social-media-logos/Youtube.svg";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const socialIcons = [
   { name: "Instagram", link: "", src: Instagram },
@@ -32,10 +33,10 @@ const company = [
 ];
 
 const Footer = () => {
-  const { data: session } = useSession();
-  const isLoggedIn = !!session?.user?.accessToken;
+  const pathName = usePathname();
+  const onDashboard = pathName === "/dashboard";
 
-  return !isLoggedIn ? (
+  return !onDashboard ? (
     <div className="container-wrapper py-10  ">
       <footer className=" bg-gray-900 content-container flex-col lg:flex-row rounded-xl text-white p-10 mb-10  text-center  sm:text-start">
         <div className=" mx-auto md:flex   ">

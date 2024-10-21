@@ -2,11 +2,14 @@
 
 import MainNavbar from "./MainNavbar";
 import LandingNavbar from "./LandingNavbar";
-import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
-  const { data: session } = useSession();
-  const isLoggedIn = !!session?.user?.accessToken;
-  return isLoggedIn ? <MainNavbar /> : <LandingNavbar />;
+  const pathName = usePathname();
+  const onDashboard = pathName === "/dashboard";
+
+  if (onDashboard) return <MainNavbar />;
+
+  return <LandingNavbar />;
 };
 export default Navbar;

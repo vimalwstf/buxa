@@ -7,8 +7,12 @@ import Image from "next/image";
 import Link from "next/link";
 import Hamburger from "../../public/images/Hamburger.svg";
 import GoogleSignup from "./GoogleSignup";
+import { useSession } from "next-auth/react";
+
 const LandingNavbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
+  const { data: session } = useSession();
+  const isLoggedIn = !!session?.user?.accessToken;
 
   return (
     <header className="bg-gray-900/80 container-wrapper backdrop-blur-3xl md:static  z-20">
@@ -44,7 +48,7 @@ const LandingNavbar = () => {
         <div>
           {" "}
           <div className="bg-white rounded-full text-black hover:scale-90 text-xs sm:text-sm md:text-lg font-semibold p-1 sm:px-2 sm:py-1 md:px-4 md:py-2 align-middle">
-            <GoogleSignup />
+            {isLoggedIn ? <span>Logout</span> : <GoogleSignup />}
           </div>
         </div>
       </div>
