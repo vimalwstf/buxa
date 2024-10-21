@@ -11,7 +11,7 @@ export default function GoogleSignup() {
       <FcGoogle />
       <div className="flex gap-1">
         <span>SignIn&nbsp;</span>
-        <span className="hidden sm:inline">with Google</span>
+        <span className="hidden sm:inline text-nowrap">with Google</span>
       </div>
     </button>
   );
