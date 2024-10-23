@@ -2,7 +2,7 @@ import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 
 export const handleSignIn = async () => {
-  await signIn("google", { callbackUrl: "/" }, { prompt: "login" });
+  await signIn("google", { callbackUrl: "/dashboard" }, { prompt: "login" });
 };
 
 export default function GoogleSignup() {
