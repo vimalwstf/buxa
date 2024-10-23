@@ -10,12 +10,12 @@ type LanguageDropdownProps = {
 
 const languages = [
   "English",
-  "Hindi",
-  "French",
-  "Pashto",
-  "German",
-  "Urdu",
-  "Spanish",
+  // "Hindi",
+  // "French",
+  // "Pashto",
+  // "German",
+  // "Urdu",
+  // "Spanish",
 ];
 
 const LanguageDropdown: React.FC<LanguageDropdownProps> = ({
@@ -48,7 +48,9 @@ const LanguageDropdown: React.FC<LanguageDropdownProps> = ({
     <div className={` mb-4 ${isOpen ? "shadow-lg rounded-md bg-black" : ""}`}>
       <div
         className={`flex justify-between  items-center cursor-pointer ${
-          isOpen ? "bg-primary-green p-2 rounded-t-md text-black" : "text-text-third"
+          isOpen
+            ? "bg-primary-green p-2 rounded-t-md text-black"
+            : "text-text-third"
         }`}
         onClick={toggleDropdown}
       >
@@ -56,23 +58,24 @@ const LanguageDropdown: React.FC<LanguageDropdownProps> = ({
         {isOpen ? <FiChevronUp /> : <FiChevronDown />}
       </div>
       {isOpen && (
-       
         <div className="mt-2 rounded-md max-h-40 overflow-y-auto element scrollbar-hidden">
-  {languages.map((language) => (
-    <button
-      type="button"
-      key={language}
-      className="block w-[95%] text-left px-2 py-1 rounded-md m-1 hover:bg-primary-green hover:text-black"
-      onClick={() => handleLanguageSelect(language)}
-    >
-      {language}
-    </button>
-  ))}
-</div>
-
+          {languages.map((language) => (
+            <button
+              type="button"
+              key={language}
+              className="block w-[95%] text-left px-2 py-1 rounded-md m-1 hover:bg-primary-green hover:text-black"
+              onClick={() => handleLanguageSelect(language)}
+            >
+              {language}
+            </button>
+          ))}
+        </div>
       )}
       {!isOpen && selectedLanguage && (
-        <div className="mt-2 border border-gray-200 rounded-md p-2">
+        <div
+          onClick={toggleDropdown}
+          className="mt-2 border border-gray-200 rounded-md p-2"
+        >
           {selectedLanguage}
         </div>
       )}

@@ -41,10 +41,14 @@ const UseCaseDropdown: React.FC<UseCaseDropdownProps> = ({
   }, [isOpen, setToneOpen, setPersonalityOpen]);
 
   return (
-    <div className={`element mb-4 ${isOpen ? "shadow-lg rounded-md bg-black" : ""}`}>
+    <div
+      className={`element mb-4 ${isOpen ? "shadow-lg rounded-md bg-black" : ""}`}
+    >
       <div
         className={`flex justify-between  items-center cursor-pointer ${
-          isOpen ? "bg-primary-green p-2 rounded-t-md text-black" : "text-text-third"
+          isOpen
+            ? "bg-primary-green p-2 rounded-t-md text-black"
+            : "text-text-third"
         }`}
         onClick={toggleDropdown}
       >
@@ -66,7 +70,10 @@ const UseCaseDropdown: React.FC<UseCaseDropdownProps> = ({
         </div>
       )}
       {!isOpen && selectedUseCase && (
-        <div className="mt-2 border border-gray-200 rounded-md p-2">
+        <div
+          onClick={toggleDropdown}
+          className="mt-2 border border-gray-200 rounded-md p-2"
+        >
           {selectedUseCase}
         </div>
       )}

@@ -50,7 +50,7 @@ const Sidebar = ({
 }) => {
   const [useCase, setUseCase] = useState("");
   const [primaryKey, setPrimaryKey] = useState("");
-  const [researchLevel, setResearchLevel] = useState(0);
+  const [researchLevel, setResearchLevel] = useState(2);
   const [personalityTags, setPersonalityTags] =
     useState<tagType[]>(personalities);
   const [toneTags, setToneTags] = useState<tagType[]>(tones);
@@ -58,7 +58,7 @@ const Sidebar = ({
     tagType[]
   >([]);
   const [selectedToneTags, setSelectedToneTags] = useState<tagType[]>([]);
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState("English");
   const [personalityOpen, setPersonalityOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [toneOpen, setToneOpen] = useState(false);
@@ -70,11 +70,11 @@ const Sidebar = ({
     const updatedTags = personalityTags.map((tag) =>
       tag.name === selectedTag.name
         ? { ...tag, isSelected: !tag.isSelected }
-        : tag
+        : tag,
     );
     if (selectedTag.isSelected) {
       const updatedSelected = selectedPersonalityTags.filter(
-        (tag) => tag.name !== selectedTag.name
+        (tag) => tag.name !== selectedTag.name,
       );
       setSelectedPersonalityTags(updatedSelected);
     } else {
@@ -129,7 +129,7 @@ const Sidebar = ({
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            }
+            },
           );
           // console.log(response.data);
           if (response?.data?.status) {

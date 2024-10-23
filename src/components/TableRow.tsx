@@ -57,7 +57,7 @@ function TableRow({
   };
 
   return (
-    <tr className="cursor-pointer text-white">
+    <tr className="cursor-pointer text-white hover:bg-gray-200">
       <Td
         openEditor={openEditor}
         wrap

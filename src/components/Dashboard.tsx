@@ -10,6 +10,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoMdDocument } from "react-icons/io";
 import { useSession } from "next-auth/react";
 import { useAppDispatch } from "@/lib/hooks";
+import { enqueueSnackbar } from "notistack";
 
 type DataObject = {
   id: string;
@@ -43,6 +44,7 @@ const Dashboard = () => {
   const accessToken = session?.user?.accessToken;
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
+
     if (accessToken) {
       try {
         const res = await axios.put(url, null, {
@@ -50,12 +52,8 @@ const Dashboard = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const updatedDocuments = [...documents];
-        const index = updatedDocuments.findIndex((doc) => doc.id === id);
-        updatedDocuments[index].favourite = !updatedDocuments[index].favourite;
-        setDocuments(updatedDocuments);
         // console.log(res);
-        if (res.status !== 200) {
+        if (res.status === 200) {
           const updatedDocuments = [...documents];
           const index = updatedDocuments.findIndex((doc) => doc.id === id);
           updatedDocuments[index].favourite =
@@ -69,6 +67,7 @@ const Dashboard = () => {
   };
   const handleDeleteData = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
+
     if (accessToken) {
       try {
         const res = await axios.delete(url, {
@@ -99,7 +98,7 @@ const Dashboard = () => {
                 Authorization: `Bearer ${accessToken}`,
                 "ngrok-skip-browser-warning": true,
               },
-            }
+            },
           );
           if (response?.data?.status) {
             const data: DocumentInfo[] = response.data.data.map(
@@ -111,7 +110,7 @@ const Dashboard = () => {
                   modified: doc.updatedAt,
                   favourite: doc.isFavorite,
                 };
-              }
+              },
             );
             data.reverse();
             setDocuments(data);
@@ -139,6 +138,15 @@ const Dashboard = () => {
   };
 
   const handleEditorSubmit = async () => {
+    const htmlString = editorText.name;
+    const html = new DOMParser().parseFromString(htmlString, "text/html");
+    const text = html.body.textContent || "";
+    if (text.trim() === "") {
+      enqueueSnackbar("Document is empty!", {
+        variant: "error",
+      });
+      return;
+    }
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${editorText?.id}`;
     if (accessToken) {
       try {
@@ -151,12 +159,12 @@ const Dashboard = () => {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         if (res.status === 200) {
           const updatedDocuments = [...documents];
           const index = updatedDocuments.findIndex(
-            (doc) => doc.id === editorText.id
+            (doc) => doc.id === editorText.id,
           );
           updatedDocuments[index] = editorText;
           setDocuments(updatedDocuments);

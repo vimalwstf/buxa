@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Script from "next/script";
+// import Script from "next/script";
 import { getServerSession } from "next-auth";
 import Provider from "@/providers/Provider";
 import { AuthOptions } from "./api/auth/[...nextauth]/options";
@@ -33,7 +33,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <Script src="https://sdk.cashfree.com/js/v3/cashfree.js"></Script>
+      {/* <Script src="https://sdk.cashfree.com/js/v3/cashfree.js"></Script> */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

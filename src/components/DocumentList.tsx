@@ -71,7 +71,7 @@ function DocumentList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         if (res.status === 200) {
           handleManualDocumentSave({
@@ -84,7 +84,16 @@ function DocumentList({
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        toggleShowDocuments();
       }
+      setManualEditorText({
+        id: "",
+        name: "",
+        words: 0,
+        modified: "",
+        favourite: false,
+      });
     }
   };
   return (
