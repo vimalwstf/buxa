@@ -7,11 +7,31 @@ import Image from "next/image";
 import Link from "next/link";
 import Hamburger from "../../public/images/Hamburger.svg";
 import GoogleSignup from "./GoogleSignup";
+
 const LandingNavbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
 
+  const Links = [
+    {
+      name: "Resources",
+      href: "/resources",
+    },
+    {
+      name: "Pricing",
+      href: "/pricing",
+    },
+    {
+      name: "Company",
+      href: "/company",
+    },
+    {
+      name: "Support",
+      href: "/support",
+    },
+  ];
+
   return (
-    <header className="container-wrapper backdrop-blur-3xl sticky top-0 z-[99] h-[80px] items-center sm:h-[94px]">
+    <header className="container-wrapper backdrop-blur-3xl md:static z-20 h-[80px] items-center sm:h-[94px]">
       <div className="content-container bg-blue-80 flex justify-between py-4 md:py-6 items-center">
         {/* hamburger menu button */}
         <div
@@ -27,22 +47,15 @@ const LandingNavbar = () => {
         </div>
         <div className="hidden md:flex">
           <nav className="space-x-10 m-auto md:text-lg lg:text-xl">
-            <Link className="hover:text-green-500" href="/resources">
-              Resources
-            </Link>
-            <Link className="hover:text-green-500" href="/pricing">
-              Pricing
-            </Link>
-            <Link className="hover:text-green-500" href="/company">
-              Company
-            </Link>
-            <Link className="hover:text-green-500" href="/support">
-              Support
-            </Link>
+            {Links.map(({ name, href }, i) => (
+              <Link key={i} className="hover:text-green-500" href={href}>
+                {name}
+              </Link>
+            ))}
           </nav>
         </div>
         <div>
-          <div className="bg-white rounded-full text-black hover:scale-90 text-xs sm:text-sm md:text-lg font-semibold p-1 sm:px-2 sm:py-1 md:px-4 md:py-2 align-middle">
+          <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">
             <GoogleSignup />
           </div>
         </div>
@@ -52,20 +65,13 @@ const LandingNavbar = () => {
           mobileNavigation ? "block " : "hidden"
         }`}
       >
-        <nav className="rounded-xl text-lg bg-black ">
+        <nav className="text-lg bg-black border-b">
           <ul className="flex flex-col justify-center items-center gap-10 py-5">
-            <li>
-              <Link href="/resources">Resources</Link>
-            </li>
-            <li>
-              <Link href="/pricing">Pricing</Link>
-            </li>
-            <li>
-              <Link href="/company">Company</Link>
-            </li>
-            <li>
-              <Link href="/support">Support</Link>
-            </li>
+            {Links.map(({ name, href }, i) => (
+              <li key={i}>
+                <Link href={href}>{name}</Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

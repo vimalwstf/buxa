@@ -113,6 +113,7 @@ const Dashboard = () => {
                 };
               }
             );
+            data.reverse();
             setDocuments(data);
           }
         } catch (error) {
