@@ -99,7 +99,7 @@ const Dashboard = () => {
                 Authorization: `Bearer ${accessToken}`,
                 "ngrok-skip-browser-warning": true,
               },
-            },
+            }
           );
           if (response?.data?.status) {
             const data: DocumentInfo[] = response.data.data.map(
@@ -111,7 +111,7 @@ const Dashboard = () => {
                   modified: doc.updatedAt,
                   favourite: doc.isFavorite,
                 };
-              },
+              }
             );
             setDocuments(data);
           }
@@ -150,12 +150,12 @@ const Dashboard = () => {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           const updatedDocuments = [...documents];
           const index = updatedDocuments.findIndex(
-            (doc) => doc.id === editorText.id,
+            (doc) => doc.id === editorText.id
           );
           updatedDocuments[index] = editorText;
           setDocuments(updatedDocuments);
@@ -182,7 +182,7 @@ const Dashboard = () => {
     };
   }, []);
   return (
-    <main className="w-full p-4 ">
+    <main className="w-full p-4 bg-custom-gradient">
       <div className="flex gap-4">
         <div
           className={`fixed inset-0 z-40 transition-transform transform md:hidden ${

@@ -26,7 +26,7 @@ const MainNavbar = () => {
   };
 
   return (
-    <div>
+    <div className="bg-custom-gradient">
       <nav
         className={`w-full md:h-[60px]  flex justify-between items-center px-6 py-4 }`}
       >
