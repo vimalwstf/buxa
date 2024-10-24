@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Table from "./Table";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { DocumentInfo } from "./Dashboard";
+import { DocumentInfo } from "../Dashboard";
 interface PaginationProps {
   documents: DocumentInfo[];
   handleFavouriteUpdate: (id: string) => void;
@@ -40,24 +40,26 @@ const PaginatedTable: React.FC<PaginationProps> = ({
     return pages;
   };
   return (
-    <div  >
+    <div>
       <Table
         setEditorText={setEditorText}
         setShowEditor={setShowEditor}
         documents={currentDocuments}
         handleFavouriteUpdate={handleFavouriteUpdate}
         handleDeleteData={handleDeleteData}
-        className={`${totalPages > 1 ? "h-[77vh]": "min-h-[calc(100vh - 200px)]"}`}
+        className={`${
+          totalPages > 1 ? "h-[77vh]" : "min-h-[calc(100vh - 200px)]"
+        }`}
       />
       {totalPages > 1 && (
         <div className="mx-auto max-w-max flex bg-primary-light py-2 px-1 rounded-full shadow-sm justify-center items-center mt-4">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 flex gap-2 items-center cursor-pointer text-text-third disabled:cursor-not-allowed"
+            className="px-4 py-2 flex gap-2 items-center cursor-pointer text-text-third disabled:cursor-default"
           >
             <FaChevronLeft />
-            <span className="font-medium">Back</span>
+            <span className="font-medium">Prev</span>
           </button>
           <div className="flex items-center">
             <div className="flex gap-2 justify-center items-center">
@@ -74,7 +76,9 @@ const PaginatedTable: React.FC<PaginationProps> = ({
                     key={index}
                     onClick={() => handlePageChange(Number(page))}
                     className={`${
-                      currentPage === page ? "bg-primary-green text-black" : "text-primary-green"
+                      currentPage === page
+                        ? "bg-primary-green text-black"
+                        : "text-primary-green"
                     } px-2 py-1 rounded-md cursor-pointer `}
                   >
                     {page}
@@ -86,7 +90,7 @@ const PaginatedTable: React.FC<PaginationProps> = ({
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 flex gap-2 items-center cursor-pointer text-text-third disabled:cursor-not-allowed"
+            className="px-4 py-2 flex gap-2 items-center cursor-pointer text-text-third disabled:cursor-default"
           >
             <span className="font-medium">Next</span>
             <FaChevronRight />

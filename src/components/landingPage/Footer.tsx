@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
-import Logo from "../../public/images/Buxa logo 2.svg";
+import Logo from "../../../public/images/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import Instagram from "../../public/images/social-media-logos/Instagram.svg";
-import Twitter from "../../public/images/social-media-logos/Twitter.svg";
-import Facebook from "../../public/images/social-media-logos/Facebook.svg";
-// import Linkedin from "../../public/images/social-media-logos/Linkedin.svg";
-import Youtube from "../../public/images/social-media-logos/Youtube.svg";
+import Instagram from "../../../public/images/socials/Instagram.svg";
+import Twitter from "../../../public/images/socials/Twitter.svg";
+import Facebook from "../../../public/images/socials/Facebook.svg";
+// import Linkedin from "../../../public/images/socials/Linkedin.svg";
+import Youtube from "../../../public/images/socials/Youtube.svg";
 import { usePathname } from "next/navigation";
 
 const socialIcons = [

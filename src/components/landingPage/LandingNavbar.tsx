@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-// import Logo from "../../public/images/buxa_logo.svg";
-import Logo from "../../public/images/Buxa logo 2.svg";
+import Logo from "../../../public/images/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import Hamburger from "../../public/images/Hamburger.svg";
-import GoogleSignup from "./GoogleSignup";
+import Hamburger from "../../../public/images/Hamburger.svg";
+import GoogleSignup from "../GoogleSignup";
 
 const LandingNavbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
@@ -55,7 +54,10 @@ const LandingNavbar = () => {
           </nav>
         </div>
         <div>
-          <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">
+          <div
+            // onClick={() => console.log("clicked navbar")}
+            className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150"
+          >
             <GoogleSignup />
           </div>
         </div>

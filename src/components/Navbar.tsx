@@ -1,7 +1,7 @@
 "use client";
 
-import MainNavbar from "./MainNavbar";
-import LandingNavbar from "./LandingNavbar";
+import MainNavbar from "./DashboardNavbar";
+import LandingNavbar from "./landingPage/LandingNavbar";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {

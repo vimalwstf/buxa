@@ -1,8 +1,8 @@
 "use client";
-import Hero from "@/components/Hero";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import About from "@/components/About";
-import Features from "@/components/Features";
+import Hero from "@/components/landingPage/Hero";
+import WhyChooseUs from "@/components/landingPage/WhyChooseUs";
+import About from "@/components/landingPage/About";
+import Features from "@/components/landingPage/Features";
 
 export default function Home() {
   return (

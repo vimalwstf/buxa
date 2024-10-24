@@ -3,8 +3,8 @@ import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { CgFileAdd } from "react-icons/cg";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import Editor from "./Editor";
-import PaginatedTable from "./PaginatedTable";
+import Editor from "./editor/Editor";
+import PaginatedTable from "./table/PaginatedTable";
 import { DocumentInfo } from "./Dashboard";
 import { IoMdDocument } from "react-icons/io";
 import axios from "axios";
@@ -71,7 +71,7 @@ function DocumentList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           handleManualDocumentSave({

@@ -1,6 +1,6 @@
 import React from "react";
 // import Link from "next/link";
-import { handleSignIn } from "./GoogleSignup";
+import { handleSignIn } from "../GoogleSignup";
 // import Image from "next/image";
 // import Hamburger from "../../public/images/Hamburger.svg";
 

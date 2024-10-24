@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaCreditCard } from "react-icons/fa6";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
-import PaymentModal from "./PaymentModal";
+import PaymentModal from "./credits/PaymentModal";
 import { signOut } from "next-auth/react";
 import { IoLogOut } from "react-icons/io5";
 import Image from "next/image";

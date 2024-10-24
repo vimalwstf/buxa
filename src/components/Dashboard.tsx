@@ -1,11 +1,11 @@
 "use client";
 
 import DocumentList from "./DocumentList";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar/Sidebar";
 import { CiPen } from "react-icons/ci";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Editor from "./Editor";
+import Editor from "./editor/Editor";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoMdDocument } from "react-icons/io";
 import { useSession } from "next-auth/react";
@@ -98,7 +98,7 @@ const Dashboard = () => {
                 Authorization: `Bearer ${accessToken}`,
                 "ngrok-skip-browser-warning": true,
               },
-            },
+            }
           );
           if (response?.data?.status) {
             const data: DocumentInfo[] = response.data.data.map(
@@ -110,7 +110,7 @@ const Dashboard = () => {
                   modified: doc.updatedAt,
                   favourite: doc.isFavorite,
                 };
-              },
+              }
             );
             data.reverse();
             setDocuments(data);
@@ -159,12 +159,12 @@ const Dashboard = () => {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           const updatedDocuments = [...documents];
           const index = updatedDocuments.findIndex(
-            (doc) => doc.id === editorText.id,
+            (doc) => doc.id === editorText.id
           );
           updatedDocuments[index] = editorText;
           setDocuments(updatedDocuments);

@@ -1,13 +1,13 @@
 import React from "react";
 import TableRow from "./TableRow";
-import { DocumentInfo } from "./Dashboard";
+import { DocumentInfo } from "../Dashboard";
 interface TableProps {
   documents: DocumentInfo[];
   handleFavouriteUpdate: (id: string) => void;
   handleDeleteData: (id: string) => void;
   setShowEditor: (b: boolean) => void;
   setEditorText: (data: DocumentInfo) => void;
-  className?: string
+  className?: string;
 }
 const Table: React.FC<TableProps> = ({
   documents,
@@ -34,6 +34,7 @@ const Table: React.FC<TableProps> = ({
             <Th className="text-center ">Modified</Th>
           </tr>
         </thead>
+
         <tbody className=" divide-gray-200">
           {documents.map((item) => (
             <TableRow
@@ -58,10 +59,7 @@ function Th({
   className?: string;
 }>) {
   return (
-    <th
-      scope="col"
-      className={`px-1 py-3 text-white font-medium ${className}`}
-    >
+    <th scope="col" className={`px-1 py-3 text-white font-medium ${className}`}>
       {children}
     </th>
   );

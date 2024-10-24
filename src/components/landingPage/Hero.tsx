@@ -1,13 +1,14 @@
 import React from "react";
 import Image from "next/image";
 // import heroImg1 from "../../public/images/bg-images/hero-image-1.png";
-import lex from "../../public/images/brandLogos/lex.svg";
-import astrix from "../../public/images/brandLogos/astrix.svg";
-import btc from "../../public/images/brandLogos/btc.svg";
+// import lex from "../../public/images/brandLogos/lex.svg";
+import lex from "../../../public/images/brandLogos/lex.svg";
+import astrix from "../../../public/images/brandLogos/astrix.svg";
+import btc from "../../../public/images/brandLogos/btc.svg";
 // import DownArrow from "../../public/images/DownArrow.svg";
-import Hero2 from "../../public/images/hero2.svg";
-import Hero1 from "../../public/images/hero1.svg";
-import HeroGlobe from "../../public/images/HeroGlobe.png";
+import Hero2 from "../../../public/images/hero2.svg";
+import Hero1 from "../../../public/images/hero1.svg";
+import HeroGlobe from "../../../public/images/HeroGlobe.png";
 // import LandingHero from "../../public/images/LandingHero.svg";
 
 import Link from "next/link";

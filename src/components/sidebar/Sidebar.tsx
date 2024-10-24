@@ -70,11 +70,11 @@ const Sidebar = ({
     const updatedTags = personalityTags.map((tag) =>
       tag.name === selectedTag.name
         ? { ...tag, isSelected: !tag.isSelected }
-        : tag,
+        : tag
     );
     if (selectedTag.isSelected) {
       const updatedSelected = selectedPersonalityTags.filter(
-        (tag) => tag.name !== selectedTag.name,
+        (tag) => tag.name !== selectedTag.name
       );
       setSelectedPersonalityTags(updatedSelected);
     } else {
@@ -129,7 +129,7 @@ const Sidebar = ({
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            },
+            }
           );
           // console.log(response.data);
           if (response?.data?.status) {
