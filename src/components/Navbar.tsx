@@ -10,6 +10,10 @@ const Navbar = () => {
 
   if (onDashboard) return <MainNavbar />;
 
-  return <LandingNavbar />;
+  return (
+    <div className="fixed top-0 z-10 w-full">
+      <LandingNavbar />
+    </div>
+  );
 };
 export default Navbar;
