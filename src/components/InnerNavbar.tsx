@@ -9,7 +9,7 @@ import { useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 import LogoutBtn from "./LogoutBtn";
 
-const DashboardNavbar = () => {
+const InnerNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useAppSelector((state) => state.user.user);
@@ -79,4 +79,4 @@ const DashboardNavbar = () => {
   );
 };
 
-export default DashboardNavbar;
+export default InnerNavbar;
