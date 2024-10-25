@@ -2,27 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * {
-  overflow: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;  
-}
-
-*::-webkit-scrollbar {
-  display: none;
-} */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary-color-blue: #7867fd;
-  }
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --primary-color-blue: #7867fd;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -35,7 +19,6 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-
 .rdw-editor {
   height: 90vh;
 }
@@ -47,13 +30,11 @@ input[type="number"] {
   }
 }
 
-
-
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
- 
+
   /* font-size: calc(15px + 0.390625vw); */
 }
 
@@ -64,9 +45,8 @@ body {
 }
 
 /* giving full screen  */
-.container-fluid{
-  width: 100%; 
- 
+.container-fluid {
+  width: 100%;
 }
 
 /* to control max-width on larger screen */
@@ -75,27 +55,29 @@ body {
   margin: auto;
 }
 
-
-.content-container{
+.content-container {
   width: 95%;
   margin: auto;
- 
 }
 
-.dp{
-  padding:  calc(8px + 1.5625vw);
+.dp {
+  padding: calc(8px + 1.5625vw);
 }
-
 
 .bg-custom-gradient {
-  background: linear-gradient(90deg, #000000 19.96%, rgba(124, 101, 252, 0.2) 39.86%, rgba(152, 234, 114, 0.2) 58.21%, #000000 80.96%) !important;
+  background: linear-gradient(
+    90deg,
+    #000000 19.96%,
+    rgba(124, 101, 252, 0.2) 39.86%,
+    rgba(152, 234, 114, 0.2) 58.21%,
+    #000000 80.96%
+  ) !important;
 }
-
 
 .element {
   overflow: auto;
   scrollbar-width: none;
-  -ms-overflow-style: none;  
+  -ms-overflow-style: none;
 }
 
 .element::-webkit-scrollbar {

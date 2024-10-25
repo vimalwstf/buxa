@@ -9,6 +9,29 @@ type EditorProps = {
   value?: string; // htmlstring
   onChange?: (content: string) => void;
 };
+
+const toolbar = {
+  inline: {
+    inDropdown: false,
+    className: undefined,
+    component: undefined,
+    dropdownClassName: undefined,
+    options: [
+      "bold",
+      "italic",
+      "underline",
+      "strikethrough",
+      "monospace",
+      "superscript",
+      "subscript",
+    ],
+  },
+  list: { inDropdown: true },
+  textAlign: { inDropdown: true },
+  link: { inDropdown: true },
+  history: { inDropdown: false },
+};
+
 const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
@@ -46,6 +69,7 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
         toolbarClassName="text-black"
         editorClassName="max-h-[60vh] max-w-[95vw] md:max-h-[74vh] min-h-[54vh] bg-primary-light border-2 border-gray-200 rounded-lg p-2 mb-2 overflow-y-auto break-words whitespace-normal"
         onEditorStateChange={onEditorStateChange}
+        toolbar={toolbar}
       />
     </div>
   );
