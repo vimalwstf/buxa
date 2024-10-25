@@ -1,6 +1,6 @@
 "use client";
 
-import MainNavbar from "./DashboardNavbar";
+import DashboardNavbar from "./DashboardNavbar";
 import LandingNavbar from "./landingPage/LandingNavbar";
 import { usePathname } from "next/navigation";
 
@@ -8,7 +8,7 @@ const Navbar = () => {
   const pathName = usePathname();
   const onDashboard = pathName === "/dashboard";
 
-  if (onDashboard) return <MainNavbar />;
+  if (onDashboard) return <DashboardNavbar />;
 
   return (
     <div className="fixed top-0 z-10 w-full">

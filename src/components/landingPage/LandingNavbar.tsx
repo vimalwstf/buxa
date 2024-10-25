@@ -54,10 +54,7 @@ const LandingNavbar = () => {
           </nav>
         </div>
         <div>
-          <div
-            // onClick={() => console.log("clicked navbar")}
-            className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150"
-          >
+          <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">
             <GoogleSignup />
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from "react";
+// import GoogleSignup from "../GoogleSignup";
 // import Link from "next/link";
 import { handleSignIn } from "../GoogleSignup";
 // import Image from "next/image";
@@ -34,6 +35,7 @@ function WhyChooseUs() {
           >
             Try Buxa AI{" "}
           </button>
+
           <p className=" text-lg  md:text-xl">
             The world&apos;s first ChatGPT-powered AI writing app and keyboard
             extension to generate text, email and more - in your voice -
