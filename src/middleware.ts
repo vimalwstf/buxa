@@ -1,18 +1,9 @@
-import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
-export default withAuth(
-  function middleware(req) {
-    const { pathname } = req.nextUrl;
-
-    if (pathname === "/")
-      return NextResponse.redirect(new URL("/home", req.url));
+export default withAuth({
+  callbacks: {
+    authorized: ({ token }) => !!token?.accessToken,
   },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token?.accessToken,
-    },
-  },
-);
+});
 
-export const config = { matcher: ["/", "/dashboard(.*)"] };
+export const config = { matcher: ["/dashboard(.*)"] };
