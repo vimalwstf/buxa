@@ -13,19 +13,19 @@ const LandingNavbar = () => {
   const Links = [
     {
       name: "Resources",
-      href: "/resources",
+      href: "/home/resources",
     },
     {
       name: "Pricing",
-      href: "/pricing",
+      href: "/home/pricing",
     },
     {
       name: "Company",
-      href: "/company",
+      href: "/home/company",
     },
     {
       name: "Support",
-      href: "/support",
+      href: "/home/support",
     },
   ];
 

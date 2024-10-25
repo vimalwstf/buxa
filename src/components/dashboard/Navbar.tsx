@@ -1,7 +1,7 @@
 import React from "react";
 
-const DashboardNavbar = () => {
+const Navbar = () => {
   return <div>DashboardNavbar</div>;
 };
 
-export default DashboardNavbar;
+export default Navbar;

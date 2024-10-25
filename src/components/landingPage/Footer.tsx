@@ -8,7 +8,6 @@ import Twitter from "../../../public/images/socials/Twitter.svg";
 import Facebook from "../../../public/images/socials/Facebook.svg";
 // import Linkedin from "../../../public/images/socials/Linkedin.svg";
 import Youtube from "../../../public/images/socials/Youtube.svg";
-import { usePathname } from "next/navigation";
 
 const socialIcons = [
   { name: "Instagram", link: "", src: Instagram },
@@ -32,10 +31,7 @@ const company = [
 ];
 
 const Footer = () => {
-  const pathName = usePathname();
-  const onDashboard = pathName === "/dashboard";
-
-  return !onDashboard ? (
+  return (
     <div className="container-wrapper py-10  ">
       <footer className=" bg-gray-900 content-container flex-col lg:flex-row rounded-xl text-white p-10 mb-10  text-center  sm:text-start">
         <div className=" mx-auto md:flex   ">
@@ -112,8 +108,6 @@ const Footer = () => {
         </div>
       </footer>
     </div>
-  ) : (
-    <></>
   );
 };
 
