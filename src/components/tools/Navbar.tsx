@@ -6,7 +6,7 @@ import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import PaymentModal from "@/components/credits/PaymentModal";
 import { MdDashboard } from "react-icons/md";
 import Image from "next/image";
-import logo from "../../public/logo.svg";
+import logo from "../../../public/logo.svg";
 import { useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 import LogoutBtn from "@/components/LogoutBtn";

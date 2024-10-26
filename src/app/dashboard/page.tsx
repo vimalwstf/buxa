@@ -8,7 +8,7 @@ export default function Dashboard() {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col mr-5">
         <Navbar />
         <div className=" flex">
           <div className="flex-1 flex flex-col">
