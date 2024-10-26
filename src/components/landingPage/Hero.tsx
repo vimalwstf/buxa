@@ -15,8 +15,8 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="max-w-[1920px] mx-auto pt-24">
-      <section className="content-container space-x-6 py-10 mx-auto">
+    <div className="max-w-[1920px] mx-auto pt-6">
+      <section className="content-container space-x-6 pb-10 mx-auto">
         <div className="flex text-6xl sm:text-[5.34rem] lg:text-9xl md:text-start text-center font-bold space-x-4 mx-auto ">
           <div className="flex flex-col ">
             <div className="flex flex-col sm:flex-row gap-8">

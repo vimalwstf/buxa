@@ -31,18 +31,18 @@ const Navbar = () => {
 
   return (
     <header
-      className={`container-wrapper sticky top-0 h-[80px] items-center sm:h-[94px] ${mobileNavigation ? "bg-black" : "backdrop-blur-3xl"}`}
+      className={`container-wrapper sticky top-0 backdrop-blur-3xl z-20 h-[80px] items-center sm:h-[94px] ${mobileNavigation ? "bg-black" : "backdrop-blur-3xl"}`}
     >
-      <div className="content-container z-50 bg-blue-80 flex justify-between py-4 md:py-6 items-center">
-        {/* hamburger menu button */}
+      <div className="content-container bg-blue-80 flex justify-between py-4 md:py-6 items-center">
+        {/* Hamburger menu button */}
         <div
           className="md:hidden"
           onClick={() => setMobileNavigation(!mobileNavigation)}
         >
           <Image src={Hamburger} width={40} height={40} alt="" />
         </div>
-        <div className=" flex items-center text-2xl md:text-2xl w-24 sm:w-40 font-bold text-green-500">
-          <Link className="" href="/">
+        <div className="flex items-center text-2xl md:text-2xl w-24 sm:w-40 font-bold text-green-500">
+          <Link href="/">
             <Image src={Logo} width={130} height={130} alt="logo" />
           </Link>
         </div>
@@ -62,8 +62,8 @@ const Navbar = () => {
         </div>
       </div>
       <div
-        className={`ease-in-out z-40 transition-all duration-150 content-container md:hidden ${
-          mobileNavigation ? "translate-y-0" : "-translate-y-[calc(100%+80px)]"
+        className={`content-container md:hidden ${
+          mobileNavigation ? "block" : "hidden"
         }`}
       >
         <nav className="text-lg bg-black border-b">
