@@ -3,7 +3,7 @@ import { CiCalendar } from "react-icons/ci";
 
 export default function Alerts() {
   return (
-    <div className="max-h-full overflow-auto max-w-[28rem]">
+    <div className="element max-h-screen overflow-auto max-w-[28rem] mt-[16px]">
       <div className="text-text-third flex justify-between items-center px-2 pb-2">
         <h3 className="text-xl font-medium">Alerts</h3>
         <div className="flex items-center gap-2">

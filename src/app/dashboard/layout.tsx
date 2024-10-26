@@ -3,5 +3,9 @@ export default function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="bg-custom-gradient h-screen">{children}</div>;
+  return (
+    <div className="bg-custom-gradient h-screen overflow-hidden">
+      {children}
+    </div>
+  );
 }

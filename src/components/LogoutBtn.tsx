@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { IoLogOut } from "react-icons/io5";
 import { signOut } from "next-auth/react";
@@ -14,7 +15,7 @@ const LogoutBtn = () => {
 
   return (
     <button
-      className="flex items-center mt-10 text-nowrap gap-2 font-bold cursor-pointer"
+      className="flex items-center  text-nowrap gap-2 font-bold cursor-pointer"
       onClick={handleLogout}
     >
       <IoLogOut size={30} className="rotate-180 text-red-500" />
