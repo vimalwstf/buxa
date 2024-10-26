@@ -10,16 +10,12 @@ import { BsBellFill } from "react-icons/bs";
 
 const sidebarLinks = [
   { icon: <MdDashboard />, href: "/dashboard", name: "Dashboard" },
-  { icon: <FaPenNib />, href: "/dashboard/write", name: "Write with AI" },
-  {
-    icon: <MdManageSearch />,
-    href: "/dashboard/research",
-    name: "Research with AI",
-  },
-  { icon: <BsBellFill />, href: "/dashboard/alert", name: "Alert with AI" },
+  { icon: <FaPenNib />, href: "/write", name: "Write with AI" },
+  { icon: <MdManageSearch />, href: "/research", name: "Research with AI" },
+  { icon: <BsBellFill />, href: "/alert", name: "Alert with AI" },
 ];
 
-const DashboardSidebar = () => {
+const Sidebar = () => {
   const pathname = usePathname();
   console.log(pathname);
 
@@ -49,4 +45,4 @@ const DashboardSidebar = () => {
   );
 };
 
-export default DashboardSidebar;
+export default Sidebar;
