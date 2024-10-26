@@ -6,7 +6,6 @@ import { logIn, logOut } from "@/lib/user/userSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { signOut } from "next-auth/react";
 import axios from "axios";
-import ProtectedRoute from "../protected/ProtectedRoute";
 import Loader from "@/components/Loader";
 // import Dashboard from "@/components/dashboard/Dashboard";
 
@@ -29,7 +28,7 @@ export default function Home() {
                 Authorization: `Bearer ${accessToken}`,
                 "ngrok-skip-browser-warning": true,
               },
-            }
+            },
           );
           if (response?.data?.status) {
             dispatch(logIn(response?.data?.data));
@@ -53,5 +52,5 @@ export default function Home() {
   if (isLoading) {
     return <Loader />;
   }
-  return <ProtectedRoute render={<Dashboard />} />;
+  return <Dashboard />;
 }
