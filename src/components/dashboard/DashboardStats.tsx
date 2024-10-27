@@ -44,8 +44,7 @@ export default function DashboardStats() {
          </div>
             ))}
 
-            <Progress number={number}
-            />
+            
         </div>
     );
 }
