@@ -1,8 +1,8 @@
 import Alerts from "@/components/dashboard/Alerts";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Navbar from "@/components/dashboard/Navbar";
-import History from "@/components/dashboard/History";
 import Stats from "@/components/dashboard/Stats";
+import Table from "@/components/dashboard/Table";
 
 export default function Dashboard() {
   return (
@@ -13,7 +13,7 @@ export default function Dashboard() {
         <div className=" flex">
           <div className="flex-1 flex flex-col">
             <Stats />
-            <History />
+            <Table />
           </div>
           <Alerts />
         </div>

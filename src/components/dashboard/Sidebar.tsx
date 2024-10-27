@@ -10,13 +10,13 @@ import { BsBellFill } from "react-icons/bs";
 
 const sidebarLinks = [
   { icon: <MdDashboard />, href: "/dashboard", name: "Dashboard" },
-  { icon: <FaPenNib />, href: "/dashboard/write", name: "Write with AI" },
+  { icon: <FaPenNib />, href: "/write", name: "Write with AI" },
   {
     icon: <MdManageSearch />,
-    href: "/dashboard/research",
+    href: "/research",
     name: "Research with AI",
   },
-  { icon: <BsBellFill />, href: "/dashboard/alert", name: "Alert with AI" },
+  { icon: <BsBellFill />, href: "/alert", name: "Alert with AI" },
 ];
 
 const Sidebar = () => {
@@ -24,7 +24,7 @@ const Sidebar = () => {
   console.log(pathname);
 
   return (
-    <aside className="hidden lg:block h-screen w-[300px] bg-[#0A0A0D] rounded-br-[8px] border border-gray-200 border-l-0 border-t-0 pt-4">
+    <aside className="hidden lg:block h-[99vh] w-[300px] bg-[#0A0A0D] rounded-br-[8px] border border-gray-200 border-l-0 border-t-0 pt-4">
       <Image
         src={Logo}
         alt="logo"
