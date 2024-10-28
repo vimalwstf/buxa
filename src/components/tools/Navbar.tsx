@@ -6,7 +6,6 @@ import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import PaymentModal from "@/components/credits/PaymentModal";
 import { MdDashboard } from "react-icons/md";
 import Image from "next/image";
-import logo from "../../../public/logo.svg";
 import { useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 import LogoutBtn from "@/components/LogoutBtn";
@@ -27,9 +26,9 @@ const Navbar = () => {
         className={`w-full md:h-[60px] flex justify-between items-center px-6 py-4 }`}
       >
         {/* Logo Section */}
-        <div className="flex items-center pt-4">
-          <Image src={logo} alt="Logo" width={95} height={95} />
-        </div>
+        <Link href="/" className="flex items-center pt-4">
+          <Image src="/logo.svg" alt="Logo" width={95} height={95} />
+        </Link>
 
         {/* Hamburger Icon (visible on smaller screens) */}
         <div className="md:hidden flex items-center fixed right-2 z-20">

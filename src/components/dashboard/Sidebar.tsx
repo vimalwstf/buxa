@@ -5,7 +5,6 @@ import { FaPenNib } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import Logo from "../../../public/logo.svg";
 import { BsBellFill } from "react-icons/bs";
 
 const sidebarLinks = [
@@ -25,13 +24,15 @@ const Sidebar = () => {
 
   return (
     <aside className="hidden lg:block h-[99vh] w-[300px] bg-[#0A0A0D] rounded-br-[8px] border border-gray-200 border-l-0 border-t-0 pt-4">
-      <Image
-        src={Logo}
-        alt="logo"
-        width={120}
-        height={120}
-        className="ml-4 py-[6px]"
-      />
+      <Link href="/">
+        <Image
+          src="/logo.svg"
+          alt="logo"
+          width={120}
+          height={120}
+          className="ml-4 py-[6px]"
+        />
+      </Link>
       {sidebarLinks.map(({ icon, href, name }, index) => {
         return (
           <div key={index} className="flex flex-col pt-[26px]">
