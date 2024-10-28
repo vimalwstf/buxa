@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { useState } from "react";
 import Logo from "../../../public/images/logo.svg";
@@ -6,9 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import Hamburger from "../../../public/images/Hamburger.svg";
 import GoogleSignup from "../GoogleSignup";
+import { useSession } from "next-auth/react";
+import { MdDashboard } from "react-icons/md";
 
 const Navbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
+  const { data: session } = useSession();
+  const loggedIn = !!session?.user?.accessToken;
 
   const Links = [
     {
@@ -36,7 +41,7 @@ const Navbar = () => {
       <div className="content-container bg-blue-80 flex justify-between py-4 md:py-6 items-center">
         {/* Hamburger menu button */}
         <div
-          className="md:hidden"
+          className="md:hidden cursor-pointer"
           onClick={() => setMobileNavigation(!mobileNavigation)}
         >
           <Image src={Hamburger} width={40} height={40} alt="" />
@@ -56,9 +61,21 @@ const Navbar = () => {
           </nav>
         </div>
         <div>
-          <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">
-            <GoogleSignup />
-          </div>
+          {loggedIn ? (
+            <Link
+              className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer"
+              href="/dashboard"
+            >
+              <MdDashboard size={24} className="text-primary-green" />
+              <span className="sm:inline-block text-lg sm:text-xl font-medium">
+                Dashboard
+              </span>
+            </Link>
+          ) : (
+            <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">
+              <GoogleSignup />
+            </div>
+          )}
         </div>
       </div>
       <div
