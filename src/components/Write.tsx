@@ -9,26 +9,10 @@ import Editor from "./editor/Editor";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoMdDocument } from "react-icons/io";
 import { useSession } from "next-auth/react";
-import { useAppDispatch } from "@/lib/hooks";
 import { enqueueSnackbar } from "notistack";
-
-type DataObject = {
-  id: string;
-  content: string;
-  words: number;
-  isFavorite: boolean;
-  updatedAt: string;
-};
-
-export type DocumentInfo = {
-  id: string;
-  name: string;
-  words: number;
-  modified: string;
-  favourite: boolean;
-};
-
-const Dashboard = () => {
+import { DocumentInfo } from "@/types/type";
+import useFetchWriteDocuments from "@/hooks/useFetchWriteDocuments";
+const Write = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [documents, setDocuments] = useState<DocumentInfo[]>([]);
   const [editorText, setEditorText] = useState<DocumentInfo>({
@@ -39,9 +23,10 @@ const Dashboard = () => {
     favourite: false,
   });
   const [showEditor, setShowEditor] = useState(false);
-  const dispatch = useAppDispatch();
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
+  //fetch all write documents
+  useFetchWriteDocuments(setDocuments);
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
 
@@ -86,43 +71,6 @@ const Dashboard = () => {
     }
   };
 
-  //all documents fetch
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      if (accessToken) {
-        try {
-          const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "ngrok-skip-browser-warning": true,
-              },
-            },
-          );
-          if (response?.data?.status) {
-            const data: DocumentInfo[] = response.data.data.map(
-              (doc: DataObject) => {
-                return {
-                  id: doc.id,
-                  name: doc.content,
-                  words: doc.words,
-                  modified: doc.updatedAt,
-                  favourite: doc.isFavorite,
-                };
-              },
-            );
-            data.reverse();
-            setDocuments(data);
-          }
-        } catch (error) {
-          console.log("document fetch", error);
-        }
-      }
-    };
-    fetchDocuments();
-  }, [accessToken, dispatch]);
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -159,12 +107,12 @@ const Dashboard = () => {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           const updatedDocuments = [...documents];
           const index = updatedDocuments.findIndex(
-            (doc) => doc.id === editorText.id,
+            (doc) => doc.id === editorText.id
           );
           updatedDocuments[index] = editorText;
           setDocuments(updatedDocuments);
@@ -215,13 +163,13 @@ const Dashboard = () => {
           <div className="flex-1">
             <div className="flex justify-between mb-4 items-baseline">
               <div>
-                <h2 className="sm:text-2xl text-lg  flex items-center gap-2 text-white font-bold">
+                <button className="sm:text-2xl text-lg  flex items-center gap-2 text-white font-bold">
                   <FaArrowLeftLong
                     className="cursor-pointer "
                     onClick={() => setShowEditor(false)}
                   />
                   Document List
-                </h2>
+                </button>
               </div>
               <button
                 className="text-black flex items-center gap-2 top-10 bg-primary-green  px-4 py-2 text-sm rounded-md shadow-md"
@@ -262,4 +210,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Write;

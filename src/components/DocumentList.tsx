@@ -5,7 +5,7 @@ import { CgFileAdd } from "react-icons/cg";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Editor from "./editor/Editor";
 import PaginatedTable from "./table/PaginatedTable";
-import { DocumentInfo } from "./Dashboard";
+import { DocumentInfo } from "@/types/type";
 import { IoMdDocument } from "react-icons/io";
 import axios from "axios";
 import { useSession } from "next-auth/react";

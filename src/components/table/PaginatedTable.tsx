@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Table from "./Table";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { DocumentInfo } from "../Dashboard";
+import { DocumentInfo } from "../Write";
 interface PaginationProps {
   documents: DocumentInfo[];
   handleFavouriteUpdate: (id: string) => void;

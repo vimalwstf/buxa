@@ -20,7 +20,6 @@ const sidebarLinks = [
 
 const Sidebar = () => {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <aside className="hidden lg:block h-[99vh] w-[300px] bg-[#0A0A0D] rounded-br-[8px] border border-gray-200 border-l-0 border-t-0 pt-4">
