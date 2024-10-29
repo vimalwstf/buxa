@@ -12,11 +12,14 @@ export default function Dashboard() {
   return (
     <div className="flex">
       <Sidebar />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className="flex-1 flex flex-col mr-5">
-          <Navbar />
+     
+      <div className="flex-1 flex flex-col mr-5">
+        <Navbar />
+        {isLoading ? (
+          <div className="flex mx-auto justify-center items-center h-[90vh]">
+            <Loader />
+          </div>
+        ) : (
           <div className=" flex">
             <div className="flex-1 flex flex-col">
               <Stats />
@@ -24,8 +27,8 @@ export default function Dashboard() {
             </div>
             <Alerts />
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
