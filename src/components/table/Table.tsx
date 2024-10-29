@@ -1,6 +1,6 @@
 import React from "react";
 import TableRow from "./TableRow";
-import { DocumentInfo } from "../Dashboard";
+import { DocumentInfo } from "../Write";
 interface TableProps {
   documents: DocumentInfo[];
   handleFavouriteUpdate: (id: string) => void;

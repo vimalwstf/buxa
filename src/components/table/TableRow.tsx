@@ -1,7 +1,7 @@
 import { FaStar, FaRegStar, FaFileAlt } from "react-icons/fa";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { useState } from "react";
-import { DocumentInfo } from "../Dashboard";
+import { DocumentInfo } from "../Write";
 import OptionsModal from "./OptionsModal";
 
 type Props = {
