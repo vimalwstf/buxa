@@ -5,6 +5,7 @@ type DropdownProps = {
   name: string;
   selected: string;
   options: string[];
+  label: string;
   handleSelect: (option: string) => void;
   dropdown: string;
   setDropdown: (name: string) => void;
@@ -14,6 +15,7 @@ export default function Dropdown({
   name,
   selected,
   options,
+  label,
   handleSelect,
   dropdown,
   setDropdown,
@@ -42,7 +44,7 @@ export default function Dropdown({
         }`}
         onClick={toggleDropdown}
       >
-        <label className="block mb-1 font-medium">Set {name}</label>
+        <label className="block mb-1 font-medium">{label}</label>
         {dropdownOpen ? <FiChevronUp /> : <FiChevronDown />}
       </div>
       {dropdownOpen && (

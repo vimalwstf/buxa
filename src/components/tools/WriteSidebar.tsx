@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import ProgressBar from "@/components/sidebar/ProgressBar";
-import axios from "axios";
-import { enqueueSnackbar } from "notistack";
-import { useSession } from "next-auth/react";
-import { useAppDispatch } from "@/lib/hooks";
-import { updateCredit } from "@/lib/user/userSlice";
 import ComboDropdown from "@/components/sidebar/ComboDropdown";
 import Dropdown from "@/components/sidebar/Dropdown";
-import Input from "@/components/sidebar/Input";
 import Form from "@/components/sidebar/Form";
+import Input from "@/components/sidebar/Input";
+import ProgressBar from "@/components/sidebar/ProgressBar";
+import { useAppDispatch } from "@/lib/hooks";
+import { updateCredit } from "@/lib/user/userSlice";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { enqueueSnackbar } from "notistack";
+import { useState } from "react";
 
 const useCases = [
   "Blog Ideas and outlines",
@@ -189,6 +189,7 @@ export default function WriteSidebar({
         name="use case"
         selected={useCase}
         options={useCases}
+        label="Choose use case"
         handleSelect={handleDropdownSelect("useCase")}
         dropdown={dropdown}
         setDropdown={setDropdown}
@@ -235,6 +236,7 @@ export default function WriteSidebar({
         name="language"
         selected={language}
         options={languages}
+        label="Set language"
         handleSelect={handleDropdownSelect("language")}
         dropdown={dropdown}
         setDropdown={setDropdown}
