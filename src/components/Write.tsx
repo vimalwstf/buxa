@@ -1,7 +1,7 @@
 "use client";
 
 import DocumentList from "./DocumentList";
-import Sidebar from "./sidebar/Sidebar";
+import Sidebar from "./sidebar/WriteSidebar";
 import { CiPen } from "react-icons/ci";
 import { useState, useEffect } from "react";
 import axios from "axios";

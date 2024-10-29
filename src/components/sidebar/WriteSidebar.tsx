@@ -12,6 +12,7 @@ import { enqueueSnackbar } from "notistack";
 import { useSession } from "next-auth/react";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
+import TextInput from "./TextInput";
 
 type tagType = {
   name: string;
@@ -179,18 +180,12 @@ const Sidebar = ({
         />
 
         {/* primaryKeyword input */}
-        <div className="mb-4">
-          <label className="block text-text-third font-medium mb-2">
-            Primary Keywords
-          </label>
-          <input
-            type="text"
-            value={primaryKey}
-            onChange={(e) => setPrimaryKey(e.target.value)}
-            placeholder="AI writing assistant"
-            className="w-full px-4 py-2 border font-semibold text-sm text-gray-50 border-gray-100 rounded-md outline-none"
-          />
-        </div>
+        <TextInput
+          label="Primary Keywords"
+          value={primaryKey}
+          onChange={(e) => setPrimaryKey(e.target.value)}
+          placeholder="AI writing assistant"
+        />
 
         {/* Research level slider */}
         <ProgressBar

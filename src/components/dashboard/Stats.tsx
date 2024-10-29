@@ -5,7 +5,7 @@ import { FaPenNib } from "react-icons/fa6";
 
 export default function Stats() {
   return (
-    <div className="grid grid-cols-1 gap-4  md:grid-cols-3 mt-[14px] px-[14px] py-[10px]">
+    <div className="grid grid-cols-1 gap-4  md:grid-cols-3 m-3 mt-6 ">
       <StatCard
         icon={FaPenNib}
         title="Total no. of content written"
