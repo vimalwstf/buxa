@@ -1,6 +1,6 @@
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import SelectionBox from "./SelectionBox";
 import { LiaTimesSolid } from "react-icons/lia";
+import ComboBox from "./ComboBox";
 
 type ComboDropdownProps = {
   dropdown: string;
@@ -42,7 +42,7 @@ export default function ComboDropdown({
         )}
       </div>
       {dropdownOpen ? (
-        <SelectionBox
+        <ComboBox
           tags={allTags}
           selectedTags={selectedTags}
           placeholder={searchLabel}

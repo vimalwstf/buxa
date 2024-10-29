@@ -25,7 +25,7 @@ export default function Dropdown({
     setDropdown("");
   };
 
-  const toggleDropdown = (e) => {
+  const toggleDropdown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setDropdown(dropdownOpen ? "" : name);
   };
