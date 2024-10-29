@@ -11,6 +11,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
+import ToggleButton from "../sidebar/ToggleButton";
 
 const useCases = [
   "Blog Ideas and outlines",
@@ -243,6 +244,7 @@ export default function WriteSidebar({
       />
 
       {/* TODO: Write from my content component */}
+      <ToggleButton label="Write from my content"/>
     </Form>
   );
 }

@@ -37,7 +37,7 @@ const Sidebar = () => {
           <div key={index} className="flex flex-col pt-[26px]">
             <Link href={href} className="flex justify-between items-center">
               <div
-                className={`flex justify-center text-xl font-medium items-center px-4  gap-2 hover:text-bg-primary-green hover:cursor-pointer ${
+                className={`flex justify-center text-xl font-medium items-center px-4  gap-2 hover:text-primary-green hover:cursor-pointer ${
                   href === pathname ? "text-primary-green" : "text-text-third "
                 }`}
               >

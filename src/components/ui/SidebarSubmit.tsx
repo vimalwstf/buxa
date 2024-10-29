@@ -12,13 +12,13 @@ const data = {
   },
   research: {
     icon: MdManageSearch,
-    text: "Write for me",
+    text: "Research for me",
     loading: "Researching...",
   },
   alert: {
     icon: BsBell,
-    text: "Write for me",
-    loading: "Creating Alert...",
+    text: "Set Alert",
+    loading: "Setting Alert...",
   },
 };
 
@@ -32,7 +32,7 @@ export default function SidebarSubmit({
   loading: boolean;
 }) {
   const btn = data[variant];
-  console.log(disabled, loading);
+  // console.log(disabled, loading);
 
   return (
     <button
@@ -47,7 +47,8 @@ export default function SidebarSubmit({
       disabled={disabled || loading}
     >
       <btn.icon
-        className={`text-lg ${disabled || loading ? "text-white" : " text-black "}`}
+      size={25}
+        className={`${disabled || loading ? "text-white" : " text-black "}`}
       />
       {loading ? btn.loading : btn.text}
     </button>

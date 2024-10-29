@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Dropdown from "@/components/sidebar/Dropdown";
 import Input from "@/components/sidebar/Input";
 import Form from "@/components/sidebar/Form";
+import ToggleButton from "../sidebar/ToggleButton";
 
 const allFormats = ["Article", "Blog Post", "Book", "Course", "Podcast"];
 const focusAreas = ["Business", "Marketing", "Tech"];
@@ -87,7 +88,7 @@ export default function ResearchSidebar({
   return (
     <Form
       heading="Research with AI"
-      variant="write"
+      variant="research"
       allFilled={allFieldsFilled}
       loading={loading}
       onSubmit={handleSubmit}
@@ -136,8 +137,11 @@ export default function ResearchSidebar({
       />
 
       {/* TODO: Deep dive checkbox */}
+      <ToggleButton label="Deep dive"/>
 
       {/* TODO: Research from web checkbox */}
+      <ToggleButton label="Research from web"/>
+
     </Form>
   );
 }
