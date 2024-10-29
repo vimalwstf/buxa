@@ -6,13 +6,12 @@ import SelectionBox from "./SelectionBox";
 import ProgressBar from "./ProgressBar";
 import { FaPenNib } from "react-icons/fa";
 import axios from "axios";
-import LanguageDropdown from "./LanguageDropdown";
-import UseCaseDropdown from "./UseCaseDropdown";
 import { enqueueSnackbar } from "notistack";
 import { useSession } from "next-auth/react";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
 import TextInput from "./TextInput";
+import DropDown from "./DropDown";
 
 type tagType = {
   name: string;
@@ -37,8 +36,15 @@ const tones = [
   { name: "Fact-driven", isSelected: false },
   { name: "Knowledgeable", isSelected: false },
 ];
+const languageOptions = ["English", "Hindi", "French", "German"];
+const useCaseOptions = [
+  "Blog Ideas and outlines",
+  "Tech Event Ideas",
+  "Bussiness Ideas",
+  "Marketing Events",
+];
 
-const Sidebar = ({
+const WriteSidebar = ({
   handleDocumentSubmit,
 }: {
   handleDocumentSubmit: (data: {
@@ -64,6 +70,10 @@ const Sidebar = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [toneOpen, setToneOpen] = useState(false);
   const dispatch = useAppDispatch();
+
+  const [selectedUseCase, setSelectedUseCase] = useState(
+    "Blog Ideas and outlines"
+  );
 
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
@@ -173,10 +183,12 @@ const Sidebar = ({
       </h2>
       <form onSubmit={handleSubmit}>
         {/* UseCase Drop-down */}
-        <UseCaseDropdown
-          selectedUseCase={useCase}
-          setUseCase={setUseCase}
-          setToneOpen={setToneOpen}
+
+        <DropDown
+          options={useCaseOptions}
+          selectedOption={selectedUseCase}
+          setOption={setSelectedUseCase}
+          label="Choose use cases"
         />
 
         {/* primaryKeyword input */}
@@ -282,11 +294,14 @@ const Sidebar = ({
           )}
         </div>
 
-        <LanguageDropdown
-          selectedLanguage={language}
-          setLanguage={setLanguage}
-          setToneOpen={setToneOpen}
+        {/* <LanguageDropdown */}
+        <DropDown
+          options={languageOptions}
+          selectedOption={language}
+          setOption={setLanguage}
+          label="Set Language"
         />
+
         <button
           type="submit"
           className={`flex gap-2 justify-center items-center cursor-pointer w-full px-4 py-2 mt-8 font-semibold rounded-md ${
@@ -307,4 +322,4 @@ const Sidebar = ({
   );
 };
 
-export default Sidebar;
+export default WriteSidebar;
