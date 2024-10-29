@@ -1,6 +1,6 @@
 import Glass from "@/components/ui/Glass";
 import { FaEllipsisVertical } from "react-icons/fa6";
-import SeeAlert from "@/components/ui/SeeAlert";
+
 
 export default function AlertCard() {
   return (
@@ -9,7 +9,7 @@ export default function AlertCard() {
         <div className="flex flex-col gap-2">
           <div className="flex justify-between items-center">
             <h4 className="text-xl font-medium">Topic Name</h4>
-            <FaEllipsisVertical className="text-text-third" />
+            <FaEllipsisVertical className="text-text-third curson pointer" />
           </div>
           <span className="border-primary-green bg-[#A6FF7C1A] border py-1 px-2 rounded-md w-fit">
             Web Name
@@ -28,7 +28,7 @@ export default function AlertCard() {
             <span className="text-text-third">Posted on: </span>
             <span>20 Feb 2024</span>
           </div>
-          <SeeAlert />
+      
         </div>
       </div>
     </Glass>
