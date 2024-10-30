@@ -105,13 +105,20 @@ export default function WriteList({
           },
         );
         if (res.status === 200) {
-          const updatedDocuments = [...documents];
-          const index = updatedDocuments.findIndex(
-            (doc) => doc.id === editorDocData.id,
-          );
-          updatedDocuments[index] = editorDocData;
-          setDocuments(updatedDocuments);
-          setShowEditor(false);
+          const { id, content, wordCount, updatedAt, isFavorite } =
+            res.data.data;
+
+          setDocuments((prev) => [
+            {
+              id,
+              name: content,
+              words: wordCount,
+              modified: updatedAt,
+              favourite: isFavorite,
+            },
+            ...prev,
+          ]);
+          toggleShowEditor();
           enqueueSnackbar("Document saved successfully!", {
             variant: "success",
           });
