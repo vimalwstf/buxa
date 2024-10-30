@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { FaBars, FaCreditCard } from "react-icons/fa6";
 import LogoutBtn from "../LogoutBtn";
-import { MdDashboard, MdManageSearch } from "react-icons/md";
-import { FaPenNib } from "react-icons/fa";
-import { BsBellFill } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { BiX } from "react-icons/bi";
+import { LiaPenNibSolid } from "react-icons/lia";
+import { TbListSearch } from "react-icons/tb";
+import { MdDashboard } from "react-icons/md";
+import { BsBellFill } from "react-icons/bs";
 
 const sidebarLinks = [
   { icon: <MdDashboard />, href: "/dashboard", name: "Dashboard" },
-  { icon: <FaPenNib />, href: "/write", name: "Write with AI" },
-  { icon: <MdManageSearch />, href: "/research", name: "Research with AI" },
+  { icon: <LiaPenNibSolid />, href: "/write", name: "Write with AI" },
+  {
+    icon: <TbListSearch />,
+    href: "/research",
+    name: "Research with AI",
+  },
   { icon: <BsBellFill />, href: "/alert", name: "Alert with AI" },
 ];
 
@@ -35,7 +40,7 @@ const MobileNav: React.FC = () => {
           onClick={toggleMenu}
           className="text-white focus:outline-none z-50 -mt-4"
         >
-          {isOpen ? <BiX size={24} /> : <FaBars size={24} />}
+          {isOpen ? <BiX size={28} /> : <FaBars size={24} />}
         </button>
       </div>
 

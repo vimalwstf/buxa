@@ -1,12 +1,10 @@
 "use client";
 import React from "react";
 import { MdDashboard } from "react-icons/md";
-// import { FaPenNib } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-// import { BsBellFill } from "react-icons/bs";
-import { GoBell } from "react-icons/go";
+import { BsBellFill } from "react-icons/bs";
 import { TbListSearch } from "react-icons/tb";
 import { LiaPenNibSolid } from "react-icons/lia";
 
@@ -18,7 +16,7 @@ const sidebarLinks = [
     href: "/research",
     name: "Research with AI",
   },
-  { icon: <GoBell />, href: "/alert", name: "Alert with AI" },
+  { icon: <BsBellFill />, href: "/alert", name: "Alert with AI" },
 ];
 
 const Sidebar = () => {
