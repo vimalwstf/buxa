@@ -148,7 +148,7 @@ export default function WriteList({
         <>
           <div className="flex items-end justify-between">
             <h2 className="sm:text-2xl text-lg font-bold text-white">
-              Write List
+              Document List
             </h2>
             <div className="flex gap-4">
               <FavouritesButton

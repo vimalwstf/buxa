@@ -52,9 +52,9 @@ export default function DocumentsTable({
           <table className="w-full">
             <thead>
               <tr>
-                <Th className="pl-4 sm:pl-10 ">Name</Th>
-                <Th className="text-center ">Words</Th>
-                <Th className="text-center ">Modified</Th>
+                <Th className="text-left pl-4 sm:pl-10">Name</Th>
+                <Th className="text-center">Words</Th>
+                <Th className="text-center">Modified</Th>
               </tr>
             </thead>
             <tbody className="divide-gray-200">
