@@ -1,5 +1,5 @@
-"use client";
-
+import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
+import { parseHtml } from "@/lib/utils";
 import { DocumentInfo } from "@/types/type";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -7,28 +7,25 @@ import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import MyEditor from "../editor/Editor";
 import DocumentsTable from "../table/DocumentsTable";
+import LoadingDocs from "../table/LoadingDocs";
+import ListButton from "../ui/ListButton";
 import FavouritesButton from "../ui/FavouritesButton";
 import NewDocButton from "../ui/NewDocButton";
-import { parseHtml } from "@/lib/utils";
-import LoadingDocs from "../table/LoadingDocs";
-import DocListButton from "../ui/DocListButton";
-import DocSaveButton from "../ui/DocSaveButton";
-import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
+import SaveButton from "../ui/SaveButton";
 
-const DEFAULT_DOCUMENT: DocumentInfo = {
-  id: "",
-  name: "",
-  words: 0,
-  modified: "",
-  favourite: false,
-};
-
-export default function WriteList() {
+export default function WriteList({
+  showEditor,
+  toggleShowEditor,
+  editorDocData,
+  seEditorDocData,
+}: {
+  showEditor: boolean;
+  toggleShowEditor: () => void;
+  editorDocData: DocumentInfo;
+  seEditorDocData: (data: DocumentInfo) => void;
+}) {
   const [documents, setDocuments] = useState<DocumentInfo[]>([]);
   const [favouritesON, setFavouritesON] = useState(false);
-  const [showEditor, setShowEditor] = useState(false);
-  const [editorDocData, seEditorDocData] =
-    useState<DocumentInfo>(DEFAULT_DOCUMENT);
 
   const { isLoading } = useFetchWriterDocuments(setDocuments);
 
@@ -38,10 +35,6 @@ export default function WriteList() {
 
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
-
-  const toggleShowEditor = () => {
-    setShowEditor(!showEditor);
-  };
 
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
@@ -134,8 +127,8 @@ export default function WriteList() {
       {showEditor ? (
         <>
           <div className="flex justify-between mb-4 items-baseline">
-            <DocListButton handleClick={toggleShowEditor} />
-            <DocSaveButton handleClick={handleEditorSubmit} />
+            <ListButton handleClick={toggleShowEditor} label="Document List" />
+            <SaveButton handleClick={handleEditorSubmit} />
           </div>
           <MyEditor
             value={editorDocData.name}
@@ -165,7 +158,7 @@ export default function WriteList() {
             <DocumentsTable
               documents={filteredDocuments}
               seEditorDocData={seEditorDocData}
-              setShowEditor={setShowEditor}
+              toggleShowEditor={toggleShowEditor}
               handleFavouriteUpdate={handleFavouriteUpdate}
               handleDeleteData={handleDeleteData}
             />
