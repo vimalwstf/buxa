@@ -1,21 +1,24 @@
 "use client";
 import React from "react";
-import { MdDashboard, MdManageSearch } from "react-icons/md";
-import { FaPenNib } from "react-icons/fa6";
+import { MdDashboard } from "react-icons/md";
+// import { FaPenNib } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { BsBellFill } from "react-icons/bs";
+// import { BsBellFill } from "react-icons/bs";
+import { GoBell } from "react-icons/go";
+import { TbListSearch } from "react-icons/tb";
+import { LiaPenNibSolid } from "react-icons/lia";
 
 const sidebarLinks = [
   { icon: <MdDashboard />, href: "/dashboard", name: "Dashboard" },
-  { icon: <FaPenNib />, href: "/write", name: "Write with AI" },
+  { icon: <LiaPenNibSolid />, href: "/write", name: "Write with AI" },
   {
-    icon: <MdManageSearch />,
+    icon: <TbListSearch />,
     href: "/research",
     name: "Research with AI",
   },
-  { icon: <BsBellFill />, href: "/alert", name: "Alert with AI" },
+  { icon: <GoBell />, href: "/alert", name: "Alert with AI" },
 ];
 
 const Sidebar = () => {
@@ -37,7 +40,7 @@ const Sidebar = () => {
           <div key={index} className="flex flex-col pt-[26px]">
             <Link href={href} className="flex justify-between items-center">
               <div
-                className={`flex justify-center text-xl font-medium items-center px-4  gap-2 hover:text-bg-primary-green hover:cursor-pointer ${
+                className={`flex justify-center text-xl font-medium items-center px-4  gap-2 hover:text-primary-green hover:cursor-pointer ${
                   href === pathname ? "text-primary-green" : "text-text-third "
                 }`}
               >

@@ -6,15 +6,18 @@ import Stats from "@/components/dashboard/Stats";
 import Table from "@/components/dashboard/Table";
 import Loader from "@/components/Loader";
 import useFetchUser from "@/hooks/useFetchUser";
+import StatLevel from "@/components/dashboard/StatLevel";
+import MobileNav from "@/components/dashboard/MobileNav";
 export default function Dashboard() {
   // fetch user profile data
   const { isLoading } = useFetchUser();
   return (
     <div className="flex">
       <Sidebar />
-     
+
       <div className="flex-1 flex flex-col mr-5">
         <Navbar />
+        <MobileNav />
         {isLoading ? (
           <div className="flex mx-auto justify-center items-center h-[90vh]">
             <Loader />
@@ -23,6 +26,7 @@ export default function Dashboard() {
           <div className=" flex">
             <div className="flex-1 flex flex-col">
               <Stats />
+              <StatLevel />
               <Table />
             </div>
             <Alerts />

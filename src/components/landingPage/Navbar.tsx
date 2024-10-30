@@ -67,7 +67,7 @@ const Navbar = () => {
               href="/dashboard"
             >
               <MdDashboard size={24} className="text-primary-green" />
-              <span className="sm:inline-block text-lg sm:text-xl font-medium">
+              <span className="sm:inline-block text-lg sm:text-xl font-medium hover:bg-primary-green">
                 Dashboard
               </span>
             </Link>
