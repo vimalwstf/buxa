@@ -13,7 +13,7 @@ import FavouritesButton from "../ui/FavouritesButton";
 import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 
-export default function WriteList({
+export default function ResearchList({
   showEditor,
   toggleShowEditor,
   editorDocData,
@@ -134,7 +134,7 @@ export default function WriteList({
       {showEditor ? (
         <>
           <div className="flex justify-between mb-4 items-baseline">
-            <ListButton handleClick={toggleShowEditor} label="Document List" />
+            <ListButton handleClick={toggleShowEditor} label="Research List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>
           <MyEditor
@@ -148,7 +148,7 @@ export default function WriteList({
         <>
           <div className="flex items-end justify-between">
             <h2 className="sm:text-2xl text-lg font-bold text-white">
-              Write List
+              Research List
             </h2>
             <div className="flex gap-4">
               <FavouritesButton
@@ -156,7 +156,7 @@ export default function WriteList({
                 setFavouritesON={setFavouritesON}
               />
               <NewButton
-                label="New Document"
+                label="New Research"
                 createNewDocument={toggleShowEditor}
               />
             </div>

@@ -1,8 +1,10 @@
 import { CgFileAdd } from "react-icons/cg";
 
-export default function NewDocButton({
+export default function NewButton({
+  label,
   createNewDocument,
 }: {
+  label: string;
   createNewDocument: () => void;
 }) {
   return (
@@ -11,7 +13,7 @@ export default function NewDocButton({
       onClick={createNewDocument}
     >
       <CgFileAdd size={22} className="inline sm:mr-2" />
-      <span className="sr-only sm:not-sr-only ">New Document</span>
+      <span className="sr-only sm:not-sr-only ">{label}</span>
     </button>
   );
 }

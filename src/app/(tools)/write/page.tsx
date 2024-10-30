@@ -6,14 +6,14 @@ import WriteSidebar from "@/components/tools/WriteSidebar";
 import { DocumentInfo } from "@/types/type";
 
 const DEFAULT_DOCUMENT: DocumentInfo = {
-  id: "",
+  id: "0",
   name: "",
   words: 0,
   modified: "",
   favourite: false,
 };
 
-export default function Alert() {
+export default function Write() {
   const [showEditor, setShowEditor] = useState(false);
   const [editorDocData, seEditorDocData] =
     useState<DocumentInfo>(DEFAULT_DOCUMENT);

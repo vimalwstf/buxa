@@ -354,15 +354,7 @@ export default function AlertList() {
   ];
 
   const { currentPage, setCurrentPage, firstIndex, lastIndex, totalPages } =
-    usePagination(AlertListData.length, 20);
-
-  console.log({
-    currentPage,
-    setCurrentPage,
-    firstIndex,
-    lastIndex,
-    totalPages,
-  });
+    usePagination(AlertListData.length);
 
   const currentAlerts = AlertListData.slice(firstIndex, lastIndex);
 
