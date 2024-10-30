@@ -3,36 +3,32 @@ import Td from "@/components/table/Td";
 import Th from "@/components/table/Th";
 import { formatDate, parseHtml } from "@/lib/utils";
 import { DocumentInfo } from "@/types/type";
-import { FaFileAlt, FaRegStar } from "react-icons/fa";
-import { FaEllipsisVertical } from "react-icons/fa6";
+import { FaFileAlt, FaRegStar, FaStar } from "react-icons/fa";
 import OptionsModal from "./OptionsModal";
-import { useState } from "react";
 import { CgFileAdd } from "react-icons/cg";
 
 interface TableProps {
   documents: DocumentInfo[];
-  setShowEditor: (b: boolean) => void;
-  setEditorText: (doc: DocumentInfo) => void;
+  toggleShowEditor: () => void;
+  seEditorDocData: (doc: DocumentInfo) => void;
   handleFavouriteUpdate: (id: string) => void;
   handleDeleteData: (id: string) => void;
 }
 
 export default function DocumentsTable({
   documents,
-  setShowEditor,
-  setEditorText,
+  toggleShowEditor,
+  seEditorDocData,
   handleFavouriteUpdate,
   handleDeleteData,
 }: TableProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-
   const { currentPage, setCurrentPage, firstIndex, lastIndex, totalPages } =
     usePagination(documents.length);
   const currentDocuments = documents.slice(firstIndex, lastIndex);
 
   const openEditor = (doc: DocumentInfo) => {
-    setShowEditor(true);
-    setEditorText(doc);
+    toggleShowEditor();
+    seEditorDocData(doc);
   };
 
   return (
@@ -46,7 +42,7 @@ export default function DocumentsTable({
             </p>
             <button
               className="text-black px-4 py-2 text-sm  rounded-md shadow-md bg-primary-green "
-              onClick={() => setShowEditor(true)}
+              onClick={toggleShowEditor}
             >
               <CgFileAdd size={22} className="inline sm:mr-2" />
               <span className="sr-only sm:not-sr-only ">New Document</span>
@@ -90,28 +86,17 @@ export default function DocumentsTable({
                       }}
                     >
                       {item.favourite ? (
-                        <FaRegStar size={18} className="text-primary-green" />
+                        <FaStar size={18} className="text-primary-green" />
                       ) : (
                         <FaRegStar size={18} className="text-white" />
                       )}
                     </button>
                   </Td>
                   <Td>
-                    <FaEllipsisVertical
-                      className="cursor-pointer text-white"
-                      size={18}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setModalOpen(!modalOpen);
-                      }}
+                    <OptionsModal
+                      id={item.id}
+                      handleDeleteData={handleDeleteData}
                     />
-                    {modalOpen && (
-                      <OptionsModal
-                        id={item.id}
-                        handleDeleteData={handleDeleteData}
-                        onClose={() => setModalOpen(false)}
-                      />
-                    )}
                   </Td>
                 </tr>
               ))}
