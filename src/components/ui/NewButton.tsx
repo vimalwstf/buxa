@@ -9,7 +9,7 @@ export default function NewButton({
 }) {
   return (
     <button
-      className="text-black px-4 py-2 text-sm  rounded-md shadow-md bg-primary-green "
+      className="text-black px-4 py-2 text-sm  rounded-md shadow-md bg-primary-green hover:cursor-pointer"
       onClick={createNewDocument}
     >
       <CgFileAdd size={22} className="inline sm:mr-2" />

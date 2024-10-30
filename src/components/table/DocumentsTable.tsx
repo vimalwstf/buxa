@@ -59,7 +59,7 @@ export default function DocumentsTable({
             </thead>
             <tbody className="divide-gray-200">
               {currentDocuments.map((item, i) => (
-                <tr key={i}>
+                <tr key={i} className="hover:bg-gray-200 cursor-pointer">
                   <Td
                     onClick={() => openEditor(item)}
                     className="flex !whitespace-normal items-center"

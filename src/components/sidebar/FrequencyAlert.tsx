@@ -21,8 +21,8 @@ const FrequencyAlert = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-4 bg-transparent">
-      <h2 className="mb-4 text-xl font-medium text-text-third">
+    <div className="flex flex-col  bg-transparent">
+      <h2 className="mb-2 text-left text-lg font-medium text-text-third">
         Select Frequency
       </h2>
 

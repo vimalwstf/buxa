@@ -58,7 +58,7 @@ export default function AlertList() {
           </thead>
           <tbody className="divide-gray-200">
             {currentAlerts.map((item, i) => (
-              <tr key={i}>
+              <tr key={i} className="cursor-pointer hover:bg-gray-200">
                 <Td>
                   <FaFileAlt className="inline mr-2 hover:cursor-pointer text-white" />{" "}
                   {item.topic}

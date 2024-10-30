@@ -11,13 +11,15 @@ export default function Input({
 }) {
   return (
     <div className="mb-4">
-      <label className="block text-text-third font-medium mb-2">{label}</label>
+      <label className="block text-text-third font-medium mb-2 text-lg">
+        {label}
+      </label>
       <input
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-4 py-3 border font-medium text-sm text-gray-100 border-gray-200 rounded-md outline-none bg-transparent hover:bg-gray-900"
+        className="w-full px-4 py-3 border font-medium text-sm text-gray-100 border-gray-200 rounded-md outline-none bg-transparent"
       />
     </div>
   );

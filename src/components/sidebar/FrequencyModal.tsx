@@ -24,8 +24,8 @@ const FrequencyModal: FC<FrequencyModalProps> = ({ frequency, onClose }) => {
   };
 
   return (
-    <div className="mt-4 w-full p-4 bg-gray-200 border rounded-md">
-      <h3 className="text-lg font-semibold text-gray-800 mb-2">
+    <div className="w-full p-4 bg-primary-light border rounded-md mb-4">
+      <h3 className="text-[16px] font-medium text-white mb-2">
         Set {frequency} Frequency
       </h3>
 
@@ -34,14 +34,14 @@ const FrequencyModal: FC<FrequencyModalProps> = ({ frequency, onClose }) => {
           type="time"
           value={time}
           onChange={(e) => setTime(e.target.value)}
-          className="block w-full px-4 py-2 border rounded-md mb-4 text-black"
+          className="block w-full py-2 border rounded-md mb-4 text-black outline-none"
         />
       )}
       {frequency === "Weekly" && (
         <select
           value={day}
           onChange={(e) => setDay(e.target.value)}
-          className="block w-full px-4 py-2 border rounded-md mb-4 text-black"
+          className="block w-full py-2 border rounded-md mb-4 text-black outline-none"
         >
           {[
             "Monday",
@@ -67,12 +67,12 @@ const FrequencyModal: FC<FrequencyModalProps> = ({ frequency, onClose }) => {
           }
           min={1}
           max={31}
-          className="block w-full px-4 py-2 border rounded-md mb-4 text-black"
+          className="block w-full  p-2 border rounded-md mb-4 text-black outline-none"
           placeholder="Enter day of the month (1-31)"
         />
       )}
 
-      <div className="flex justify-end space-x-4">
+      <div className="flex justify-end gap-2">
         <button
           onClick={confirmSelection}
           className="px-4 py-2 bg-primary-green text-black rounded-md"

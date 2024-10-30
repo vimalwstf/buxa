@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Input from "@/components/sidebar/Input";
 import Form from "@/components/sidebar/Form";
+import FrequencyAlert from "../sidebar/FrequencyAlert";
 
 export default function AlertSidebar() {
   const initialState = {
@@ -56,10 +57,11 @@ export default function AlertSidebar() {
       />
 
       {/* TODO: Alert frequency */}
+      <FrequencyAlert />
 
       <div className="text-text-third">
-        <p className="font-medium"> Alert Method</p>
-        <span className="text-[0.85rem] font-medium">
+        <p className="text-lg font-medium leading-4"> Alert Method</p>
+        <span className="text-xs font-medium">
           Alerts will be sent on {email}
         </span>
       </div>
