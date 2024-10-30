@@ -87,7 +87,7 @@ export default function ResearchSidebar({
   return (
     <Form
       heading="Research with AI"
-      variant="write"
+      variant="research"
       allFilled={allFieldsFilled}
       loading={loading}
       onSubmit={handleSubmit}
