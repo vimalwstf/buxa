@@ -1,6 +1,6 @@
 "use client";
 import DocumentList from "./DocumentList";
-import Sidebar from "./sidebar/Sidebar";
+import WriteSidebar from "./tools/WriteSidebar";
 import { CiPen } from "react-icons/ci";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -147,7 +147,7 @@ const Write = () => {
           } ease-in-out duration-300`}
         >
           <div className="relative w-full h-full bg-blue shadow-lg">
-            <Sidebar handleDocumentSubmit={handleDocumentSubmit} />
+            <WriteSidebar handleDocumentSubmit={handleDocumentSubmit} />
           </div>
         </div>
 
@@ -156,7 +156,7 @@ const Write = () => {
             showEditor && "flex-[0.4]"
           }`}
         >
-          <Sidebar handleDocumentSubmit={handleDocumentSubmit} />
+          <WriteSidebar handleDocumentSubmit={handleDocumentSubmit} />
         </div>
 
         {showEditor ? (

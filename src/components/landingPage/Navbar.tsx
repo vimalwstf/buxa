@@ -8,7 +8,8 @@ import Link from "next/link";
 import Hamburger from "../../../public/images/Hamburger.svg";
 import GoogleSignup from "../GoogleSignup";
 import { useSession } from "next-auth/react";
-import { MdDashboard } from "react-icons/md";
+// import { MdDashboard } from "react-icons/md";
+import { MdOutlineArrowOutward } from "react-icons/md";
 
 const Navbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
@@ -36,7 +37,9 @@ const Navbar = () => {
 
   return (
     <header
-      className={`container-wrapper sticky top-0 backdrop-blur-3xl z-20 h-[80px] items-center sm:h-[94px] ${mobileNavigation ? "bg-black" : "backdrop-blur-3xl"}`}
+      className={`container-wrapper sticky top-0 backdrop-blur-3xl z-20 h-[80px] items-center sm:h-[94px] text-white ${
+        mobileNavigation ? "bg-black" : "backdrop-blur-3xl"
+      }`}
     >
       <div className="content-container bg-blue-80 flex justify-between py-4 md:py-6 items-center">
         {/* Hamburger menu button */}
@@ -46,7 +49,7 @@ const Navbar = () => {
         >
           <Image src={Hamburger} width={40} height={40} alt="" />
         </div>
-        <div className="flex items-center text-2xl md:text-2xl w-24 sm:w-40 font-bold text-green-500">
+        <div className="w-24 sm:w-40 ">
           <Link href="/">
             <Image src={Logo} width={130} height={130} alt="logo" />
           </Link>
@@ -63,13 +66,14 @@ const Navbar = () => {
         <div>
           {loggedIn ? (
             <Link
-              className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer"
+              className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
               href="/dashboard"
             >
-              <MdDashboard size={24} className="text-primary-green" />
-              <span className="sm:inline-block text-lg sm:text-xl font-medium">
+              {/* <MdDashboard size={24} className="text-primary-green" /> */}
+              <span className="sm:inline-block text-xl font-medium">
                 Dashboard
               </span>
+              <MdOutlineArrowOutward size={24} />
             </Link>
           ) : (
             <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">

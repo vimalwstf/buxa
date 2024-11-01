@@ -3,17 +3,18 @@ import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 interface ComboBoxTagProps {
-  tags: tagType[];
+  tags: string[];
+  selectedTags: string[];
   placeholder?: string;
-  handleSelect: (selectedTag: tagType) => void;
+  handleSelect: (tag: string) => void;
 }
 
-type tagType = {
-  name: string;
-  isSelected: boolean;
-};
-
-function SelectionBox({ tags, placeholder, handleSelect }: ComboBoxTagProps) {
+function SelectionBox({
+  tags,
+  selectedTags,
+  placeholder,
+  handleSelect,
+}: ComboBoxTagProps) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +22,7 @@ function SelectionBox({ tags, placeholder, handleSelect }: ComboBoxTagProps) {
   };
 
   const filteredTags = tags.filter((tag) =>
-    tag.name.toLowerCase().includes(searchTerm.toLowerCase())
+    tag.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -38,23 +39,38 @@ function SelectionBox({ tags, placeholder, handleSelect }: ComboBoxTagProps) {
       </div>
 
       <div className="flex flex-wrap">
-        {filteredTags.map((tag) => (
-          <Tag tag={tag} key={tag.name} onClick={() => handleSelect(tag)} />
+        {filteredTags.map((tag, i) => (
+          <Tag
+            key={i}
+            tag={tag}
+            selected={selectedTags.includes(tag)}
+            onClick={() => {
+              handleSelect(tag);
+            }}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function Tag({ tag, onClick }: { tag: tagType; onClick: () => void }) {
+function Tag({
+  tag,
+  selected,
+  onClick,
+}: {
+  tag: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
   return (
     <span
       className={`font-medium hover:bg-gray-200 text-sm px-2 py-1 rounded-md m-1 cursor-pointer
-    ${tag.isSelected ? "bg-primary-green text-black" : "bg-black text-white"}
+    ${selected ? "bg-primary-green text-black" : "bg-black text-white"}
   `}
       onClick={onClick}
     >
-      {tag.name}
+      {tag}
     </span>
   );
 }

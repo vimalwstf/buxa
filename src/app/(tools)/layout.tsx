@@ -6,9 +6,11 @@ export default function ToolsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-custom-gradient h-screen">
+    <div className="bg-custom-gradient h-[100dvh] flex flex-col">
       <Navbar />
-      {children}
+      <main className="flex-1 m-2 md:m-3 flex gap-2 md:gap-4 overflow-y-auto">
+        {children}
+      </main>
     </div>
   );
 }
