@@ -3,13 +3,13 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { DocumentInfo, DataObject } from "@/types/type";
 
-const useFetchWriterDocuments = (
-  setDocuments: (documents: DocumentInfo[]) => void,
-) => {
+interface Props {
+  setDocuments: (documents: DocumentInfo[]) => void;
+}
+const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
-
   useEffect(() => {
     const fetchDocuments = async () => {
       if (accessToken) {

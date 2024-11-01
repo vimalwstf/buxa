@@ -15,7 +15,7 @@ export default function Dashboard() {
     <div className="flex">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col mr-5">
+      <div className="flex-1 flex flex-col mx-auto md:mr-5">
         <Navbar />
         <MobileNav />
         {isLoading ? (
@@ -23,7 +23,7 @@ export default function Dashboard() {
             <Loader />
           </div>
         ) : (
-          <div className=" flex">
+          <div className="flex-col md:flex-row flex">
             <div className="flex-1 flex flex-col">
               <Stats />
               <StatLevel />

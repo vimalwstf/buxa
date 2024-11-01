@@ -13,7 +13,7 @@ const LogoutBtn = () => {
         size={30}
         className="rotate-180 text-red-500 hover:scale-110 transition-all duration-200"
       />
-      <span className="inline sm:hidden text-white font-medium">Logout</span>
+      <span className="inline md:hidden text-text-third font-medium">Logout</span>
     </button>
   );
 };

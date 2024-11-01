@@ -58,7 +58,7 @@ export default function Pagination({
         className="px-4 py-2 flex gap-2 items-center cursor-pointer text-text-third disabled:cursor-default"
       >
         <FaChevronLeft />
-        <span className="font-medium">Prev</span>
+        <span className="font-medium hidden sm:inline">Prev</span>
       </button>
       <div className="flex items-center">
         <div className="flex gap-2 justify-center items-center">
@@ -91,7 +91,7 @@ export default function Pagination({
         disabled={currentPage === totalPages}
         className="px-4 py-2 flex gap-2 items-center cursor-pointer text-text-third disabled:cursor-default"
       >
-        <span className="font-medium">Next</span>
+        <span className="font-medium hidden sm:inline">Next</span>
         <FaChevronRight />
       </button>
     </div>
