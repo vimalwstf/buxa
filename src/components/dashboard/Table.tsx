@@ -47,7 +47,7 @@ const Table: FC = () => {
             </div>
 
             {/* Scrollable Rows */}
-            <div className="element overflow-y-auto max-h-[200px]">
+            <div className="element overflow-y-auto max-h-[210px]">
               {[...mockData, ...mockData, ...mockData].map((doc, index) => (
                 <TableRow
                   key={index}
