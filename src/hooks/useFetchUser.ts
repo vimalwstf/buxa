@@ -17,7 +17,6 @@ const useFetchUser = () => {
       if (accessToken) {
         setIsLoading(true);
         try {
-          console.log(accessToken)
           const response = await axios.get(
             `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
             {
@@ -27,7 +26,6 @@ const useFetchUser = () => {
               },
             }
           );
-          console.log(response);
           if (response?.data?.status) {
             dispatch(logIn(response?.data?.data));
           } else if (response.status === 400) {
