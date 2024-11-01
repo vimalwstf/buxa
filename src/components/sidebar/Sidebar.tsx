@@ -12,6 +12,7 @@ import { enqueueSnackbar } from "notistack";
 import { useSession } from "next-auth/react";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
+import AlertFrequency from "./alertSiderbar/alertFrequency";
 
 type tagType = {
   name: string;
@@ -292,6 +293,7 @@ const Sidebar = ({
           setLanguage={setLanguage}
           setToneOpen={setToneOpen}
         />
+        <AlertFrequency />
         <button
           type="submit"
           className={`flex gap-2 justify-center items-center cursor-pointer w-full px-4 py-2 mt-8 font-semibold rounded-md ${

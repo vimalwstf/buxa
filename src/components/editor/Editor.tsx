@@ -52,7 +52,7 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
   const onEditorStateChange = (newState: EditorState) => {
     setEditorState(newState);
   };
-  const handleFocusChange = () => {
+  const onEditorFocusChange = () => {
     if (onChange) {
       const htmlText = draftToHtml(
         convertToRaw(editorState.getCurrentContent())
@@ -63,7 +63,7 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
   return (
     <div>
       <Editor
-        onBlur={handleFocusChange}
+        onBlur={onEditorFocusChange}
         editorState={editorState}
         wrapperClassName=""
         toolbarClassName="text-black"
