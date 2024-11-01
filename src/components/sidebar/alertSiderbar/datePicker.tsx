@@ -1,95 +1,49 @@
 import { useState } from "react";
 
 interface DatePickerProps {
-  selectedDate: Date | null;
-  onDateChange: (date: Date) => void;
+  selectedDate: number | null;
+  onDateChange: (date: number) => void;
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
   selectedDate,
   onDateChange,
 }) => {
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
-  const currentYear = new Date().getFullYear();
-  const daysInWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const getDaysInMonth = (month: number): Date[] => {
-    const date = new Date(currentYear, month, 1);
-    const dates: Date[] = [];
-    while (date.getMonth() === month) {
-      dates.push(new Date(date));
-      date.setDate(date.getDate() + 1);
-    }
-    return dates;
+  const [isCalenderOpen, setCalenderIsOpen] = useState(false);
+  const toggleDatePicker = () => {
+    setCalenderIsOpen(!isCalenderOpen);
   };
-
-  const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMonth(Number(event.target.value));
-  };
-
-  const handleDateClick = (date: Date) => {
-    onDateChange(date);
-  };
-
-  const daysInMonth =
-    selectedMonth !== null ? getDaysInMonth(selectedMonth) : [];
-
   return (
-    <div className="w-full text-black">
-      <div className="mb-4">
-        <select
-          id="month"
-          value={selectedMonth ?? ""}
-          onChange={handleMonthChange}
-          className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="" disabled>
-            Select a month
-          </option>
-          {months.map((month, index) => (
-            <option key={month} value={index}>
-              {month}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className="relative w-full">
+      <label
+        onClick={toggleDatePicker}
+        className="mb-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 hover:cursor-pointer"
+      >
+        {selectedDate ? `Selected Date: ${selectedDate}` : "Select Date"}
+      </label>
 
-      {selectedMonth !== null && (
-        <div className="grid grid-cols-7 gap-2 text-center">
-          {daysInWeek.map((day) => (
-            <div key={day} className="font-semibold text-white">
-              {day}
-            </div>
-          ))}
-          {daysInMonth.map((date) => (
-            <button
-              key={date.toString()}
-              onClick={() => handleDateClick(date)}
-              className={`p-2 rounded-md ${
-                selectedDate &&
-                selectedDate.toDateString() === date.toDateString()
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-100 text-gray-800"
-              } hover:bg-blue-400 hover:text-white`}
-            >
-              {date.getDate()}
-            </button>
-          ))}
+      {isCalenderOpen && (
+        <div className="absolute top-12 left-0 w-full bg-white border rounded-lg shadow-lg p-4 z-10">
+          <div className="grid grid-cols-7 gap-2">
+            {Array.from({ length: 28 }, (_, i) => i + 1).map((date) => (
+              <button
+                key={date}
+                type="button"
+                onClick={() => {
+                  onDateChange(date);
+                  toggleDatePicker();
+                }}
+                className={`aspect-square w-8 cursor-pointer px-2 py-1 text-center rounded-md 
+                  ${
+                    date === selectedDate
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100 hover:bg-blue-100 text-black"
+                  }`}
+              >
+                {date}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

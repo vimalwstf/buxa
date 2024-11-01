@@ -19,7 +19,7 @@ const TimePicker = ({
   const timeOptions = generateTimeOptions();
 
   return (
-    <div className=" w-24">
+    <div className="">
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

@@ -24,7 +24,7 @@ export default function WeekDayPicker({
       <select
         value={selectedDay}
         onChange={handleWeekDayChange}
-        className="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-700"
+        className="mb-2 block w-full p-2 bg-black border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 "
       >
         {daysOfWeek.map((day) => (
           <option key={day.value} value={day.value}>

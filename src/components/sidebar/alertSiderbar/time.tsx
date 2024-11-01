@@ -14,7 +14,7 @@ const Time = ({
   onEndTimeChange,
 }: TimeProps) => {
   return (
-    <div className="flex items-center justify-between mb-2">
+    <div className="flex items-center mb-2 w-full">
       <label>
         <MdDelete size={24} />
       </label>
