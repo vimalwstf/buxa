@@ -28,7 +28,7 @@ const MobileNav: React.FC = () => {
   const toggleMenu = (): void => setIsOpen(!isOpen);
 
   return (
-    <div className="block md:hidden w-full bg-transparent h-[75px] relative">
+    <div className="block lg:hidden w-full bg-transparent h-[75px] relative">
       <div className="flex justify-between items-center p-4 h-full">
         {/* Logo */}
         <Link href="/">
@@ -38,7 +38,7 @@ const MobileNav: React.FC = () => {
         {/* Hamburger Icon */}
         <button
           onClick={toggleMenu}
-          className="text-white focus:outline-none z-50 -mt-4"
+          className="text-white fixed top-6 right-6 focus:outline-none z-50"
         >
           {isOpen ? <BiX size={28} /> : <FaBars size={24} />}
         </button>
@@ -46,22 +46,20 @@ const MobileNav: React.FC = () => {
 
       {/* Slide-in Menu */}
       <div
-        className={`fixed top-0 right-0 w-[65%] h-full bg-black text-white transform ${
+        className={`px-8 pt-12 fixed top-0 right-0 w-[65%] h-full bg-black text-white transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 ease-in-out p-6 z-40`}
       >
-        <div className="flex items-center space-x-2 mb-6">
+        <div className="flex items-center space-x-2">
           <FaCreditCard size={24} className="text-primary-green" />
-          <span className="text-lg font-medium">90 Credits</span>
+          <span className="text-lg font-medium text-text-third">90 Credits</span>
         </div>
-        <div>
-          <LogoutBtn />
-        </div>
+      
         {sidebarLinks.map(({ icon, href, name }, index) => (
           <div key={index} className="flex flex-col pt-[26px]">
             <Link href={href} className="flex justify-between items-center">
               <div
-                className={`flex justify-center text-xl font-medium items-center px-4 gap-2 hover:text-primary-green hover:cursor-pointer ${
+                className={`flex justify-center text-xl font-medium items-center gap-2 hover:text-primary-green hover:cursor-pointer ${
                   href === pathname ? "text-primary-green" : "text-text-third"
                 }`}
               >
@@ -74,6 +72,10 @@ const MobileNav: React.FC = () => {
             </Link>
           </div>
         ))}
+          <div className="mt-6 flex gap-2 items-center text-text-third!">
+          <LogoutBtn />
+          <span className="md:inline hidden lg:hidden font-medium text-text-third">Logout</span>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import LogoutBtn from "../LogoutBtn";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="hidden md:block w-full md:w-[calc(100% - 300px)] backdrop-blur-sm bg-opacity-30 bg-[#0a0a0d] h-[75px] z-99">
+    <nav className="hidden lg:block w-full md:w-[calc(100% - 300px)] backdrop-blur-sm bg-opacity-30 bg-[#0a0a0d] h-[75px] z-99">
       <div className="flex justify-between items-center p-4 border border-t-0 rounded-br-[8px] rounded-bl-[8px] h-full ml-3">
         <div>
           <h3>John Doe</h3>
