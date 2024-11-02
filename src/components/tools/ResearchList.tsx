@@ -5,13 +5,17 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import MyEditor from "../editor/Editor";
-import DocumentsTable from "../table/DocumentsTable";
-import LoadingDocs from "../table/LoadingDocs";
-import ListButton from "../ui/ListButton";
-import FavouritesButton from "../ui/FavouritesButton";
-import NewButton from "../ui/NewButton";
-import SaveButton from "../ui/SaveButton";
+import DocumentsTable from "@/components/table/DocumentsTable";
+import LoadingDocs from "@/components/table/LoadingDocs";
+import ListButton from "@/components/ui/ListButton";
+import FavouritesButton from "@/components/ui/FavouritesButton";
+import NewButton from "@/components/ui/NewButton";
+import SaveButton from "@/components/ui/SaveButton";
+import dynamic from "next/dynamic";
+
+const MyEditor = dynamic(() => import("@/components/editor/Editor"), {
+  ssr: false,
+});
 
 export default function ResearchList({
   showEditor,
@@ -102,7 +106,7 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =

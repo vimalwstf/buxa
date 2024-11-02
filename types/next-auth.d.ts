@@ -1,3 +1,4 @@
+//@ts-expect-error auth
 import NextAuth, { DefaultSession } from "next-auth";
 
 type userData = {

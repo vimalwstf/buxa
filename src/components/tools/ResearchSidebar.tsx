@@ -79,6 +79,13 @@ export default function ResearchSidebar({
         };
         setLoading(true);
         console.log(metadata);
+        handleDocumentSubmit({
+          favourite:false,
+          id:"0",
+          modified: "",
+          name:"",
+          words:0
+        })
         setLoading(false);
       }
     }
