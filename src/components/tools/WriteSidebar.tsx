@@ -11,7 +11,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-
+import Toggle from "../toggle";
 const useCases = [
   "Blog Ideas and outlines",
   "Tech Event Ideas",
@@ -65,6 +65,7 @@ export default function WriteSidebar({
 
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState<boolean>(false);
+  const [writeFromMyContent, setWriteFromMyContent] = useState(true);
   const {
     useCase,
     keywords,
@@ -103,8 +104,8 @@ export default function WriteSidebar({
               ? prev.personalityTags.filter((t) => t !== tag)
               : [...prev.personalityTags, tag]
             : prev.toneTags.includes(tag)
-              ? []
-              : [tag];
+            ? []
+            : [tag];
 
         return {
           ...prev,
@@ -147,7 +148,7 @@ export default function WriteSidebar({
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            },
+            }
           );
 
           if (response?.data?.status) {
@@ -243,6 +244,11 @@ export default function WriteSidebar({
       />
 
       {/* TODO: Write from my content component */}
+      <Toggle
+        label="Write from my content"
+        checked={writeFromMyContent}
+        onChange={() => setWriteFromMyContent(!writeFromMyContent)}
+      />
     </Form>
   );
 }

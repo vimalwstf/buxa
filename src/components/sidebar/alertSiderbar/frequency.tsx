@@ -1,10 +1,10 @@
 type FrequencyProps = {
   selectedFrequency: string;
-  handleFrequencyChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFrequencyChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 const Frequency = ({
   selectedFrequency,
-  handleFrequencyChange,
+  onFrequencyChange,
 }: FrequencyProps) => {
   return (
     <div>
@@ -14,7 +14,7 @@ const Frequency = ({
           name="alertFrequency"
           value="daily"
           checked={selectedFrequency === "daily"}
-          onChange={handleFrequencyChange}
+          onChange={onFrequencyChange}
           className="mr-2"
         />
         <span>Daily</span>
@@ -25,7 +25,7 @@ const Frequency = ({
           name="alertFrequency"
           value="weekly"
           checked={selectedFrequency === "weekly"}
-          onChange={handleFrequencyChange}
+          onChange={onFrequencyChange}
           className="mr-2"
         />
         <span>Weekly</span>
@@ -36,7 +36,7 @@ const Frequency = ({
           name="alertFrequency"
           value="monthly"
           checked={selectedFrequency === "monthly"}
-          onChange={handleFrequencyChange}
+          onChange={onFrequencyChange}
           className="mr-2"
         />
         <span>Monthly</span>

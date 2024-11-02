@@ -126,6 +126,7 @@ const Write = () => {
   const handleEditorTextChange = (content: string) => {
     setEditorText({ ...editorText, name: content });
   };
+  //TODO: remove window listener
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {

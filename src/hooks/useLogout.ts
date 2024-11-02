@@ -9,6 +9,6 @@ export default function useLogout() {
     await signOut({ callbackUrl: "/" });
     dispatch(logOut());
     
-  },[dispatch,]);
+  },[dispatch]);
   return handleLogout;
 };

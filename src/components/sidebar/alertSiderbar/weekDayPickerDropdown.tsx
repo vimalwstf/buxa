@@ -4,7 +4,7 @@ interface DayOption {
 }
 interface WeekDayPickerProps {
   selectedDay: string;
-  handleWeekDayChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onWeekDayChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 const daysOfWeek: DayOption[] = [
   { value: "Sun", label: "Sunday" },
@@ -17,13 +17,13 @@ const daysOfWeek: DayOption[] = [
 ];
 export default function WeekDayPicker({
   selectedDay,
-  handleWeekDayChange,
+  onWeekDayChange,
 }: WeekDayPickerProps) {
   return (
     <div className="w-full mb-4">
       <select
         value={selectedDay}
-        onChange={handleWeekDayChange}
+        onChange={onWeekDayChange}
         className="mb-2 block w-full p-2 bg-black border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 "
       >
         {daysOfWeek.map((day) => (

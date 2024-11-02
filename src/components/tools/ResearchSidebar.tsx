@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Dropdown from "@/components/sidebar/Dropdown";
 import Input from "@/components/sidebar/Input";
 import Form from "@/components/sidebar/Form";
+import Toggle from "../toggle";
 
 const allFormats = ["Article", "Blog Post", "Book", "Course", "Podcast"];
 const focusAreas = ["Business", "Marketing", "Tech"];
@@ -27,21 +28,23 @@ export default function ResearchSidebar({
     date: "",
     focus: "",
     source: "",
-    deepDive: false,
-    researchFromWeb: false,
+    // deepDive: false,
+    // researchFromWeb: false,
     dropdown: "",
   };
 
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState<boolean>(false);
+  const [deepDive, setDeepDive] = useState(true);
+  const [researchFromWeb, setResearchFromWeb] = useState(false);
   const {
     topic,
     format,
     date,
     focus,
     source,
-    deepDive,
-    researchFromWeb,
+    // deepDive,
+    // researchFromWeb,
     dropdown,
   } = state;
 
@@ -136,8 +139,18 @@ export default function ResearchSidebar({
       />
 
       {/* TODO: Deep dive checkbox */}
+      <Toggle
+        label="Deep dive"
+        checked={deepDive}
+        onChange={() => setDeepDive(!deepDive)}
+      />
 
       {/* TODO: Research from web checkbox */}
+      <Toggle
+        label="Research from web"
+        checked={researchFromWeb}
+        onChange={() => setResearchFromWeb(!researchFromWeb)}
+      />
     </Form>
   );
 }

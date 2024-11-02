@@ -12,14 +12,14 @@ export default function AlertFrequency() {
   const [weekDay, setWeekDay] = useState("");
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
 
-  const schedule = {
-    selectedFrequency,
-    selectedDate,
-    weekDay,
-    startTime,
-    endTime,
-  };
-  console.log(schedule);
+  // const schedule = {
+  //   selectedFrequency,
+  //   selectedDate,
+  //   weekDay,
+  //   startTime,
+  //   endTime,
+  // };
+  // console.log(schedule);
   const onDateChange = (value: number) => {
     setSelectedDate(value);
   };
@@ -29,12 +29,10 @@ export default function AlertFrequency() {
   const onEndTimeChange = (value: string) => {
     setEndTime(value);
   };
-  const handleFrequencyChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onFrequencyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFrequency(event.target.value);
   };
-  const handleWeekDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onWeekDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setWeekDay(event.target.value);
   };
   return (
@@ -44,7 +42,7 @@ export default function AlertFrequency() {
       </label>
       <Frequency
         selectedFrequency={selectedFrequency}
-        handleFrequencyChange={handleFrequencyChange}
+        onFrequencyChange={onFrequencyChange}
       />
       <Time
         startTime={startTime}
@@ -62,7 +60,7 @@ export default function AlertFrequency() {
       {selectedFrequency === "weekly" && (
         <WeekDayPicker
           selectedDay={weekDay}
-          handleWeekDayChange={handleWeekDayChange}
+          onWeekDayChange={onWeekDayChange}
         />
       )}
       {selectedFrequency === "monthly" && (
