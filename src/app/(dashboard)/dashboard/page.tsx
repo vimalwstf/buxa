@@ -17,7 +17,8 @@ export default function Dashboard() {
 
       <div className="flex-1 flex flex-col mx-auto md:mr-5">
         <Navbar />
-        <MobileNav />
+        <div className="fixed top-0 z-20 w-full"><MobileNav /></div>
+        
         {isLoading ? (
           <div className="flex mx-auto justify-center items-center h-[90vh]">
             <Loader />
