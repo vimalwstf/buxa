@@ -55,7 +55,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="hidden md:flex">
-          <nav className="space-x-10 m-auto md:text-lg lg:text-xl">
+          <nav className="space-x-6 lg:space-x-10 m-auto md:text-lg lg:text-xl">
             {Links.map(({ name, href }, i) => (
               <Link key={i} className="hover:text-green-500" href={href}>
                 {name}
