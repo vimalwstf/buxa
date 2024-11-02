@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import ResearchSidebar from "@/components/tools/ResearchSidebar";
-
-export default function Research() {
-  return (
-    <div className="flex">
-      <div className="w-2/6 max-w-sm overflow-y-scroll">
-        <ResearchSidebar />
-      </div>
-    </div>
-  );
-}
-=======
 "use client";
 
 import ResearchList from "@/components/tools/ResearchList";
@@ -52,4 +39,3 @@ export default function Research() {
     </>
   );
 }
->>>>>>> 7e8b1c9eba030371857b674f4f1aabbeb3616042
