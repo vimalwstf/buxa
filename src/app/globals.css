@@ -107,3 +107,18 @@ body {
 .element::-webkit-scrollbar {
   display: none;
 }
+
+
+.custom-checkbox {
+  position: relative;
+}
+
+.custom-checkbox:checked::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem; /* Adjust size as needed */
+  color: #000000;
+}
