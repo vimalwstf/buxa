@@ -1,5 +1,4 @@
 "use client";
-
 import DocumentList from "./DocumentList";
 import WriteSidebar from "./tools/WriteSidebar";
 import { CiPen } from "react-icons/ci";
@@ -138,6 +137,7 @@ const Write = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <main className="w-full p-4 ">
       <div className="flex gap-4">

@@ -104,8 +104,8 @@ export default function WriteSidebar({
               ? prev.personalityTags.filter((t) => t !== tag)
               : [...prev.personalityTags, tag]
             : prev.toneTags.includes(tag)
-              ? []
-              : [tag];
+            ? []
+            : [tag];
 
         return {
           ...prev,
@@ -148,7 +148,7 @@ export default function WriteSidebar({
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            },
+            }
           );
 
           if (response?.data?.status) {
@@ -243,8 +243,8 @@ export default function WriteSidebar({
         setDropdown={setDropdown}
       />
 
-      {/* TODO: Write from my content component */}
-      <ToggleButton label="Write from my content"/>
+      {/*  Write from my content component */}
+      <ToggleButton label="Write from my content" />
     </Form>
   );
 }

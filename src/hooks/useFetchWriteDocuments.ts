@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { DocumentInfo,DataObject } from "@/types/type";
+import { DocumentInfo, DataObject } from "@/types/type";
 
-const useFetchWriterDocuments = (setDocuments:(documents: DocumentInfo[]) => void) => {
+interface Props {
+  setDocuments: (documents: DocumentInfo[]) => void;
+}
+const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
   const [isLoading, setIsLoading] = useState(false);
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
-
   useEffect(() => {
     const fetchDocuments = async () => {
       if (accessToken) {
@@ -20,7 +22,7 @@ const useFetchWriterDocuments = (setDocuments:(documents: DocumentInfo[]) => voi
                 Authorization: `Bearer ${accessToken}`,
                 "ngrok-skip-browser-warning": true,
               },
-            }
+            },
           );
           if (response?.data?.status) {
             const data: DocumentInfo[] = response.data.data.map(
@@ -32,20 +34,23 @@ const useFetchWriterDocuments = (setDocuments:(documents: DocumentInfo[]) => voi
                   modified: doc.updatedAt,
                   favourite: doc.isFavorite,
                 };
-              }
+              },
             );
-            data.reverse();
+            data.sort(
+              (a, b) =>
+                new Date(b.modified).getTime() - new Date(a.modified).getTime(),
+            );
             setDocuments(data);
           }
         } catch (error) {
           console.log("document fetch", error);
-        }finally {
+        } finally {
           setIsLoading(false);
         }
       }
     };
     fetchDocuments();
-  }, [accessToken,setDocuments]);
+  }, [accessToken, setDocuments]);
 
   return { isLoading };
 };

@@ -136,12 +136,11 @@ export default function ResearchSidebar({
         setDropdown={setDropdown}
       />
 
-      {/* TODO: Deep dive checkbox */}
-      <ToggleButton label="Deep dive"/>
+      {/* Deep dive toggle */}
+      <ToggleButton label="Deep Dive" />
 
-      {/* TODO: Research from web checkbox */}
-      <ToggleButton label="Research from web"/>
-
+      {/*  Research from web toggle */}
+      <ToggleButton label="Research from web" />
     </Form>
   );
 }

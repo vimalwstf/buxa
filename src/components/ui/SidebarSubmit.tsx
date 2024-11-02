@@ -1,5 +1,3 @@
-"use client";
-
 import { BsBell } from "react-icons/bs";
 import { FaPenNib } from "react-icons/fa";
 import { MdManageSearch } from "react-icons/md";
@@ -32,7 +30,10 @@ export default function SidebarSubmit({
   loading: boolean;
 }) {
   const btn = data[variant];
+<<<<<<< HEAD
   // console.log(disabled, loading);
+=======
+>>>>>>> 7e8b1c9eba030371857b674f4f1aabbeb3616042
 
   return (
     <button
