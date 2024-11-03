@@ -128,8 +128,7 @@ const Footer = () => {
           <p className="">
             Copyright © 2023{" "}
             <Link href="" className="border-b">
-              Buxa.ai, Inc. All rights reserved. The smartest AI writer
-              available.
+              Buxa.ai Inc. All rights reserved.
             </Link>
           </p>
         </div>
