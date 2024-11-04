@@ -31,6 +31,7 @@ const toolbar = {
   textAlign: { inDropdown: true },
   link: { inDropdown: true },
   history: { inDropdown: false },
+  image: false,
 };
 
 const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
@@ -67,8 +68,8 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
         onBlur={onEditorFocusChange}
         editorState={editorState}
         wrapperClassName=""
-        toolbarClassName="text-black"
-        editorClassName="max-h-[60vh] max-w-[95vw] md:max-h-[74vh] min-h-[54vh] bg-primary-light border-2 border-gray-200 rounded-lg p-2 mb-2 overflow-y-auto break-words whitespace-normal"
+        // toolbarClassName="text-black "
+        editorClassName="max-h-[60vh] max-w-[95vw] md:max-h-[74vh] min-h-[54vh] bg-primary-light border border-gray-200 rounded-[8px] p-2 mb-2 overflow-y-auto break-words whitespace-normal"
         onEditorStateChange={onEditorStateChange}
         toolbar={toolbar}
       />
