@@ -136,7 +136,7 @@ export default function WriteList({
     <div className="w-full h-full flex flex-col gap-2 md:gap-4 ">
       {showEditor ? (
         <>
-          <div className="flex justify-between mb-4 items-baseline">
+          <div className="flex justify-between items-baseline">
             <ListButton handleClick={toggleShowEditor} label="Document List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>

@@ -36,14 +36,14 @@ const toolbar = {
 
 const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
   const [editorState, setEditorState] = useState<EditorState>(
-    EditorState.createEmpty()
+    EditorState.createEmpty(),
   );
   useEffect(() => {
     if (value) {
       const contentBlock = htmlToDraft(value);
       if (contentBlock) {
         const contentState = ContentState.createFromBlockArray(
-          contentBlock.contentBlocks
+          contentBlock.contentBlocks,
         );
         const editorState = EditorState.createWithContent(contentState);
         setEditorState(editorState);
@@ -57,23 +57,20 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
   const onEditorFocusChange = () => {
     if (onChange) {
       const htmlText = draftToHtml(
-        convertToRaw(editorState.getCurrentContent())
+        convertToRaw(editorState.getCurrentContent()),
       );
       onChange(htmlText);
     }
   };
   return (
-    <div>
-      <Editor
-        onBlur={onEditorFocusChange}
-        editorState={editorState}
-        wrapperClassName=""
-        // toolbarClassName="text-black "
-        editorClassName="max-h-[60vh] max-w-[95vw] md:max-h-[74vh] min-h-[54vh] bg-primary-light border border-gray-200 rounded-[8px] p-2 mb-2 overflow-y-auto break-words whitespace-normal"
-        onEditorStateChange={onEditorStateChange}
-        toolbar={toolbar}
-      />
-    </div>
+    <Editor
+      onBlur={onEditorFocusChange}
+      editorState={editorState}
+      wrapperClassName="h-full flex flex-col overflow-hidden"
+      editorClassName="max-w-[95vw] overflow-y-scroll bg-primary-light border-b border-2 border-gray-200 rounded-b rounded-[8px] p-2 break-words whitespace-normal"
+      onEditorStateChange={onEditorStateChange}
+      toolbar={toolbar}
+    />
   );
 };
 
