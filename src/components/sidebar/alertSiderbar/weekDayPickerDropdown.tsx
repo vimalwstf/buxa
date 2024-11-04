@@ -24,10 +24,11 @@ export default function WeekDayPicker({
       <select
         value={selectedDay}
         onChange={handleWeekDayChange}
-        className="mb-2 block w-full p-2 bg-black border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 "
+        className="mb-2 block w-full px-4 py-3 bg-primary-light border border-gray-200 rounded-md shadow-md outline-none hover:bg-black transition duration-200 ease-in-out"
       >
         {daysOfWeek.map((day) => (
           <option key={day.value} value={day.value}>
+          
             {day.label}
           </option>
         ))}
