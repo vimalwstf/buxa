@@ -38,7 +38,7 @@ const MobileNav: React.FC = () => {
         {/* Hamburger Icon */}
         <button
           onClick={toggleMenu}
-          className="text-white fixed top-6 right-6 focus:outline-none z-50"
+          className="text-white focus:outline-none z-50"
         >
           {isOpen ? <BiX size={28} /> : <FaBars size={24} />}
         </button>

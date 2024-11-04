@@ -3,7 +3,7 @@ import AlertCard from "./AlertCard";
 
 export default function Alerts() {
   return (
-    <div className="mx-3 mb-4 md:m-0 element max-h-screen overflow-auto md:max-w-[28rem] mt-[16px]">
+    <div className="mx-3 mb-4 md:mb-0 element max-h-screen overflow-auto md:max-w-[28rem] mt-[18px]">
       <div className="text-text-third flex justify-between items-center px-2 pb-2">
         <h3 className="text-xl font-medium">Alerts</h3>
         {/* <div className="flex items-center gap-2">

@@ -11,7 +11,8 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import Toggle from "../toggle";
+import ToggleButton from "../sidebar/ToggleButton";
+
 const useCases = [
   "Blog Ideas and outlines",
   "Tech Event Ideas",
@@ -178,6 +179,7 @@ export default function WriteSidebar({
   };
 
   return (
+    // <div className="">
     <Form
       heading="Write with AI"
       variant="write"
@@ -243,12 +245,9 @@ export default function WriteSidebar({
         setDropdown={setDropdown}
       />
 
-      {/* TODO: Write from my content component */}
-      <Toggle
-        label="Write from my content"
-        checked={writeFromMyContent}
-        onChange={() => setWriteFromMyContent(!writeFromMyContent)}
-      />
+      {/*  Write from my content component */}
+      <ToggleButton label="Write from my content" />
     </Form>
+    // </div>
   );
 }
