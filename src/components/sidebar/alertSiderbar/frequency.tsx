@@ -1,48 +1,52 @@
+import React from "react";
+
 type FrequencyProps = {
   selectedFrequency: string;
   handleFrequencyChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
+
 const Frequency = ({
   selectedFrequency,
   handleFrequencyChange,
 }: FrequencyProps) => {
   return (
-    <div>
-      <label className="flex items-center mb-2">
+    <div className="flex gap-1 flex-col">
+      <label className="flex items-center mb-1 cursor-pointer">
         <input
           type="checkbox"
           name="alertFrequency"
           value="daily"
           checked={selectedFrequency === "daily"}
           onChange={handleFrequencyChange}
-          className="mr-2"
+          className="custom-checkbox appearance-none h-5 w-5 border border-gray-200 rounded-md checked:bg-primary-green checked:border-transparent outline-none transition-all duration-200"
         />
-        <span>Daily</span>
+        <span className="ml-2">Daily</span>
       </label>
-      <label className="flex items-center mb-2">
+      <label className="flex items-center mb-2 cursor-pointer">
         <input
           type="checkbox"
           name="alertFrequency"
           value="weekly"
           checked={selectedFrequency === "weekly"}
           onChange={handleFrequencyChange}
-          className="mr-2"
+          className="custom-checkbox appearance-none h-5 w-5 border border-gray-200 rounded-md checked:bg-primary-green checked:border-transparent outline-none transition-all duration-200"
         />
-        <span>Weekly</span>
+        <span className="ml-2">Weekly</span>
       </label>
-      <label className="flex items-center">
+      <label className="flex items-center cursor-pointer">
         <input
           type="checkbox"
           name="alertFrequency"
           value="monthly"
           checked={selectedFrequency === "monthly"}
           onChange={handleFrequencyChange}
-          className="mr-2"
+          className="custom-checkbox appearance-none h-5 w-5 border border-gray-200 rounded-md checked:bg-primary-green checked:border-transparent outline-none transition-all duration-200"
         />
-        <span>Monthly</span>
+        <span className="ml-2">Monthly</span>
       </label>
     </div>
   );
 };
 
 export default Frequency;
+
