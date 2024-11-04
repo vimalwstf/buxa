@@ -5,13 +5,16 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import MyEditor from "../editor/Editor";
+const MyEditor = dynamic(() => import("../editor/Editor"), {
+  ssr: false,
+});
 import DocumentsTable from "../table/DocumentsTable";
 import LoadingDocs from "../table/LoadingDocs";
 import ListButton from "../ui/ListButton";
 import FavouritesButton from "../ui/FavouritesButton";
 import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
+import dynamic from "next/dynamic";
 
 export default function ResearchList({
   showEditor,

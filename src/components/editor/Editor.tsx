@@ -5,6 +5,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
+import dynamic from "next/dynamic";
 type EditorProps = {
   value?: string; // htmlstring
   onChange?: (content: string) => void;
@@ -74,4 +75,5 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
     </div>
   );
 };
-export default MyEditor;
+
+export default dynamic(() => Promise.resolve(MyEditor), { ssr: false });

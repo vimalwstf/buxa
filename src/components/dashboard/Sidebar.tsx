@@ -9,14 +9,14 @@ import { TbListSearch } from "react-icons/tb";
 import { LiaPenNibSolid } from "react-icons/lia";
 
 const sidebarLinks = [
-  { icon: <MdDashboard />, href: "/dashboard", name: "Dashboard" },
+  // { icon: <MdDashboard />, href: "/dashboard", name: "Dashboard" },
   { icon: <LiaPenNibSolid />, href: "/write", name: "Write with AI" },
-  {
-    icon: <TbListSearch />,
-    href: "/research",
-    name: "Research with AI",
-  },
-  { icon: <BsBellFill />, href: "/alert", name: "Alert with AI" },
+  // {
+  //   icon: <TbListSearch />,
+  //   href: "/research",
+  //   name: "Research with AI",
+  // },
+  // { icon: <BsBellFill />, href: "/alert", name: "Alert with AI" },
 ];
 
 const Sidebar = () => {
