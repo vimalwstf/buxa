@@ -53,7 +53,7 @@ export default function Form({
           {SidebarForm}
         </div>
       </div>
-      <div className="hidden md:block md:w-2/6 md:max-w-sm">{SidebarForm}</div>
+      <div className="hidden md:block md:w-[30%] lg:w-[25%]">{SidebarForm}</div>
       <div className="fixed bottom-2 right-2 z-50">
         <div
           className="bg-secondary-disabled rounded-lg shadow-lg p-3 cursor-pointer md:hidden"

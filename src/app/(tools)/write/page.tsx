@@ -28,7 +28,7 @@ export default function Write() {
   return (
     <>
       <WriteSidebar handleDocumentSubmit={handleDocumentSubmit} />
-      <div className="flex-1">
+      <div className="w-full md:w-[70%] lg:w-[75%]">
         <WriteList
           showEditor={showEditor}
           toggleShowEditor={toggleShowEditor}

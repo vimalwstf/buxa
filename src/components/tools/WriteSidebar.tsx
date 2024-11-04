@@ -178,73 +178,75 @@ export default function WriteSidebar({
   };
 
   return (
-    <Form
-      heading="Write with AI"
-      variant="write"
-      loading={loading}
-      allFilled={allFieldsFilled}
-      onSubmit={handleSubmit}
-    >
-      {/* UseCase Drop-down */}
-      <Dropdown
-        name="use case"
-        selected={useCase}
-        options={useCases}
-        label="Choose use case"
-        handleSelect={handleDropdownSelect("useCase")}
-        dropdown={dropdown}
-        setDropdown={setDropdown}
-      />
+    // <div className="">
+      <Form
+        heading="Write with AI"
+        variant="write"
+        loading={loading}
+        allFilled={allFieldsFilled}
+        onSubmit={handleSubmit}
+      >
+        {/* UseCase Drop-down */}
+        <Dropdown
+          name="use case"
+          selected={useCase}
+          options={useCases}
+          label="Choose use case"
+          handleSelect={handleDropdownSelect("useCase")}
+          dropdown={dropdown}
+          setDropdown={setDropdown}
+        />
 
-      {/* primaryKeyword input */}
-      <Input
-        label="Primary Keywords"
-        placeholder="AI writing assistant"
-        value={keywords}
-        setValue={setKeywords}
-      />
+        {/* primaryKeyword input */}
+        <Input
+          label="Primary Keywords"
+          placeholder="AI writing assistant"
+          value={keywords}
+          setValue={setKeywords}
+        />
 
-      {/* Research level slider */}
-      <ProgressBar
-        researchLevel={researchLevel}
-        setResearchLevel={setResearchLevel}
-      />
+        {/* Research level slider */}
+        <ProgressBar
+          researchLevel={researchLevel}
+          setResearchLevel={setResearchLevel}
+        />
 
-      {/* Personality dropdown */}
-      <ComboDropdown
-        name="personality"
-        searchLabel="Search another personality"
-        selectedTags={personalityTags}
-        allTags={personalities}
-        handleSelect={handleTagSelect("personality")}
-        dropdown={dropdown}
-        setDropdown={setDropdown}
-      />
+        {/* Personality dropdown */}
+        <ComboDropdown
+          name="personality"
+          searchLabel="Search another personality"
+          selectedTags={personalityTags}
+          allTags={personalities}
+          handleSelect={handleTagSelect("personality")}
+          dropdown={dropdown}
+          setDropdown={setDropdown}
+        />
 
-      {/* Tone dropdown */}
-      <ComboDropdown
-        name="tone"
-        searchLabel="Search another tone"
-        selectedTags={toneTags}
-        allTags={tones}
-        handleSelect={handleTagSelect("tone")}
-        dropdown={dropdown}
-        setDropdown={setDropdown}
-      />
+        {/* Tone dropdown */}
+        <ComboDropdown
+          name="tone"
+          searchLabel="Search another tone"
+          selectedTags={toneTags}
+          allTags={tones}
+          handleSelect={handleTagSelect("tone")}
+          dropdown={dropdown}
+          setDropdown={setDropdown}
+        />
 
-      {/* Language dropdown */}
-      <Dropdown
-        name="language"
-        selected={language}
-        options={languages}
-        label="Set language"
-        handleSelect={handleDropdownSelect("language")}
-        dropdown={dropdown}
-        setDropdown={setDropdown}
-      />
+        {/* Language dropdown */}
+        <Dropdown
+          name="language"
+          selected={language}
+          options={languages}
+          label="Set language"
+          handleSelect={handleDropdownSelect("language")}
+          dropdown={dropdown}
+          setDropdown={setDropdown}
+        />
 
-      {/*  Write from my content component */}
-      <ToggleButton label="Write from my content" />
-    </Form>
+        {/*  Write from my content component */}
+        <ToggleButton label="Write from my content" />
+      </Form>
+    // </div>
   );
 }

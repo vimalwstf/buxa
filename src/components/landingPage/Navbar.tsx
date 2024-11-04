@@ -67,7 +67,7 @@ const Navbar = () => {
           {loggedIn ? (
             <Link
               className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
-              href="/dashboard"
+              href="/write"
             >
               {/* <MdDashboard size={24} className="text-primary-green" /> */}
               <span className="sm:inline-block text-xl font-medium">
@@ -75,6 +75,16 @@ const Navbar = () => {
               </span>
               <MdOutlineArrowOutward size={24} />
             </Link>
+            // <Link
+            //   className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
+            //   href="/dashboard"
+            // >
+            //   {/* <MdDashboard size={24} className="text-primary-green" /> */}
+            //   <span className="sm:inline-block text-xl font-medium">
+            //     Dashboard
+            //   </span>
+            //   <MdOutlineArrowOutward size={24} />
+            // </Link>
           ) : (
             <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">
               <GoogleSignup />
