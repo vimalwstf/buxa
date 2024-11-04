@@ -89,7 +89,7 @@ export default function AlertFrequency() {
         type="button"
         onClick={addTimeSlot}
         disabled={timeSlots.length === maxTimeSlots}
-        className="flex items-center gap-2 bg-slate-300 text-black px-4 py-2 rounded w-full justify-center mb-4 disabled:cursor-not-allowed"
+        className="flex items-center gap-2 bg-text-third text-white font-medium px-4 py-2 rounded w-full justify-center mb-4 disabled:cursor-not-allowed"
       >
         <FaCirclePlus />
         <span>Add more timing</span>

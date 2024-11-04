@@ -21,7 +21,7 @@ const Time = ({
         <MdDelete size={24} />
       </button>
       <TimePicker onChange={onStartTimeChange} value={startTime} />
-      <div className="w-4 h-1 bg-slate-300"></div>
+      <div className="w-4 h-1 bg-primary-light"></div>
       <TimePicker onChange={onEndTimeChange} value={endTime} />
     </div>
   );

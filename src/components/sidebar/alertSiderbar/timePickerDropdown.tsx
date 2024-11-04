@@ -23,7 +23,7 @@ const TimePicker = ({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full mt-1 p-2 text-text-third bg-text-primary border border-gray-300 rounded-md shadow-sm focus:outline-none focus:bg-slate-800"
+        className="w-full mt-1 p-2 text-text-third bg-primary-light border border-gray-200 rounded-md  focus:outline-none focus:bg-zinc-800"
       >
         <option value="">time</option>
         {timeOptions.map((time) => (
