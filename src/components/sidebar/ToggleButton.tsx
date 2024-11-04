@@ -16,7 +16,7 @@ export default function ToggleButton({ label }: ToggleButtonProps) {
 
       <div className="flex items-center justify-center">
         <div
-          className={`w-9 h-4 flex items-center bg-[#120F25] rounded-full cursor-pointer transition duration-300 ${
+          className={`relative w-9 h-4 flex items-center bg-[#120F25] rounded-full cursor-pointer transition duration-300 ${
             isOn && "bg-[#695fb0]"
           }`}
           onClick={handleToggle}

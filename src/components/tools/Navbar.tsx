@@ -43,12 +43,12 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <div
-          className={`mobile-nav fixed md:static top-0 right-0 h-full w-[60%] md:w-auto bg-black md:bg-transparent p-6 md:p-0 flex flex-col md:flex-row items-start md:items-center space-y-8 md:space-y-0 md:space-x-4
+          className={`mobile-nav laptop:justify-end fixed md:static top-0 right-0 h-full w-[60%] md:w-auto bg-black md:bg-transparent p-6 md:p-0 flex flex-col md:flex-row items-start md:items-center space-y-8 md:space-y-0 md:space-x-4
             transform transition-transform duration-300 ease-in-out ${
               isMenuOpen ? "translate-x-0" : "translate-x-full"
             } md:translate-x-0`}
         >
-          <Link
+          {/* <Link
             className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer"
             href="/dashboard"
           >
@@ -56,7 +56,7 @@ const Navbar = () => {
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
               Dashboard
             </span>
-          </Link>
+          </Link> */}
 
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
