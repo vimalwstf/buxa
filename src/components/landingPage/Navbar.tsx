@@ -66,15 +66,15 @@ const Navbar = () => {
         <div>
           {loggedIn ? (
             <Link
-              className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
-              href="/write"
-            >
-              {/* <MdDashboard size={24} className="text-primary-green" /> */}
-              <span className="sm:inline-block text-xl font-medium">
-                Dashboard
-              </span>
-              <MdOutlineArrowOutward size={24} />
-            </Link>
+            className="flex group items-center md:gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
+            href="/write"
+          >
+            {/* <MdDashboard size={24} className="text-primary-green" /> */}
+            <span className=" text-sm sm:inline-block md:text-xl font-medium">
+              Dashboard
+            </span>
+            <MdOutlineArrowOutward className="group-hover:scale-150 group-hover:text-primary-green ease-in-out" size={26} />
+          </Link>
             // <Link
             //   className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
             //   href="/dashboard"

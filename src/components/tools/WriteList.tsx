@@ -122,12 +122,23 @@ export default function WriteList({
             ...prev,
           ]);
           toggleShowEditor();
-          enqueueSnackbar("Document saved successfully!", {
+          enqueueSnackbar("Document saved successfully", {
             variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
           });
         }
       } catch (error) {
         console.log(error);
+        enqueueSnackbar("Failed to save Document", {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },
+        });
       }
     }
   };

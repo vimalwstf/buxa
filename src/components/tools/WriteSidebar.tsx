@@ -165,11 +165,21 @@ export default function WriteSidebar({
             setState(initialState);
             enqueueSnackbar("Document generated successfully", {
               variant: "success",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              }
             });
           }
         } catch (error) {
           console.log(error);
-          enqueueSnackbar("Failed to generate document", { variant: "error" });
+          enqueueSnackbar("Failed to generate document", {
+            variant: "error",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            }
+          });
         } finally {
           setLoading(false);
         }
