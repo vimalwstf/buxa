@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { FaCreditCard } from "react-icons/fa6";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import PaymentModal from "@/components/credits/PaymentModal";
-import { MdDashboard } from "react-icons/md";
 import Image from "next/image";
 import { useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
@@ -63,7 +62,7 @@ const Navbar = () => {
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
-              {user?.credits} credits
+              {isLoading ? "..." : user?.credits} credits
             </span>
           </div>
 
