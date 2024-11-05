@@ -47,7 +47,7 @@ const Navbar = () => {
           className="md:hidden cursor-pointer"
           onClick={() => setMobileNavigation(!mobileNavigation)}
         >
-          <Image src={Hamburger} width={40} height={40} alt="" />
+          <Image src={Hamburger} width={30} height={30} alt="hamburger" />
         </div>
         <div className="w-24 sm:w-40 ">
           <Link href="/">
