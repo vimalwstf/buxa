@@ -8,28 +8,33 @@ import { useState } from "react";
 const MyEditor = dynamic(() => import("../editor/Editor"), {
   ssr: false,
 });
+import DocumentsTable from "../table/DocumentsTable";
 import LoadingDocs from "../table/LoadingDocs";
 import ListButton from "../ui/ListButton";
 import FavouritesButton from "../ui/FavouritesButton";
 import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
-import ResearchTable from "../table/ResearchTable";
 
 export default function ResearchList({
   showEditor,
   toggleShowEditor,
-  docData,
-  setDocData,
+  editorDocData,
+  seEditorDocData,
 }: {
   showEditor: boolean;
   toggleShowEditor: () => void;
-  docData: string[];
-  setDocData: (data: string[]) => void;
+  editorDocData: DocumentInfo;
+  seEditorDocData: (data: DocumentInfo) => void;
 }) {
   const [documents, setDocuments] = useState<DocumentInfo[]>([]);
+  const [favouritesON, setFavouritesON] = useState(false);
+
   const { isLoading } = useFetchWriterDocuments(setDocuments);
-  const [selectedDoc, setSelectedDoc] = useState(0);
+
+  const filteredDocuments = favouritesON
+    ? documents.filter((doc) => doc.favourite)
+    : documents;
 
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
@@ -147,22 +152,11 @@ export default function ResearchList({
             <ListButton handleClick={toggleShowEditor} label="Research List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>
-          {docData.map((doc, index) => (
-            <button
-              key={index}
-              onClick={() => setSelectedDoc(index)}
-              className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              Version {index + 1}
-            </button>
-          ))}
           <MyEditor
-            value={docData[selectedDoc]}
-            onChange={(content: string) => {
-              const updatedDocs = [...docData];
-              updatedDocs[selectedDoc] = content;
-              setDocData(updatedDocs);
-            }}
+            value={editorDocData.name}
+            onChange={(content: string) =>
+              seEditorDocData({ ...editorDocData, name: content })
+            }
           />
         </>
       ) : (
@@ -183,14 +177,13 @@ export default function ResearchList({
           {isLoading ? (
             <LoadingDocs />
           ) : (
-            ""
-            // <ResearchTable
-            //   documents={documents}
-            //   setDocData={setDocData}
-            //   toggleShowEditor={toggleShowEditor}
-            //   handleFavouriteUpdate={handleFavouriteUpdate}
-            //   handleDeleteData={handleDeleteData}
-            // />
+            <DocumentsTable
+              documents={filteredDocuments}
+              seEditorDocData={seEditorDocData}
+              toggleShowEditor={toggleShowEditor}
+              handleFavouriteUpdate={handleFavouriteUpdate}
+              handleDeleteData={handleDeleteData}
+            />
           )}
         </>
       )}
