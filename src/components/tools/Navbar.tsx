@@ -50,7 +50,7 @@ const Navbar = () => {
               isMenuOpen ? "translate-x-0" : "translate-x-full"
             } md:translate-x-0`}
         >
-          {/* <Link
+          <Link
             className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer"
             href="/dashboard"
           >
@@ -58,12 +58,12 @@ const Navbar = () => {
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
               Dashboard
             </span>
-          </Link> */}
+          </Link>
 
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
-              {user?.credits} credits
+              {isLoading ? "..." : user?.credits} credits
             </span>
           </div>
 
