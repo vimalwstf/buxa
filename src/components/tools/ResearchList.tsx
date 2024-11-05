@@ -105,7 +105,7 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =
@@ -166,10 +166,7 @@ export default function ResearchList({
               Research List
             </h2>
             <div className="flex gap-4">
-              <FavouritesButton
-                favouritesON={favouritesON}
-                setFavouritesON={setFavouritesON}
-              />
+              <FavouritesButton />
               <NewButton
                 label="New Research"
                 createNewDocument={toggleShowEditor}
