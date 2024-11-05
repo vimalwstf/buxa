@@ -67,7 +67,7 @@ const MyEditor: React.FC<EditorProps> = ({ value, onChange }) => {
       onBlur={onEditorFocusChange}
       editorState={editorState}
       wrapperClassName="h-full flex flex-col overflow-hidden"
-      editorClassName="max-w-[95vw] overflow-y-scroll bg-primary-light border-b border-2 border-gray-200 rounded-b rounded-[8px] p-2 break-words whitespace-normal"
+      editorClassName="element max-w-[95vw] overflow-y-scroll bg-primary-light border-b border-2 border-gray-200 rounded-b rounded-[8px] p-2 break-words whitespace-normal"
       onEditorStateChange={onEditorStateChange}
       toolbar={toolbar}
     />
