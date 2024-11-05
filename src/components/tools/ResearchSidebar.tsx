@@ -28,21 +28,23 @@ export default function ResearchSidebar({
     date: "",
     focus: "",
     source: "",
-    deepDive: false,
-    researchFromWeb: false,
+    // deepDive: false,
+    // researchFromWeb: false,
     dropdown: "",
   };
 
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState<boolean>(false);
+  const [deepDive, setDeepDive] = useState(true);
+  const [researchFromWeb, setResearchFromWeb] = useState(false);
   const {
     topic,
     format,
     date,
     focus,
     source,
-    deepDive,
-    researchFromWeb,
+    // deepDive,
+    // researchFromWeb,
     dropdown,
   } = state;
 
