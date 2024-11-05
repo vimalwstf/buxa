@@ -7,13 +7,12 @@ interface Props {
   setDocuments: (documents: DocumentInfo[]) => void;
 }
 const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
   useEffect(() => {
     const fetchDocuments = async () => {
       if (accessToken) {
-        setIsLoading(true);
         try {
           const response = await axios.get(
             `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents`,
