@@ -30,7 +30,7 @@ export default function DocumentsTable({
     toggleShowEditor();
     seEditorDocData(doc);
   };
-
+ 
   return (
     <>
       <div className="element flex-1 p-4 text-white overflow-y-scroll w-full rounded-md bg-primary-light">
