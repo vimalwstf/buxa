@@ -28,13 +28,7 @@ export default function WriteList({
   seEditorDocData: (data: DocumentInfo) => void;
 }) {
   const [documents, setDocuments] = useState<DocumentInfo[]>([]);
-  const [favouritesON, setFavouritesON] = useState(false);
-
   const { isLoading } = useFetchWriterDocuments(setDocuments);
-
-  const filteredDocuments = favouritesON
-    ? documents.filter((doc) => doc.favourite)
-    : documents;
 
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;
@@ -165,10 +159,7 @@ export default function WriteList({
               Document List
             </h2>
             <div className="flex gap-4">
-              <FavouritesButton
-                favouritesON={favouritesON}
-                setFavouritesON={setFavouritesON}
-              />
+              <FavouritesButton />
               <NewButton
                 label="New Document"
                 createNewDocument={toggleShowEditor}
@@ -180,7 +171,7 @@ export default function WriteList({
             <LoadingDocs />
           ) : (
             <DocumentsTable
-              documents={filteredDocuments}
+              documents={documents}
               seEditorDocData={seEditorDocData}
               toggleShowEditor={toggleShowEditor}
               handleFavouriteUpdate={handleFavouriteUpdate}

@@ -1,14 +1,11 @@
 import { useState } from "react";
 
 interface DatePickerProps {
-  selectedDate: number | null;
-  onDateChange: (date: number) => void;
+  value: number | null;
+  onChange: (date: number) => void;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({
-  selectedDate,
-  onDateChange,
-}) => {
+const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   const [isCalenderOpen, setCalenderIsOpen] = useState(false);
   const toggleDatePicker = () => {
     setCalenderIsOpen(!isCalenderOpen);
@@ -19,7 +16,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
         onClick={toggleDatePicker}
         className="mb-2 block w-full p-2 border border-gray-200 rounded-md  outline-none hover:cursor-pointer"
       >
-        {selectedDate ? `Selected Date: ${selectedDate}` : "Select Date"}
+        {value ? `Selected Date: ${value}` : "Select Date"}
       </label>
 
       {isCalenderOpen && (
@@ -30,14 +27,14 @@ const DatePicker: React.FC<DatePickerProps> = ({
                 key={date}
                 type="button"
                 onClick={() => {
-                  onDateChange(date);
+                  onChange(date);
                   toggleDatePicker();
                 }}
                 className={`aspect-square w-8 cursor-pointer px-2 py-1 text-center rounded-md  text-black
                   ${
-                    date === selectedDate
-                      ? "bg-primary-green "
-                      : "bg-gray-100 hover:bg-blue-100"
+                    date === value
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100 hover:bg-blue-100 text-black"
                   }`}
               >
                 {date}
