@@ -2,7 +2,7 @@ import React from "react";
 
 type FrequencyProps = {
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
 };
 
 const Frequency = ({ value, onChange }: FrequencyProps) => {
@@ -14,7 +14,7 @@ const Frequency = ({ value, onChange }: FrequencyProps) => {
           name="alertFrequency"
           value="daily"
           checked={value === "daily"}
-          onChange={onChange}
+          onChange={(e) => onChange(e.target.value)}
           className="custom-checkbox appearance-none h-5 w-5 border border-gray-200 rounded-md checked:bg-primary-green checked:border-transparent outline-none transition-all duration-200"
         />
         <span className="ml-2">Daily</span>
@@ -25,7 +25,7 @@ const Frequency = ({ value, onChange }: FrequencyProps) => {
           name="alertFrequency"
           value="weekly"
           checked={value === "weekly"}
-          onChange={onChange}
+          onChange={(e) => onChange(e.target.value)}
           className="custom-checkbox appearance-none h-5 w-5 border border-gray-200 rounded-md checked:bg-primary-green checked:border-transparent outline-none transition-all duration-200"
         />
         <span className="ml-2">Weekly</span>
@@ -36,7 +36,7 @@ const Frequency = ({ value, onChange }: FrequencyProps) => {
           name="alertFrequency"
           value="monthly"
           checked={value === "monthly"}
-          onChange={onChange}
+          onChange={(e) => onChange(e.target.value)}
           className="custom-checkbox appearance-none h-5 w-5 border border-gray-200 rounded-md checked:bg-primary-green checked:border-transparent outline-none transition-all duration-200"
         />
         <span className="ml-2">Monthly</span>

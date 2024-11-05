@@ -5,11 +5,8 @@ import { FaCirclePlus } from "react-icons/fa6";
 import WeekDayPicker from "./weekDayPickerDropdown";
 import DatePicker from "./datePicker";
 
-const maxTimeSlots = 2;
-
 export default function AlertFrequency() {
   const [selectedFrequency, setSelectedFrequency] = useState("daily");
-  const [timeSlots, setTimeSlots] = useState([{ startTime: "", endTime: "" }]);
   const [timeSlots, setTimeSlots] = useState([{ startTime: "", endTime: "" }]);
   const [weekDay, setWeekDay] = useState("");
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
@@ -19,12 +16,9 @@ export default function AlertFrequency() {
     selectedDate,
     weekDay,
     timeSlots,
-    timeSlots,
   };
 
-
   console.log(schedule);
-
 
   const onDateChange = (value: number) => {
     setSelectedDate(value);
@@ -45,30 +39,14 @@ export default function AlertFrequency() {
       return slot;
     });
     setTimeSlots(updatedSlots);
-
-  const onTimeChange = (
-    index: number,
-    type: "start" | "end",
-    value: string
-  ) => {
-    const updatedSlots = timeSlots.map((slot, i) => {
-      if (i === index) {
-        return {
-          ...slot,
-          [type === "start" ? "startTime" : "endTime"]: value,
-        };
-      }
-      return slot;
-    });
-    setTimeSlots(updatedSlots);
   };
 
-  const onFrequencyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFrequency(event.target.value);
+  const onFrequencyChange = (value: string) => {
+    setSelectedFrequency(value);
   };
 
-  const onWeekDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setWeekDay(event.target.value);
+  const onWeekDayChange = (value: string) => {
+    setWeekDay(value);
   };
 
   const addTimeSlot = () => {
@@ -76,7 +54,7 @@ export default function AlertFrequency() {
   };
 
   const onDeleteTimeSlot = (index: number) => {
-    console.log(timeSlots);
+    // console.log(timeSlots);
     if (timeSlots.length === 1) return;
     const updatedSlots = timeSlots.filter((_, i) => i !== index);
     setTimeSlots(updatedSlots);
@@ -110,7 +88,6 @@ export default function AlertFrequency() {
         <FaCirclePlus />
         <span>Add more timing</span>
       </button>
-
 
       {selectedFrequency === "weekly" && (
         <WeekDayPicker value={weekDay} onChange={onWeekDayChange} />
