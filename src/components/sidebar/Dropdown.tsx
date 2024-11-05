@@ -48,7 +48,7 @@ export default function Dropdown({
         {dropdownOpen ? <FiChevronUp /> : <FiChevronDown />}
       </div>
       {dropdownOpen && (
-        <div className="mt-2 rounded-md max-h-40 overflow-y-auto element scrollbar-hidden">
+        <div className="custom-scrollbar mt-2 rounded-md max-h-40 overflow-y-auto scrollbar-hidden">
           {options.map((opt, i) => (
             <button
               type="button"

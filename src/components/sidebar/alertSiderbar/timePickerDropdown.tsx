@@ -19,11 +19,11 @@ const TimePicker = ({
   const timeOptions = generateTimeOptions();
 
   return (
-    <div className="">
+    <div className="flex-1">
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full mt-1 p-2 text-gray-900 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        className="w-full mt-1 p-2 text-text-third bg-primary-light border border-gray-200 rounded-md  focus:outline-none focus:bg-zinc-800"
       >
         <option value="">time</option>
         {timeOptions.map((time) => (

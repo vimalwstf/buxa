@@ -16,7 +16,6 @@ import dynamic from "next/dynamic";
 const MyEditor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
 });
-
 export default function WriteList({
   showEditor,
   toggleShowEditor,
@@ -106,7 +105,7 @@ export default function WriteList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =
@@ -123,12 +122,23 @@ export default function WriteList({
             ...prev,
           ]);
           toggleShowEditor();
-          enqueueSnackbar("Document saved successfully!", {
+          enqueueSnackbar("Document saved successfully", {
             variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
           });
         }
       } catch (error) {
         console.log(error);
+        enqueueSnackbar("Failed to save Document", {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },
+        });
       }
     }
   };
@@ -137,7 +147,7 @@ export default function WriteList({
     <div className="w-full h-full flex flex-col gap-2 md:gap-4 ">
       {showEditor ? (
         <>
-          <div className="flex justify-between mb-4 items-baseline">
+          <div className="flex justify-between items-baseline">
             <ListButton handleClick={toggleShowEditor} label="Document List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>

@@ -3,13 +3,7 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
 export const handleSignIn = async () => {
-  await signIn(
-    "google",
-    {
-      callbackUrl: `${process.env.NEXT_PUBLIC_SOURCE_URL}/api/auth/callback/google`,
-    },
-    { prompt: "login" },
-  );
+  await signIn("google", { callbackUrl: "/write" }, { prompt: "login" });
 };
 
 export default function GoogleSignup() {

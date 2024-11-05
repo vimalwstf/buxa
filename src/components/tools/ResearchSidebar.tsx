@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Dropdown from "@/components/sidebar/Dropdown";
 import Input from "@/components/sidebar/Input";
 import Form from "@/components/sidebar/Form";
+import ToggleButton from "../sidebar/ToggleButton";
 
 const allFormats = ["Article", "Blog Post", "Book", "Course", "Podcast"];
 const focusAreas = ["Business", "Marketing", "Tech"];
@@ -142,9 +143,11 @@ export default function ResearchSidebar({
         setDropdown={setDropdown}
       />
 
-      {/* TODO: Deep dive checkbox */}
+      {/* Deep dive toggle */}
+      <ToggleButton label="Deep Dive" />
 
-      {/* TODO: Research from web checkbox */}
+      {/*  Research from web toggle */}
+      <ToggleButton label="Research from web" />
     </Form>
   );
 }

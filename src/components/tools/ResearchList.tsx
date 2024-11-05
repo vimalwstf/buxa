@@ -16,7 +16,6 @@ import dynamic from "next/dynamic";
 const MyEditor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
 });
-
 export default function ResearchList({
   showEditor,
   toggleShowEditor,
@@ -106,7 +105,7 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =
@@ -123,12 +122,24 @@ export default function ResearchList({
             ...prev,
           ]);
           toggleShowEditor();
-          enqueueSnackbar("Document saved successfully!", {
+          enqueueSnackbar("Document saved successfully", {
             variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
           });
         }
       } catch (error) {
         console.log(error);
+        enqueueSnackbar("Failed to save document", {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },
+          autoHideDuration: 1000,
+        });
       }
     }
   };

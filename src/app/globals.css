@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * {
-  overflow: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;  
-}
-
-*::-webkit-scrollbar {
-  display: none;
-} */
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -90,6 +80,14 @@ body {
   ) !important;
 }
 
+/* .border-gradient {
+  border-width: 1px;
+  border-style: solid;
+  border-image-source: linear-gradient(102.15deg, rgba(166, 255, 124, 0.3) -36.38%, rgba(99, 102, 241, 0.3) 139.45%);
+  border-image-slice: 1;
+  border-radius: 8px;
+} */
+
 .element {
   overflow: auto;
   scrollbar-width: none;
@@ -99,3 +97,37 @@ body {
 .element::-webkit-scrollbar {
   display: none;
 }
+
+.custom-checkbox {
+  position: relative;
+}
+
+.custom-checkbox:checked::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;
+  color: #000000;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;    
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+}
+
+.rdw-editor-toolbar {
+  background: #1c1c25 !important;
+  border: 1px solid #4b4b50 !important;
+  border-radius: 8px !important;
+  color: black !important;
+}
+
+
+

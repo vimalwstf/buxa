@@ -10,7 +10,7 @@ const StatLevelCard: React.FC<StatLevelCardProps> = ({
   number,
 }) => {
   return (
-    <div className="relative w-[144px] h-[194px] rounded-md overflow-hidden bg-[#0a0a0d] border">
+    <div className="relative w-[144px] h-[194px] rounded-md overflow-hidden bg-[#111116] border">
       <div className="absolute inset-0 rounded-md  "></div>
 
       <div className="relative w-full h-full rounded-md overflow-hidden text-gray-300">
