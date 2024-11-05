@@ -2,27 +2,38 @@
 
 import ResearchList from "@/components/tools/ResearchList";
 import ResearchSidebar from "@/components/tools/ResearchSidebar";
-import { DocumentInfo } from "@/types/type";
+// import { DocumentInfo } from "@/types/type";
 import { useState } from "react";
 
-const DEFAULT_DOCUMENT: DocumentInfo = {
-  id: "0",
-  name: "",
-  words: 0,
-  modified: "",
-  favourite: false,
-};
+export type Research = [
+  [
+    {
+      id: string;
+      content: string[];
+      isFavorite: boolean;
+      updatedAt: string;
+    },
+  ],
+];
 
 export default function Research() {
   const [showEditor, setShowEditor] = useState(false);
-  const [editorDocData, seEditorDocData] =
-    useState<DocumentInfo>(DEFAULT_DOCUMENT);
+  const [docData, setDocData] = useState<Research>([
+    [
+      {
+        id: "",
+        content: [""],
+        isFavorite: false,
+        updatedAt: "",
+      },
+    ],
+  ]);
 
   const toggleShowEditor = () => setShowEditor(!showEditor);
 
-  const handleDocumentSubmit = (data: DocumentInfo) => {
+  const handleDocumentSubmit = (data: Research) => {
     toggleShowEditor();
-    seEditorDocData(data);
+    setDocData(data);
   };
 
   return (
@@ -32,8 +43,8 @@ export default function Research() {
         <ResearchList
           showEditor={showEditor}
           toggleShowEditor={toggleShowEditor}
-          editorDocData={editorDocData}
-          seEditorDocData={seEditorDocData}
+          docData={docData}
+          setDocData={setDocData}
         />
       </div>
     </>

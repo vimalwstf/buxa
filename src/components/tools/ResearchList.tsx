@@ -15,6 +15,7 @@ import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
 import ResearchTable from "../table/ResearchTable";
+import { Research } from "@/app/(tools)/research/page";
 
 export default function ResearchList({
   showEditor,
@@ -24,8 +25,8 @@ export default function ResearchList({
 }: {
   showEditor: boolean;
   toggleShowEditor: () => void;
-  docData: string[];
-  setDocData: (data: string[]) => void;
+  docData: Research;
+  setDocData: (data: Research) => void;
 }) {
   const [documents, setDocuments] = useState<DocumentInfo[]>([]);
   const { isLoading } = useFetchWriterDocuments(setDocuments);
@@ -79,7 +80,7 @@ export default function ResearchList({
   };
 
   const handleEditorSubmit = async () => {
-    const text = parseHtml(editorDocData.name);
+    const text = parseHtml(docData.name);
     if (text.trim() === "") {
       enqueueSnackbar("Document is empty!", {
         variant: "error",
@@ -87,14 +88,14 @@ export default function ResearchList({
       return;
     }
 
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${editorDocData?.id}`;
+    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${docData?.id}`;
 
-    if (accessToken && editorDocData) {
+    if (accessToken && docData) {
       try {
         const res = await axios.post(
           url,
           {
-            content: editorDocData.name,
+            content: docData.name,
           },
           {
             headers: {
@@ -147,15 +148,16 @@ export default function ResearchList({
             <ListButton handleClick={toggleShowEditor} label="Research List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>
-          {docData.map((doc, index) => (
-            <button
-              key={index}
-              onClick={() => setSelectedDoc(index)}
-              className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              Version {index + 1}
-            </button>
-          ))}
+          {docData.map((doc, index) => {
+            console.log(doc);
+            // <button
+            //   key={index}
+            //   onClick={() => setSelectedDoc(index)}
+            //   className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            // >
+            //   Version {index + 1}
+            // </button>
+          })}
           <MyEditor
             value={docData[selectedDoc]}
             onChange={(content: string) => {

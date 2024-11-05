@@ -148,7 +148,7 @@ export default function ResearchSidebar({
           ],
         });
         // Reset all state variables
-        setState(initialState);
+        // setState(initialState);
         enqueueSnackbar("Document generated successfully", {
           variant: "success",
           anchorOrigin: {
