@@ -66,7 +66,7 @@ export default function WriteSidebar({
 
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState<boolean>(false);
-  const [writeFromMyContent, setWriteFromMyContent] = useState(true);
+  // const [writeFromMyContent, setWriteFromMyContent] = useState(true);
   const {
     useCase,
     keywords,
