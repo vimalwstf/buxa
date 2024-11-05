@@ -5,8 +5,11 @@ import { FaCirclePlus } from "react-icons/fa6";
 import WeekDayPicker from "./weekDayPickerDropdown";
 import DatePicker from "./datePicker";
 
+const maxTimeSlots = 2;
+
 export default function AlertFrequency() {
   const [selectedFrequency, setSelectedFrequency] = useState("daily");
+  const [timeSlots, setTimeSlots] = useState([{ startTime: "", endTime: "" }]);
   const [timeSlots, setTimeSlots] = useState([{ startTime: "", endTime: "" }]);
   const [weekDay, setWeekDay] = useState("");
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
@@ -16,13 +19,32 @@ export default function AlertFrequency() {
     selectedDate,
     weekDay,
     timeSlots,
+    timeSlots,
   };
 
+
   console.log(schedule);
+
 
   const onDateChange = (value: number) => {
     setSelectedDate(value);
   };
+
+  const onTimeChange = (
+    index: number,
+    type: "start" | "end",
+    value: string
+  ) => {
+    const updatedSlots = timeSlots.map((slot, i) => {
+      if (i === index) {
+        return {
+          ...slot,
+          [type === "start" ? "startTime" : "endTime"]: value,
+        };
+      }
+      return slot;
+    });
+    setTimeSlots(updatedSlots);
 
   const onTimeChange = (
     index: number,
@@ -88,6 +110,7 @@ export default function AlertFrequency() {
         <FaCirclePlus />
         <span>Add more timing</span>
       </button>
+
 
       {selectedFrequency === "weekly" && (
         <WeekDayPicker value={weekDay} onChange={onWeekDayChange} />

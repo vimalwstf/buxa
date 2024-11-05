@@ -22,7 +22,7 @@ function OptionsModal({ id, handleDeleteData }: OptionsModalProps) {
       />
       {modalOpen && (
         <div
-          className="relative right-6 rounded-lg flex flex-col gap-2 overflow-y-auto px-4 py-2 bg-secondary-default shadow-lg z-10"
+          className="absolute rounded-lg flex flex-col gap-2 overflow-y-auto px-4 py-2 bg-secondary-default shadow-lg z-10"
           onClick={() => setModalOpen(false)}
         >
           <div

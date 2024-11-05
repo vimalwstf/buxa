@@ -122,12 +122,24 @@ export default function ResearchList({
             ...prev,
           ]);
           toggleShowEditor();
-          enqueueSnackbar("Document saved successfully!", {
+          enqueueSnackbar("Document saved successfully", {
             variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
           });
         }
       } catch (error) {
         console.log(error);
+        enqueueSnackbar("Failed to save document", {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },
+          autoHideDuration: 1000,
+        });
       }
     }
   };

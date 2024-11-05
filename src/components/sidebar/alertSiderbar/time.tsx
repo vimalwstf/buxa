@@ -16,12 +16,12 @@ const Time = ({
   onDelete,
 }: TimeProps) => {
   return (
-    <div className="flex items-center mb-2 w-full">
+    <div className="flex gap-1 items-center mb-2 w-full">
       <button onClick={onDelete} className="text-text-third">
         <MdDelete size={24} />
       </button>
       <TimePicker onChange={onStartTimeChange} value={startTime} />
-      <div className="w-4 h-1 bg-slate-300"></div>
+      <div className="w-4 h-1 bg-primary-light"></div>
       <TimePicker onChange={onEndTimeChange} value={endTime} />
     </div>
   );

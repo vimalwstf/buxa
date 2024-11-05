@@ -125,12 +125,12 @@ const Footer = () => {
           })}
         </div>
         <div className="text-center md:w-full opacity-50">
-          <p className="">
+          <p className="flex justify-center gap-2 items-center">
             Copyright © 2023{" "}
-            <Link href="" className="border-b">
-              Buxa.ai, Inc. All rights reserved. The smartest AI writer
-              available.
+            <Link href="/" className="border-b">
+              Buxa.AI Inc.
             </Link>
+            <span>All rights reserved.</span>
           </p>
         </div>
       </footer>

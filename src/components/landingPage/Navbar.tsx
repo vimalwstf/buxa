@@ -37,11 +37,11 @@ const Navbar = () => {
 
   return (
     <header
-      className={`container-wrapper sticky top-0 backdrop-blur-3xl z-20 h-[80px] items-center sm:h-[94px] text-white ${
+      className={`container-wrapper sticky top-0 backdrop-blur-3xl py-4 z-20 h-[80px] items-center text-white ${
         mobileNavigation ? "bg-black" : "backdrop-blur-3xl"
       }`}
     >
-      <div className="content-container bg-blue-80 flex justify-between py-4 md:py-6 items-center">
+      <div className="content-container bg-blue-80 flex justify-between items-center">
         {/* Hamburger menu button */}
         <div
           className="md:hidden cursor-pointer"
@@ -51,11 +51,11 @@ const Navbar = () => {
         </div>
         <div className="w-24 sm:w-40 ">
           <Link href="/">
-            <Image src={Logo} width={130} height={130} alt="logo" />
+            <Image src={Logo} width={120} height={120} alt="logo" />
           </Link>
         </div>
         <div className="hidden md:flex">
-          <nav className="space-x-6 lg:space-x-10 m-auto md:text-lg lg:text-xl">
+          <nav className="space-x-10 m-auto md:text-lg lg:text-xl">
             {Links.map(({ name, href }, i) => (
               <Link key={i} className="hover:text-green-500" href={href}>
                 {name}
@@ -66,14 +66,14 @@ const Navbar = () => {
         <div>
           {loggedIn ? (
             <Link
-              className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
+              className="flex group items-center md:gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
               href="/write"
             >
               {/* <MdDashboard size={24} className="text-primary-green" /> */}
-              <span className="sm:inline-block text-xl font-medium">
+              <span className=" text-sm sm:inline-block md:text-xl font-medium">
                 Dashboard
               </span>
-              <MdOutlineArrowOutward size={24} />
+              <MdOutlineArrowOutward className="group-hover:scale-150 group-hover:text-primary-green ease-in-out" size={26} />
             </Link>
             // <Link
             //   className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"

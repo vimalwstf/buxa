@@ -9,10 +9,12 @@ import Image from "next/image";
 import { useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 import LogoutBtn from "@/components/LogoutBtn";
+import useFetchUser from "@/hooks/useFetchUser";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isLoading } = useFetchUser();
   const user = useAppSelector((state) => state.user.user);
 
   // Handle opening and closing the modal
@@ -61,7 +63,7 @@ const Navbar = () => {
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
-              {user?.credits} Credits
+              {user?.credits} credits
             </span>
           </div>
 
