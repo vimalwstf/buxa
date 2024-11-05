@@ -3,9 +3,11 @@ import Td from "@/components/table/Td";
 import Th from "@/components/table/Th";
 import { formatDate, parseHtml } from "@/lib/utils";
 import { DocumentInfo } from "@/types/type";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { CgFileAdd } from "react-icons/cg";
 import { FaFileAlt, FaRegStar, FaStar } from "react-icons/fa";
 import OptionsModal from "./OptionsModal";
-import { CgFileAdd } from "react-icons/cg";
 
 interface TableProps {
   documents: DocumentInfo[];
@@ -22,22 +24,36 @@ export default function DocumentsTable({
   handleFavouriteUpdate,
   handleDeleteData,
 }: TableProps) {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+
+  const favouritesON = params.get("favourites") === "true";
+
+  const filteredDocuments = favouritesON
+    ? documents.filter((doc) => doc.favourite)
+    : documents;
+
   const { currentPage, setCurrentPage, firstIndex, lastIndex, totalPages } =
-    usePagination(documents.length);
-  const currentDocuments = documents.slice(firstIndex, lastIndex);
+    usePagination(filteredDocuments.length);
+  const currentDocuments = filteredDocuments.slice(firstIndex, lastIndex);
 
   const openEditor = (doc: DocumentInfo) => {
     toggleShowEditor();
     seEditorDocData(doc);
   };
  
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [favouritesON, setCurrentPage]);
+
   return (
     <>
       <div className="element flex-1 p-4 text-white overflow-y-scroll w-full rounded-md bg-primary-light">
-        {documents.length === 0 ? (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-center">
+        {filteredDocuments.length === 0 ? (
+          <div className="w-3/5 mx-auto h-full flex flex-col items-center justify-center gap-2 text-center">
             <h4 className="text-white text-xl font-bold">No Documents Found</h4>
-            <p className="text-white">
+            <p className="text-white text-wrap">
               You can create a new document by clicking the button below.
             </p>
             <button
@@ -94,8 +110,8 @@ export default function DocumentsTable({
                   </Td>
                   <Td>
                     <OptionsModal
-                      id={item.id}
                       handleDeleteData={handleDeleteData}
+                      id={item.id}
                     />
                   </Td>
                 </tr>
