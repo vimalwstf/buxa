@@ -8,7 +8,7 @@ import ProgressBar from "@/components/sidebar/ProgressBar";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 // import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
@@ -174,15 +174,18 @@ export default function WriteSidebar({
               },
             });
           }
-        } catch (error) {
-          console.log(error);
-          enqueueSnackbar("Failed to generate document", {
-            variant: "error",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
+        } catch (err) {
+          const error = err as any;
+          enqueueSnackbar(
+            `Failed to generate document: ${error?.response?.data?.error}`,
+            {
+              variant: "error",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
             },
-          });
+          );
         } finally {
           setLoading(false);
         }

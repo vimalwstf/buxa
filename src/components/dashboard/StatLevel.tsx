@@ -2,10 +2,19 @@ import React from "react";
 import Glass from "../ui/Glass";
 import StatLevelCard from "./StatLevelCard";
 
-const StatLevel = () => {
-  const contentCredits = 90;
-  const researchCredits = 12;
-  const alertCredits = 111;
+const StatLevel = ({
+  contentCredits,
+  researchCredits,
+  alertCredits,
+  totalCredits,
+  creditBalance,
+}: {
+  contentCredits: number;
+  researchCredits: number;
+  alertCredits: number;
+  totalCredits: number;
+  creditBalance: number;
+}) => {
   return (
     <div className="m-3">
       <Glass>
@@ -15,13 +24,17 @@ const StatLevel = () => {
               <h2 className="text-lg font-medium text-gray-300 line-clamp-2">
                 Total Credit usage :
               </h2>
-              <p className="text-4xl font-semibold text-white">1467</p>
+              <p className="text-4xl font-semibold text-white">
+                {totalCredits}
+              </p>
             </div>
             <div className="flex gap-4 items-center mb-4 sm:mb-10">
               <h2 className="text-lg font-medium text-gray-300">
                 Credit balance :
               </h2>
-              <p className="text-4xl font-semibold text-white">{90}</p>
+              <p className="text-4xl font-semibold text-white">
+                {creditBalance}
+              </p>
             </div>
             <button className="bg-primary-green font-medium text-black rounded-[8px] px-4 py-2 w-full md:w-[10vw] hover:scale-105 transition-all duration-200">
               Top up

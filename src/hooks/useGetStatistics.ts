@@ -1,13 +1,27 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import { useSession } from "next-auth/react";
-import { DocumentInfo, DataObject } from "@/types/type";
 import useLocalStorage from "./useLocalStorage";
 
-interface Props {
-  setDocuments: (documents: DocumentInfo[]) => void;
-}
-const useGetStatistics = (setStats: any) => {
+export type StatDocs = {
+  content: string;
+  documentType: string;
+  createdAt: string;
+};
+
+export type Stats = {
+  credits: number;
+  usedCredits: number;
+  totalContent: number;
+  totalResearch: number;
+  totalAlerts: number;
+  coc: number;
+  cor: number;
+  coa: number;
+  documents: StatDocs[];
+};
+
+const useGetStatistics = () => {
+  const [stats, setStats] = useState<Stats>();
   const [isLoading, setIsLoading] = useState(true);
   const { value: user } = useLocalStorage("user", { accessToken: "" });
 
@@ -16,7 +30,6 @@ const useGetStatistics = (setStats: any) => {
   useEffect(() => {
     const fetchStats = async () => {
       if (accessToken) {
-        console.log("------data---------", accessToken);
         try {
           const response = await axios.get(
             `${process.env.NEXT_PUBLIC_SOURCE_URL}/user/dashboard`,
@@ -28,11 +41,29 @@ const useGetStatistics = (setStats: any) => {
             },
           );
           if (response?.data?.status) {
-            const data: any = response.data.data;
+            const {
+              credits,
+              usedCredits,
+              totalContent,
+              totalResearch,
+              totalAlerts,
+              coc,
+              cor,
+              coa,
+              documents,
+            }: Stats = response.data.data;
 
-            console.log("------data---------", data);
-
-            setStats(data);
+            setStats({
+              credits,
+              usedCredits,
+              totalContent,
+              totalResearch,
+              totalAlerts,
+              coc,
+              cor,
+              coa,
+              documents,
+            });
           }
         } catch (error) {
           console.log("document fetch", error);
@@ -44,7 +75,7 @@ const useGetStatistics = (setStats: any) => {
     fetchStats();
   }, [accessToken, setStats]);
 
-  return { isLoading };
+  return { isLoading, stats };
 };
 
 export default useGetStatistics;
