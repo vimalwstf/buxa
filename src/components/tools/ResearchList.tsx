@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 import { Research } from "@/app/(tools)/research/page";
 import { MdDelete } from "react-icons/md";
 import ResearchTable from "../table/ResearchTable";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function ResearchList({
   showEditor,
@@ -35,9 +36,8 @@ export default function ResearchList({
   const { isLoading } = useFetchResearchDocuments(setDocuments);
   const [selectedDoc, setSelectedDoc] = useState(0);
 
-  const user = localStorage.getItem("user");
-  const parsedUser = user ? JSON.parse(user) : null;
-  const accessToken = parsedUser?.accessToken;
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const accessToken = user?.accessToken;
 
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
@@ -80,7 +80,7 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
 
         if (res.status === 200) {
@@ -116,7 +116,7 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         if (res.status === 200) {
           // const { id, content, wordCount, updatedAt, isFavorite } =

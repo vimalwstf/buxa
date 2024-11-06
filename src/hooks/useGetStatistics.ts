@@ -7,18 +7,19 @@ import useLocalStorage from "./useLocalStorage";
 interface Props {
   setDocuments: (documents: DocumentInfo[]) => void;
 }
-const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
+const useGetStatistics = (setStats: any) => {
   const [isLoading, setIsLoading] = useState(true);
-
   const { value: user } = useLocalStorage("user", { accessToken: "" });
+
   const accessToken = user?.accessToken;
 
   useEffect(() => {
-    const fetchDocuments = async () => {
+    const fetchStats = async () => {
       if (accessToken) {
+        console.log("------data---------", accessToken);
         try {
           const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents`,
+            `${process.env.NEXT_PUBLIC_SOURCE_URL}/user/dashboard`,
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -27,22 +28,11 @@ const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
             },
           );
           if (response?.data?.status) {
-            const data: DocumentInfo[] = response.data.data.map(
-              (doc: DataObject) => {
-                return {
-                  id: doc.id,
-                  name: doc.content,
-                  words: doc.words,
-                  modified: doc.updatedAt,
-                  favourite: doc.isFavorite,
-                };
-              },
-            );
-            data.sort(
-              (a, b) =>
-                new Date(b.modified).getTime() - new Date(a.modified).getTime(),
-            );
-            setDocuments(data);
+            const data: any = response.data.data;
+
+            console.log("------data---------", data);
+
+            setStats(data);
           }
         } catch (error) {
           console.log("document fetch", error);
@@ -51,10 +41,10 @@ const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
         }
       }
     };
-    fetchDocuments();
-  }, [accessToken, setDocuments]);
+    fetchStats();
+  }, [accessToken, setStats]);
 
   return { isLoading };
 };
 
-export default useFetchWriterDocuments;
+export default useGetStatistics;
