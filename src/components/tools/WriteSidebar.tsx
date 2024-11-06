@@ -8,10 +8,10 @@ import ProgressBar from "@/components/sidebar/ProgressBar";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import ToggleButton from "../sidebar/ToggleButton";
+// import ToggleButton from "../sidebar/ToggleButton";
 
 const useCases = [
   "Blog Ideas and outlines",
@@ -79,8 +79,13 @@ export default function WriteSidebar({
 
   const dispatch = useAppDispatch();
 
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
+  // const { data: session } = useSession();
+  // const accessToken = session?.user?.accessToken;
+  // const accessToken = localStorage.getItem("token");
+
+  const user = localStorage.getItem("user");
+  const parsedUser = user ? JSON.parse(user) : null;
+  const accessToken = parsedUser?.accessToken;
 
   const setDropdown = (name: string) => {
     setState((prev) => ({ ...prev, dropdown: name }));
@@ -142,6 +147,7 @@ export default function WriteSidebar({
 
         setLoading(true);
         try {
+          // console.log("hsjfdg")
           const response = await axios.post(
             `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents`,
             { metadata },
@@ -256,7 +262,7 @@ export default function WriteSidebar({
       />
 
       {/*  Write from my content component */}
-      <ToggleButton label="Write from my content" />
+      {/* <ToggleButton label="Write from my content" /> */}
     </Form>
     // </div>
   );

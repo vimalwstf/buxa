@@ -1,7 +1,7 @@
 import useFetchResearchDocuments from "@/hooks/useFetchResearchDocuments";
 import { parseHtml } from "@/lib/utils";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 const MyEditor = dynamic(() => import("../editor/Editor"), {
@@ -35,8 +35,10 @@ export default function ResearchList({
   const { isLoading } = useFetchResearchDocuments(setDocuments);
   const [selectedDoc, setSelectedDoc] = useState(0);
 
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE3MzA4ODkxOTR9.8gQdAc1MKkb4XW-KYEg6FqEktYqDRru9puxcw4q7GoE";
+  const user = localStorage.getItem("user");
+  const parsedUser = user ? JSON.parse(user) : null;
+  const accessToken = parsedUser?.accessToken;
+
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
 
@@ -50,8 +52,8 @@ export default function ResearchList({
         if (res.status === 200) {
           const updatedDocuments = [...documents];
           const index = updatedDocuments.findIndex((doc) => doc.id === id);
-          updatedDocuments[index].favourite =
-            !updatedDocuments[index].favourite;
+          updatedDocuments[index].isFavorite =
+            !updatedDocuments[index].isFavorite;
           setDocuments(updatedDocuments);
         }
       } catch (error) {
@@ -78,7 +80,7 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
 
         if (res.status === 200) {
@@ -114,7 +116,7 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           // const { id, content, wordCount, updatedAt, isFavorite } =
@@ -206,10 +208,8 @@ export default function ResearchList({
           {isLoading ? (
             <LoadingDocs />
           ) : (
-            // ""
             <ResearchTable
               documents={documents}
-              // setDocuments={setDocuments}
               setSelectedDoc={setSelectedDoc}
               setDocData={setDocData}
               toggleShowEditor={toggleShowEditor}
