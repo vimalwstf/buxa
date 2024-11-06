@@ -22,8 +22,6 @@ function GoogleRedirectPage() {
   if (user) {
     user = JSON.parse(user);
   }
-  console.log(user)
-//   const redirectRoute = "/";
   const getMe = async () => {
     if (user) {
       let credentials: Credentials = {
@@ -33,7 +31,7 @@ function GoogleRedirectPage() {
         credits: user?.credits ?? "",
         email: user?.email ?? "",
       };
-
+      
       localStorage.setItem("user",JSON.stringify(user));
 
       dispatch(logIn(credentials));

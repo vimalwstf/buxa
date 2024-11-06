@@ -10,6 +10,12 @@ import Link from "next/link";
 import LogoutBtn from "@/components/LogoutBtn";
 import { useAuth } from "@/hooks/useAuth";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useFetchUser from "@/hooks/useFetchUser";
+
+interface User {
+  credits: number;
+}
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,9 +27,12 @@ const Navbar = () => {
   };
 
   const { isLoading, checkUser } = useAuth();
+  const { isLoading: userLoading } = useFetchUser();
 
-  const { value: user } = useLocalStorage("user", { credits: "" });
-  const credits = user?.credits;
+  const { value: user } = useLocalStorage("user", {
+    credits: "",
+  });
+  const credits = user?.credits ?? 0;
 
   useEffect(() => {
     checkUser();
@@ -70,7 +79,7 @@ const Navbar = () => {
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
-              {isLoading ? ".." : credits} credits
+              {isLoading ? "..." : credits} credits
             </span>
           </div>
 

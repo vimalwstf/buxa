@@ -134,29 +134,25 @@ export default function ResearchList({
           </div>
 
           <div className="element flex gap-2 overflow-x-auto">
-            {docData.content.map(
-              (doc, index) => {
-                return (
-                  <>
-                    <span
-                      key={index}
-                      onClick={() => setSelectedDoc(index)}
-                      className="bg-primary-light px-2 py-1 flex justify-center items-center gap-2 rounded-md border cursor-pointer whitespace-nowrap"
-                    >
-                      Varient {index + 1}
-                      <button
-                        onClick={() => handleDeleteData(docData.id, index)}
-                      >
-                        <MdDelete
-                          className="hover:text-red-500 duration-200 transition-all ease-in-out"
-                          size={20}
-                        />
-                      </button>
-                    </span>
-                  </>
-                );
-              }
-            )}
+            {docData.content.map((doc, index) => {
+              return (
+                <>
+                  <span
+                    key={index}
+                    onClick={() => setSelectedDoc(index)}
+                    className="bg-primary-light px-2 py-1 flex justify-center items-center gap-2 rounded-md border cursor-pointer whitespace-nowrap"
+                  >
+                    Varient {index + 1}
+                    <button onClick={() => handleDeleteData(docData.id, index)}>
+                      <MdDelete
+                        className="hover:text-red-500 duration-200 transition-all ease-in-out"
+                        size={20}
+                      />
+                    </button>
+                  </span>
+                </>
+              );
+            })}
           </div>
 
           <MyEditor

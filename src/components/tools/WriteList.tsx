@@ -16,6 +16,7 @@ import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function WriteList({
   showEditor,
@@ -45,7 +46,7 @@ export default function WriteList({
                 Authorization: `Bearer ${accessToken}`,
                 "ngrok-skip-browser-warning": true,
               },
-            },
+            }
           );
           if (response?.data?.status) {
             const data: DocumentInfo[] = response.data.data.map(
@@ -57,11 +58,11 @@ export default function WriteList({
                   modified: doc.updatedAt,
                   favourite: doc.isFavorite,
                 };
-              },
+              }
             );
             data.sort(
               (a, b) =>
-                new Date(b.modified).getTime() - new Date(a.modified).getTime(),
+                new Date(b.modified).getTime() - new Date(a.modified).getTime()
             );
             setDocuments(data);
           }
@@ -74,9 +75,6 @@ export default function WriteList({
     };
     fetchDocuments();
   }, [accessToken, setDocuments]);
-
-  // const { data: session } = useSession();
-  // const accessToken = session?.user?.accessToken;
 
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
@@ -144,7 +142,7 @@ export default function WriteList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =

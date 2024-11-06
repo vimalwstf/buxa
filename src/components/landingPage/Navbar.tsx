@@ -11,6 +11,23 @@ import { MdOutlineArrowOutward } from "react-icons/md";
 import { useAuth } from "@/hooks/useAuth";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
+const Navbar = () => {
+  const [mobileNavigation, setMobileNavigation] = useState(false);
+  const { isLoading, checkUser } = useAuth();
+
+  
+  // const loggedIn = localStorage.getItem("");
+  // const user = localStorage.getItem("user");
+  // const parsedUser = user ? JSON.parse(user) : null;
+  // const loggedIn = parsedUser?.accessToken;
+
+  const { value: user } = useLocalStorage("user", {accessToken: ""});
+  const loggedIn = user?.accessToken;
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
 const Links = [
   {
     name: "Resources",

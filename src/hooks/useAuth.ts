@@ -11,7 +11,6 @@ const TokenVerify = async () => {
   const parsedUser = user ? JSON.parse(user) : null;
   const token = parsedUser.accessToken;
 
-  // const accessToken = localStorage.(token);
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
@@ -20,7 +19,7 @@ const TokenVerify = async () => {
           Authorization: `Bearer ${token}`,
           "ngrok-skip-browser-warning": true,
         },
-      },
+      }
     );
     return response;
   } catch (err) {
