@@ -3,6 +3,7 @@ import Th from "@/components/table/Th";
 import { CgFileAdd } from "react-icons/cg";
 import ResearchRow from "./ResearchRow";
 import { Research } from "@/app/(tools)/research/page";
+import { useSearchParams } from "next/navigation";
 
 interface TableProps {
   documents: Research[];
@@ -21,9 +22,18 @@ export default function ResearchTable({
   handleFavouriteUpdate,
   handleDeleteData,
 }: TableProps) {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+
+  const favouritesON = params.get("favourites") === "true";
+
+  const filteredDocuments = favouritesON
+    ? documents.filter((doc) => doc.isFavorite)
+    : documents;
+
   const { currentPage, setCurrentPage, firstIndex, lastIndex, totalPages } =
-    usePagination(documents.length);
-  const currentDocuments = documents.slice(firstIndex, lastIndex);
+    usePagination(filteredDocuments.length);
+  const currentDocuments = filteredDocuments.slice(firstIndex, lastIndex);
 
   const openEditor = (doc: Research, index: number) => {
     toggleShowEditor();

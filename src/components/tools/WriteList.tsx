@@ -16,7 +16,6 @@ import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function WriteList({
   showEditor,
@@ -129,7 +128,9 @@ export default function WriteList({
       return;
     }
 
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${editorDocData?.id}`;
+    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${
+      editorDocData?.id || 0
+    }`;
 
     if (accessToken && editorDocData) {
       try {

@@ -15,7 +15,6 @@ import useFetchUser from "@/hooks/useFetchUser";
 interface User {
   credits: number;
 }
-import useLocalStorage from "@/hooks/useLocalStorage";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

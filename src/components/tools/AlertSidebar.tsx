@@ -6,6 +6,7 @@ import Input from "@/components/sidebar/Input";
 import Form from "@/components/sidebar/Form";
 // import FrequencyAlert from "../sidebar/FrequencyAlert";
 import AlertFrequency from "../sidebar/alertSiderbar/alertFrequency";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function AlertSidebar() {
   const initialState = {
@@ -16,9 +17,12 @@ export default function AlertSidebar() {
   const [loading, setLoading] = useState<boolean>(false);
   const { topic } = state;
 
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
-  const email = session?.user?.userData?.email;
+  const { value: user } = useLocalStorage("user", {
+    accessToken: "",
+    email: "",
+  });
+  const accessToken = user?.accessToken;
+  const email = user?.email;
 
   const setTopic = (topic: string) => {
     setState((prev) => ({ ...prev, topic: topic }));

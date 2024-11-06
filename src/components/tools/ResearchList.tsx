@@ -13,7 +13,7 @@ import FavouritesButton from "../ui/FavouritesButton";
 import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
-import { Research } from "@/app/(tools)/research/page";
+import { DefaultResearch, Research } from "@/app/(tools)/research/page";
 import { MdDelete } from "react-icons/md";
 import ResearchTable from "../table/ResearchTable";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -102,6 +102,7 @@ export default function ResearchList({
         );
         if (res.status === 200) {
           toggleShowEditor();
+          setDocData(DefaultResearch);
           enqueueSnackbar("Document saved successfully", {
             variant: "success",
             anchorOrigin: {
@@ -124,12 +125,17 @@ export default function ResearchList({
     }
   };
 
+  const gotoList = () => {
+    toggleShowEditor();
+    setDocData(DefaultResearch);
+  };
+
   return (
     <div className="w-full h-full flex flex-col gap-2 md:gap-4 ">
       {showEditor ? (
         <>
           <div className="flex justify-between mb-4 items-baseline">
-            <ListButton handleClick={toggleShowEditor} label="Research List" />
+            <ListButton handleClick={gotoList} label="Research List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>
 

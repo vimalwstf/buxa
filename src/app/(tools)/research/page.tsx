@@ -12,14 +12,16 @@ export type Research = {
   updatedAt: string;
 };
 
+export const DefaultResearch = {
+  id: "0",
+  content: [""],
+  isFavorite: false,
+  updatedAt: "",
+};
+
 export default function Research() {
   const [showEditor, setShowEditor] = useState(false);
-  const [docData, setDocData] = useState<Research>({
-    id: "0",
-    content: [""],
-    isFavorite: false,
-    updatedAt: "",
-  });
+  const [docData, setDocData] = useState<Research>(DefaultResearch);
 
   const toggleShowEditor = () => setShowEditor(!showEditor);
 

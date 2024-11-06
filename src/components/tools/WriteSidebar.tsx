@@ -6,7 +6,6 @@ import Form from "@/components/sidebar/Form";
 import Input from "@/components/sidebar/Input";
 import ProgressBar from "@/components/sidebar/ProgressBar";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import useLocalStorage from "@/hooks/useLocalStorage";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
 import axios, { AxiosError } from "axios";
