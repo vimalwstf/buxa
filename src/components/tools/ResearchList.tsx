@@ -29,10 +29,8 @@ export default function ResearchList({
   docData: Research;
   setDocData: (data: Research) => void;
 }) {
-  // console.log(docData);
-
   const [documents, setDocuments] = useState<Research[]>([]);
-  // const isLoading = false;
+
   const { isLoading } = useFetchResearchDocuments(setDocuments);
   const [selectedDoc, setSelectedDoc] = useState(0);
 
@@ -66,12 +64,6 @@ export default function ResearchList({
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/research/${id}?index=${index}`;
 
     if (accessToken) {
-      // console.log({
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`,
-      //   },
-      // });
-
       try {
         const res = await axios.post(
           url,
@@ -80,12 +72,10 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
 
         if (res.status === 200) {
-          // const updatedDocuments = documents.filter((doc) => doc.id !== id);
-          // setDocuments(updatedDocuments);
           console.log(res.data);
         }
       } catch (error) {
@@ -95,14 +85,6 @@ export default function ResearchList({
   };
 
   const handleEditorSubmit = async () => {
-    // const text = parseHtml(docData.name);
-    // if (text.trim() === "") {
-    //   enqueueSnackbar("Document is empty!", {
-    //     variant: "error",
-    //   });
-    //   return;
-    // }
-
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/research/${docData.id}`;
 
     if (accessToken && docData) {
@@ -116,22 +98,9 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
-          // const { id, content, wordCount, updatedAt, isFavorite } =
-          //   res.data.data;
-
-          // setDocuments((prev) => [
-          //   {
-          //     id,
-          //     name: content,
-          //     words: wordCount,
-          //     modified: updatedAt,
-          //     favourite: isFavorite,
-          //   },
-          //   ...prev,
-          // ]);
           toggleShowEditor();
           enqueueSnackbar("Document saved successfully", {
             variant: "success",
@@ -163,24 +132,33 @@ export default function ResearchList({
             <ListButton handleClick={toggleShowEditor} label="Research List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>
-          <div className="flex gap-2">
-            {docData.content.map((doc, index) => {
-              return (
-                <>
-                  <span
-                    key={index}
-                    onClick={() => setSelectedDoc(index)}
-                    className="bg-primary-light p-1 rounded-md border"
-                  >
-                    Version {index + 1}
-                    <button onClick={() => handleDeleteData(docData.id, index)}>
-                      <MdDelete />
-                    </button>
-                  </span>
-                </>
-              );
-            })}
+
+          <div className="element flex gap-2 overflow-x-auto">
+            {docData.content.map(
+              (doc, index) => {
+                return (
+                  <>
+                    <span
+                      key={index}
+                      onClick={() => setSelectedDoc(index)}
+                      className="bg-primary-light px-2 py-1 flex justify-center items-center gap-2 rounded-md border cursor-pointer whitespace-nowrap"
+                    >
+                      Varient {index + 1}
+                      <button
+                        onClick={() => handleDeleteData(docData.id, index)}
+                      >
+                        <MdDelete
+                          className="hover:text-red-500 duration-200 transition-all ease-in-out"
+                          size={20}
+                        />
+                      </button>
+                    </span>
+                  </>
+                );
+              }
+            )}
           </div>
+
           <MyEditor
             value={docData.content[selectedDoc]}
             onChange={(content: string) => {

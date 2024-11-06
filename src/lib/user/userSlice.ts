@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
+
 interface UserState {
   isLoggedIn: boolean;
   user: UserType | null;
@@ -18,6 +19,8 @@ const initialState: UserState = {
   isLoggedIn: false,
   user:null
 };
+ 
+
 
 
 export const userSlice = createSlice({
@@ -31,6 +34,7 @@ export const userSlice = createSlice({
     logOut: (state) => {
      state.isLoggedIn = false;
      state.user = null;
+ 
     },
     updateCredit : (state, action: PayloadAction<number>)=>{
       if(state.user && action.payload >= 0){

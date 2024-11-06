@@ -3,8 +3,9 @@ import Td from "./Td";
 import { FaStar } from "react-icons/fa6";
 import { FaFileAlt, FaRegStar, FaTrashAlt } from "react-icons/fa";
 import { Research } from "@/app/(tools)/research/page";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Th from "./Th";
+import useClickOutside from "@/hooks/useClickOutisde";
 
 export default function ResearchRow({
   docData,
@@ -25,11 +26,20 @@ export default function ResearchRow({
     };
   };
 
+
+
+  const tableRef = useRef<HTMLDivElement>(null);
+
+  const closeTable = () => {
+   setIsOpen(false)
+  };
+  useClickOutside(tableRef, closeTable);
+
   return (
     <>
       <tr
         onClick={() => setIsOpen(!isOpen)}
-        className="hover:bg-gray-200 relative cursor-pointer"
+        className={`${isOpen ? "bg-gray-200" : ""}  hover:bg-gray-200 relative cursor-pointer`}
       >
         <Td className="flex !whitespace-normal items-center">
           {/* <FaFileAlt className="inline mr-2 hover:cursor-pointer text-white" /> */}
@@ -57,11 +67,13 @@ export default function ResearchRow({
           </button>
         </Td>
         {isOpen && (
-          <ContentTable
+         <div ref={tableRef} >
+           <ContentTable
             content={docData.content}
             onclick={onClick}
             handleDelete={handleDelete(docData.id)}
           />
+         </div>
         )}
       </tr>
     </>
@@ -78,8 +90,8 @@ function ContentTable({
   handleDelete: (index: number) => void;
 }) {
   return (
-    <table className="absolute top-8 z-40 left-0 w-full h-fit bg-primary-light border rounded-md border-gray-50">
-      <thead className="bg-gray-50">
+    <table className="absolute top-12 z-40 left-0 w-full h-fit bg-primary-light border rounded-md border-gray-200">
+      <thead className="bg-gray-200">
         <tr>
           <Th className="text-left pl-4 sm:pl-10">Content</Th>
           <Th className="text-center">Delete</Th>
@@ -87,7 +99,7 @@ function ContentTable({
       </thead>
       <tbody>
         {content.map((str, index) => (
-          <tr key={index} onClick={() => onclick(index)}>
+          <tr key={index} onClick={() => onclick(index)} className="hover:bg-gray-200">
             <Td className="flex !whitespace-normal items-center">
               <FaFileAlt className="inline mr-2 hover:cursor-pointer text-white" />
               <span className="max-w-[8ch] sm:max-w-[16ch] md:max-w-[25ch] lg:max-w-[50ch] truncate">
