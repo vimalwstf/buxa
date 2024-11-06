@@ -2,7 +2,7 @@ import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
 import { parseHtml } from "@/lib/utils";
 import { DocumentInfo } from "@/types/type";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 const MyEditor = dynamic(() => import("../editor/Editor"), {
@@ -36,8 +36,9 @@ export default function ResearchList({
     ? documents.filter((doc) => doc.favourite)
     : documents;
 
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
+  // const { data: session } = useSession();
+  // const accessToken = session?.user?.accessToken;
+  const accessToken = localStorage.getItem(user.accessToken);
 
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
@@ -105,7 +106,7 @@ export default function ResearchList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =
@@ -167,8 +168,8 @@ export default function ResearchList({
             </h2>
             <div className="flex gap-4">
               <FavouritesButton
-                favouritesON={favouritesON}
-                setFavouritesON={setFavouritesON}
+              // favouritesON={favouritesON}
+              // setFavouritesON={setFavouritesON}
               />
               <NewButton
                 label="New Research"

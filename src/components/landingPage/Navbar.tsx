@@ -1,20 +1,28 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Logo from "../../../public/images/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Hamburger from "../../../public/images/Hamburger.svg";
 import GoogleSignup from "../GoogleSignup";
-import { useSession } from "next-auth/react";
-// import { MdDashboard } from "react-icons/md";
 import { MdOutlineArrowOutward } from "react-icons/md";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
-  const { data: session } = useSession();
-  const loggedIn = !!session?.user?.accessToken;
+  const { isLoading, checkUser } = useAuth();
+
+  
+  // const loggedIn = localStorage.getItem("");
+  const user = localStorage.getItem("user");
+  const parsedUser = user ? JSON.parse(user) : null;
+  const loggedIn = parsedUser?.accessToken;
+
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   const Links = [
     {
@@ -69,22 +77,14 @@ const Navbar = () => {
               className="flex group items-center md:gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
               href="/write"
             >
-              {/* <MdDashboard size={24} className="text-primary-green" /> */}
               <span className=" text-sm sm:inline-block md:text-xl font-medium">
                 Dashboard
               </span>
-              <MdOutlineArrowOutward className="group-hover:scale-150 group-hover:text-primary-green ease-in-out" size={26} />
+              <MdOutlineArrowOutward
+                className="group-hover:scale-150 group-hover:text-primary-green ease-in-out"
+                size={26}
+              />
             </Link>
-            // <Link
-            //   className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
-            //   href="/dashboard"
-            // >
-            //   {/* <MdDashboard size={24} className="text-primary-green" /> */}
-            //   <span className="sm:inline-block text-xl font-medium">
-            //     Dashboard
-            //   </span>
-            //   <MdOutlineArrowOutward size={24} />
-            // </Link>
           ) : (
             <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">
               <GoogleSignup />
