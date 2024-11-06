@@ -1,20 +1,20 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
+
 import { SnackbarProvider } from "notistack";
 import StoreProvider from "@/providers/StoreProvider";
 import { Session } from "next-auth";
 
 type CustomSessionProviderProps = {
   children: React.ReactNode;
-  session: Session | null;
+  // session: Session | null;
 };
 
-const CustomProvider = ({ children, session }: CustomSessionProviderProps) => {
+const CustomProvider = ({ children }: CustomSessionProviderProps) => {
   return (
     <StoreProvider>
       <SnackbarProvider maxSnack={3}>
-        <SessionProvider session={session}>{children}</SessionProvider>
+      {children}
       </SnackbarProvider>
     </StoreProvider>
   );

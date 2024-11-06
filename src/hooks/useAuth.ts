@@ -38,7 +38,7 @@ export const useAuth = () => {
     if (typeof window !== "undefined") {
       const user = localStorage.getItem("user");
       const parsedUser = user ? JSON.parse(user) : null;
-      const token = parsedUser.accessToken;
+      const token = parsedUser?.accessToken;
       // console.log(token);  
 
       if (token) {
