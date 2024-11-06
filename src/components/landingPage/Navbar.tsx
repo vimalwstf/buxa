@@ -11,30 +11,33 @@ import { useSession } from "next-auth/react";
 // import { MdDashboard } from "react-icons/md";
 import { MdOutlineArrowOutward } from "react-icons/md";
 
+
+const Links = [
+  {
+    name: "Resources",
+    href: "/resources",
+  },
+  {
+    name: "Pricing",
+    href: "/pricing",
+  },
+  {
+    name: "Company",
+    href: "/company",
+  },
+  {
+    name: "Support",
+    href: "/support",
+  },
+];
+
+
 const Navbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
   const { data: session } = useSession();
   const loggedIn = !!session?.user?.accessToken;
 
-  const Links = [
-    {
-      name: "Resources",
-      href: "/resources",
-    },
-    {
-      name: "Pricing",
-      href: "/pricing",
-    },
-    {
-      name: "Company",
-      href: "/company",
-    },
-    {
-      name: "Support",
-      href: "/support",
-    },
-  ];
-
+ 
   return (
     <header
       className={`container-wrapper sticky top-0 backdrop-blur-3xl py-4 z-20 h-[80px] items-center text-white ${
