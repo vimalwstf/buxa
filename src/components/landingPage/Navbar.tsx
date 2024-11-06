@@ -9,6 +9,7 @@ import Hamburger from "../../../public/images/Hamburger.svg";
 import GoogleSignup from "../GoogleSignup";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { useAuth } from "@/hooks/useAuth";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const Navbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
@@ -16,9 +17,12 @@ const Navbar = () => {
 
   
   // const loggedIn = localStorage.getItem("");
-  const user = localStorage.getItem("user");
-  const parsedUser = user ? JSON.parse(user) : null;
-  const loggedIn = parsedUser?.accessToken;
+  // const user = localStorage.getItem("user");
+  // const parsedUser = user ? JSON.parse(user) : null;
+  // const loggedIn = parsedUser?.accessToken;
+
+  const { value: user } = useLocalStorage("user", {accessToken: ""});
+  const loggedIn = user?.accessToken;
 
   useEffect(() => {
     checkUser();

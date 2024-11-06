@@ -2,19 +2,22 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { logIn } from "@/lib/user/userSlice";
-import  useLogout  from "./useLogout";
+import useLogout from "./useLogout";
+import useLocalStorage from "./useLocalStorage";
 // import { useSession } from "next-auth/react";
 
 const useFetchUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const handleLogout  = useLogout();
+  const handleLogout = useLogout();
   // const {data: session} = useSession();
   // const accessToken = session?.user?.accessToken;
 
-  const user = localStorage.getItem("user");
-  const parsedUser = user ? JSON.parse(user) : null;
-  const accessToken = parsedUser?.accessToken;
+  const { value: user, setValue: setUser } = useLocalStorage("user", {
+    accessToken: "",
+    credits: 0,
+  });
+  const accessToken = user?.accessToken;
 
   const fetchUser = async () => {
     if (accessToken) {
@@ -30,7 +33,13 @@ const useFetchUser = () => {
           }
         );
         if (response?.data?.status) {
-          dispatch(logIn(response?.data?.data));
+          console.log("--------user data----------", response?.data?.data);
+
+          let updatedUser = user;
+          updatedUser.credits = response?.data?.data?.credits;
+          setUser(updatedUser);
+
+          // dispatch(logIn(response?.data?.data));
         } else if (response.status === 400) {
           handleLogout();
         }
@@ -45,8 +54,6 @@ const useFetchUser = () => {
   useEffect(() => {
     fetchUser();
   }, [accessToken, dispatch, handleLogout]);
-
-  
 
   return { isLoading };
 };

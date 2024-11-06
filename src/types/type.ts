@@ -13,3 +13,4 @@ export type DocumentInfo = {
     modified: string;
     favourite: boolean;
 };
+

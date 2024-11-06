@@ -10,7 +10,6 @@ const TokenVerify = async () => {
   const parsedUser = user ? JSON.parse(user) : null;
   const token = parsedUser.accessToken;
 
-  // const accessToken = localStorage.(token);
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
@@ -38,12 +37,12 @@ export const useAuth = () => {
     if (typeof window !== "undefined") {
       const user = localStorage.getItem("user");
       const parsedUser = user ? JSON.parse(user) : null;
-      const token = parsedUser.accessToken;
-      // console.log(token);  
+      const token = parsedUser?.accessToken;
+
 
       if (token) {
         let data : any = await TokenVerify();
-        console.log("sjbs", data)
+        // console.log("sjbs", data)
         if (data?.status) {
           dispatch(logIn(data?.data));
           setCallCount(1);

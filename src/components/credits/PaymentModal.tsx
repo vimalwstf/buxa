@@ -10,7 +10,7 @@ import { enqueueSnackbar } from "notistack";
 import { useSession } from "next-auth/react";
 
 interface PaymentModalProps {
-  creditBalance: number | undefined;
+  creditBalance: number | string;
   isModalOpen: boolean;
   toggleModal: () => void;
 }
@@ -37,7 +37,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   useEffect(() => {
     const loadCashfree = async () => {
       const cashfreeInstance = await load({
-        mode: "sandbox", // Switch to 'production' for production
+        mode: "sandbox",
       });
       setCashfree(cashfreeInstance);
     };

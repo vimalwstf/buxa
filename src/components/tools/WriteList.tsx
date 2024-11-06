@@ -15,6 +15,7 @@ import FavouritesButton from "../ui/FavouritesButton";
 import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function WriteList({
   showEditor,
@@ -29,14 +30,9 @@ export default function WriteList({
 }) {
   const [documents, setDocuments] = useState<DocumentInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const { isLoading } = useFetchWriterDocuments(setDocuments);
 
-  
-  // const loggedIn = localStorage.getItem("");
-  const user = localStorage.getItem("user");
-  const parsedUser = user ? JSON.parse(user) : null;
-  const accessToken = parsedUser?.accessToken;
-
+  const { value: user } = useLocalStorage("user", {accessToken: ""});
+  const accessToken = user?.accessToken
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -78,9 +74,6 @@ export default function WriteList({
     };
     fetchDocuments();
   }, [accessToken, setDocuments]);
-
-  // const { data: session } = useSession();
-  // const accessToken = session?.user?.accessToken;
 
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;

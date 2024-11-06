@@ -15,6 +15,7 @@ import FavouritesButton from "../ui/FavouritesButton";
 import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function ResearchList({
   showEditor,
@@ -36,9 +37,9 @@ export default function ResearchList({
     ? documents.filter((doc) => doc.favourite)
     : documents;
 
-  // const { data: session } = useSession();
-  // const accessToken = session?.user?.accessToken;
-  const accessToken = localStorage.getItem(user.accessToken);
+
+  const { value: user } = useLocalStorage("user", {accessToken: ""});
+  const accessToken = user?.accessToken
 
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;

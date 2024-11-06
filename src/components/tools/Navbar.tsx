@@ -10,97 +10,32 @@ import { useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 import LogoutBtn from "@/components/LogoutBtn";
 import { useAuth } from "@/hooks/useAuth";
-// import useFetchUser from "@/hooks/useFetchUser";
-// import axios from "axios";
-// import { useRouter } from "next/navigation";
-// import { useDispatch } from "react-redux";
-// import { logIn } from "@/lib/user/userSlice";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import useFetchUser from "@/hooks/useFetchUser";
 
-// const TokenVerify = async () => {
-//   const accessToken = localStorage.getItem("token");
-//   try {
-//     const response = await axios.get(
-//       `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${accessToken}`,
-//           "ngrok-skip-browser-warning": true,
-//         },
-//       }
-//     );
-//     return response;
-//   } catch (err: any) {
-//     return err.message;
-//   }
-// };
+interface User {
+  credits: number;
+}
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const user = useAppSelector((state) => state.user.user);
-
-  // Handle opening and closing the modal
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
   const { isLoading, checkUser } = useAuth();
+  const { isLoading: userLoading } = useFetchUser();
 
-  
-  // const loggedIn = localStorage.getItem("");
-  const user = localStorage.getItem("user");
-  const parsedUser = user ? JSON.parse(user) : null;
-  const credits = parsedUser?.credits;
+  const { value: user } = useLocalStorage("user", {
+    credits: "",
+  });
+  const credits = user?.credits ?? 0;
 
   useEffect(() => {
     checkUser();
   }, []);
-
-  // const [callCount, setCallCount] = useState(0);
-  // const dispatch = useDispatch();
-  // // const [isLoading, setIsLoading] = useState(true);
-  // const router = useRouter();
-
-  // fetch user profile data
-
-  // const checkUser = async () => {
-  //   if (typeof window != "undefined") {
-  //     const token = localStorage.getItem("token");
-  //     if (token) {
-  //       const data = await TokenVerify();
-  //       console.log("data", data);
-  //       if (data?.status) {
-  //         dispatch(logIn(data?.data));
-  //         setCallCount(1);
-  //         // setIsLoading(false);
-  //       } else {
-  //         // setIsLoading(false);
-  //       }
-  //     } else {
-  //       // setIsLoading(false);
-  //       router.push("/")
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (typeof window != "undefined") {
-  //     if (callCount === 1) {
-  //       if (user != null) {
-  //         // setIsLoading(false);
-  //       } else {
-  //         router.push("/");
-  //         // setIsLoading(false);
-  //       }
-  //     } else {
-  //       if (user != null) {
-  //         // setIsLoading(false);
-  //       } else {
-  //         checkUser();
-  //       }
-  //     }
-  //   }
-  // }, [callCount]);
 
   return (
     <div>
@@ -143,7 +78,7 @@ const Navbar = () => {
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
-              {credits} credits
+              {isLoading ? "..." : credits} credits
             </span>
           </div>
 
