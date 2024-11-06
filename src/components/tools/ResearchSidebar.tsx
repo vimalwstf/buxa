@@ -1,13 +1,11 @@
-"use client";
-
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import Dropdown from "@/components/sidebar/Dropdown";
 import Input from "@/components/sidebar/Input";
 import Form from "@/components/sidebar/Form";
 import ToggleButton from "../sidebar/ToggleButton";
 import { enqueueSnackbar } from "notistack";
 import axios from "axios";
+import { Research } from "@/app/(tools)/research/page";
 
 const allFormats = ["Article", "Blog Post", "Book", "Course", "Podcast"];
 const focusAreas = ["Business", "Marketing", "Tech"];
@@ -15,20 +13,11 @@ const sources = ["Web", "Book", "Podcast", "YouTube"];
 const timeRangeOptions = ["latest", "past_24hrs", "past_week"];
 
 export default function ResearchSidebar({
+  docData,
   handleDocumentSubmit,
 }: {
-  handleDocumentSubmit: (
-    data: [
-      [
-        {
-          id: string;
-          content: string[];
-          isFavorite: boolean;
-          updatedAt: string;
-        }
-      ]
-    ]
-  ) => void;
+  handleDocumentSubmit: (data: Research) => void;
+  docData: Research;
 }) {
   const initialState = {
     topic: "",
@@ -54,9 +43,8 @@ export default function ResearchSidebar({
     dropdown,
   } = state;
 
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
-
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE3MzA4ODkxOTR9.8gQdAc1MKkb4XW-KYEg6FqEktYqDRru9puxcw4q7GoE";
   const setDropdown = (name: string) => {
     setState((prev) => ({ ...prev, dropdown: name }));
   };
@@ -71,7 +59,7 @@ export default function ResearchSidebar({
     setState((prev) => ({ ...prev, topic: topic }));
   };
   const handleDropdownSelect = (
-    type: "format" | "timeRange" | "focus" | "source"
+    type: "format" | "timeRange" | "focus" | "source",
   ) => {
     return (option: string) => {
       setState((prev) => ({ ...prev, [type]: option }));
@@ -99,26 +87,27 @@ export default function ResearchSidebar({
         setLoading(true);
         try {
           const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/research`,
+            `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/research?id=${docData.id}`,
             { metadata },
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            }
+            },
           );
 
           if (response?.data?.status) {
-            console.log(response.data);
+            //     console.log(response.data);
             // dispatch(updateCredit(response?.data?.credits));
-            // const data = {
-            //   id: response.data.data.id,
-            //   name: response.data.data.content,
-            //   modified: response.data.data.updatedAt,
-            //   favourite: response.data.data.isFavorite,
-            //   words: response.data.data.wordCount,
-            // };
-            // handleDocumentSubmit();
+            const resData = response.data.data[0];
+            console.log("resData", resData);
+            const data: Research = {
+              id: String(resData.id),
+              content: resData.content,
+              updatedAt: resData.updatedAt,
+              isFavorite: resData.isFavorite,
+            };
+            handleDocumentSubmit(data);
             // Reset all state variables
             setState(initialState);
             enqueueSnackbar("Document generated successfully", {

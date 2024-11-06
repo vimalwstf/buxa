@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WriteList from "@/components/tools/WriteList";
 import WriteSidebar from "@/components/tools/WriteSidebar";
 import { DocumentInfo } from "@/types/type";
+
+import { useAuth } from "@/hooks/useAuth";
+
+
 
 const DEFAULT_DOCUMENT: DocumentInfo = {
   id: "0",
@@ -24,6 +28,17 @@ export default function Write() {
     toggleShowEditor();
     seEditorDocData(data);
   };
+
+ 
+ 
+
+  const { isLoading, checkUser } = useAuth();
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+
+
 
   return (
     <>

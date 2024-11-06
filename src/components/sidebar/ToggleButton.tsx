@@ -13,10 +13,10 @@ export default function ToggleButton({
     <div className="flex items-center justify-between text-text-third hover:text-white mb-4">
       <span className="block font-medium ">{label}</span>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center ">
         <div
-          className={`relative w-9 h-4 flex items-center bg-[#120F25] rounded-full cursor-pointer transition duration-300 ${
-            isOn && "bg-[#695fb0]"
+          className={`relative w-9 h-4 flex items-center bg-[#695fb0]  rounded-full cursor-pointer transition duration-300 ${
+            isOn && "bg-[#222]"
           }`}
           onClick={toggle}
         >

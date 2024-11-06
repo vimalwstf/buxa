@@ -120,6 +120,7 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #555;
   border-radius: 10px;
+  padding: 20px;
 }
 
 .rdw-editor-toolbar {
