@@ -9,6 +9,7 @@ import Hamburger from "../../../public/images/Hamburger.svg";
 import GoogleSignup from "../GoogleSignup";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { useAuth } from "@/hooks/useAuth";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const Links = [
   {
@@ -33,19 +34,12 @@ const Navbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
   const { isLoading, checkUser } = useAuth();
 
-  const [loggedIn, setLoggedIn] = useState(false);
-
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const loggedIn = user?.accessToken;
 
   useEffect(() => {
-    // Run only on the client
-    if (typeof window !== "undefined") {
-      const user = localStorage.getItem("user");
-      const parsedUser = user ? JSON.parse(user) : null;
-      setLoggedIn(!!parsedUser?.accessToken);
-    }
     checkUser();
   }, []);
-
 
   return (
     <header
