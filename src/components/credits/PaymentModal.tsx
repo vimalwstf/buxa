@@ -7,7 +7,7 @@ import BuyCreditsDropdown from "./BuyCreditsDropdown";
 //@ts-expect-error cashfree
 import { load } from "@cashfreepayments/cashfree-js";
 import { enqueueSnackbar } from "notistack";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 interface PaymentModalProps {
   creditBalance: number | undefined;
@@ -30,8 +30,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     {}
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
+  const user = localStorage.getItem("user");
+  const parsedUser = user ? JSON.parse(user) : null;
+  const accessToken = parsedUser?.accessToken;
   const options = [1, 10, 25, 50, 100];
 
   useEffect(() => {
