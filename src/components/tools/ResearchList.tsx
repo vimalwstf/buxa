@@ -1,6 +1,5 @@
-import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
+import useFetchResearchDocuments from "@/hooks/useFetchResearchDocuments";
 import { parseHtml } from "@/lib/utils";
-import { DocumentInfo } from "@/types/type";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
@@ -14,8 +13,9 @@ import FavouritesButton from "../ui/FavouritesButton";
 import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
-import ResearchTable from "../table/ResearchTable";
 import { Research } from "@/app/(tools)/research/page";
+import { MdDelete } from "react-icons/md";
+import ResearchTable from "../table/ResearchTable";
 
 export default function ResearchList({
   showEditor,
@@ -28,13 +28,15 @@ export default function ResearchList({
   docData: Research;
   setDocData: (data: Research) => void;
 }) {
-  const [documents, setDocuments] = useState<DocumentInfo[]>([]);
-  const { isLoading } = useFetchWriterDocuments(setDocuments);
+  // console.log(docData);
+
+  const [documents, setDocuments] = useState<Research[]>([]);
+  // const isLoading = false;
+  const { isLoading } = useFetchResearchDocuments(setDocuments);
   const [selectedDoc, setSelectedDoc] = useState(0);
 
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
-
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE3MzA4ODkxOTR9.8gQdAc1MKkb4XW-KYEg6FqEktYqDRru9puxcw4q7GoE";
   const handleFavouriteUpdate = async (id: string) => {
     const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
 
@@ -58,20 +60,31 @@ export default function ResearchList({
     }
   };
 
-  const handleDeleteData = async (id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
+  const handleDeleteData = async (id: string, index: number) => {
+    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/research/${id}?index=${index}`;
 
     if (accessToken) {
+      // console.log({
+      //   headers: {
+      //     Authorization: `Bearer ${accessToken}`,
+      //   },
+      // });
+
       try {
-        const res = await axios.delete(url, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
+        const res = await axios.post(
+          url,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
           },
-        });
+        );
 
         if (res.status === 200) {
-          const updatedDocuments = documents.filter((doc) => doc.id !== id);
-          setDocuments(updatedDocuments);
+          // const updatedDocuments = documents.filter((doc) => doc.id !== id);
+          // setDocuments(updatedDocuments);
+          console.log(res.data);
         }
       } catch (error) {
         console.log(error);
@@ -80,22 +93,22 @@ export default function ResearchList({
   };
 
   const handleEditorSubmit = async () => {
-    const text = parseHtml(docData.name);
-    if (text.trim() === "") {
-      enqueueSnackbar("Document is empty!", {
-        variant: "error",
-      });
-      return;
-    }
+    // const text = parseHtml(docData.name);
+    // if (text.trim() === "") {
+    //   enqueueSnackbar("Document is empty!", {
+    //     variant: "error",
+    //   });
+    //   return;
+    // }
 
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${docData?.id}`;
+    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/research/${docData.id}`;
 
     if (accessToken && docData) {
       try {
-        const res = await axios.post(
+        const res = await axios.put(
           url,
           {
-            content: docData.name,
+            content: docData.content,
           },
           {
             headers: {
@@ -104,19 +117,19 @@ export default function ResearchList({
           },
         );
         if (res.status === 200) {
-          const { id, content, wordCount, updatedAt, isFavorite } =
-            res.data.data;
+          // const { id, content, wordCount, updatedAt, isFavorite } =
+          //   res.data.data;
 
-          setDocuments((prev) => [
-            {
-              id,
-              name: content,
-              words: wordCount,
-              modified: updatedAt,
-              favourite: isFavorite,
-            },
-            ...prev,
-          ]);
+          // setDocuments((prev) => [
+          //   {
+          //     id,
+          //     name: content,
+          //     words: wordCount,
+          //     modified: updatedAt,
+          //     favourite: isFavorite,
+          //   },
+          //   ...prev,
+          // ]);
           toggleShowEditor();
           enqueueSnackbar("Document saved successfully", {
             variant: "success",
@@ -148,21 +161,29 @@ export default function ResearchList({
             <ListButton handleClick={toggleShowEditor} label="Research List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>
-          {docData.map((doc, index) => {
-            console.log(doc);
-            // <button
-            //   key={index}
-            //   onClick={() => setSelectedDoc(index)}
-            //   className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            // >
-            //   Version {index + 1}
-            // </button>
-          })}
+          <div className="flex gap-2">
+            {docData.content.map((doc, index) => {
+              return (
+                <>
+                  <span
+                    key={index}
+                    onClick={() => setSelectedDoc(index)}
+                    className="bg-primary-light p-1 rounded-md border"
+                  >
+                    Version {index + 1}
+                    <button onClick={() => handleDeleteData(docData.id, index)}>
+                      <MdDelete />
+                    </button>
+                  </span>
+                </>
+              );
+            })}
+          </div>
           <MyEditor
-            value={docData[selectedDoc]}
+            value={docData.content[selectedDoc]}
             onChange={(content: string) => {
-              const updatedDocs = [...docData];
-              updatedDocs[selectedDoc] = content;
+              const updatedDocs = docData;
+              updatedDocs.content[selectedDoc] = content;
               setDocData(updatedDocs);
             }}
           />
@@ -185,14 +206,16 @@ export default function ResearchList({
           {isLoading ? (
             <LoadingDocs />
           ) : (
-            ""
-            // <ResearchTable
-            //   documents={documents}
-            //   setDocData={setDocData}
-            //   toggleShowEditor={toggleShowEditor}
-            //   handleFavouriteUpdate={handleFavouriteUpdate}
-            //   handleDeleteData={handleDeleteData}
-            // />
+            // ""
+            <ResearchTable
+              documents={documents}
+              // setDocuments={setDocuments}
+              setSelectedDoc={setSelectedDoc}
+              setDocData={setDocData}
+              toggleShowEditor={toggleShowEditor}
+              handleFavouriteUpdate={handleFavouriteUpdate}
+              handleDeleteData={handleDeleteData}
+            />
           )}
         </>
       )}

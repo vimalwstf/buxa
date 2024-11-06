@@ -5,40 +5,35 @@ import ResearchSidebar from "@/components/tools/ResearchSidebar";
 // import { DocumentInfo } from "@/types/type";
 import { useState } from "react";
 
-export type Research = [
-  [
-    {
-      id: string;
-      content: string[];
-      isFavorite: boolean;
-      updatedAt: string;
-    },
-  ],
-];
+export type Research = {
+  id: string;
+  content: string[];
+  isFavorite: boolean;
+  updatedAt: string;
+};
 
 export default function Research() {
   const [showEditor, setShowEditor] = useState(false);
-  const [docData, setDocData] = useState<Research>([
-    [
-      {
-        id: "",
-        content: [""],
-        isFavorite: false,
-        updatedAt: "",
-      },
-    ],
-  ]);
+  const [docData, setDocData] = useState<Research>({
+    id: "0",
+    content: [""],
+    isFavorite: false,
+    updatedAt: "",
+  });
 
   const toggleShowEditor = () => setShowEditor(!showEditor);
 
   const handleDocumentSubmit = (data: Research) => {
-    toggleShowEditor();
+    setShowEditor(true);
     setDocData(data);
   };
 
   return (
     <>
-      <ResearchSidebar handleDocumentSubmit={handleDocumentSubmit} />
+      <ResearchSidebar
+        docData={docData}
+        handleDocumentSubmit={handleDocumentSubmit}
+      />
       <div className="flex-1">
         <ResearchList
           showEditor={showEditor}

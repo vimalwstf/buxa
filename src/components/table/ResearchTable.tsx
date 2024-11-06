@@ -1,55 +1,40 @@
 import Pagination, { usePagination } from "@/components/table/Pagination";
-import Td from "@/components/table/Td";
 import Th from "@/components/table/Th";
-import { DocumentInfo } from "@/types/type";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import { CgFileAdd } from "react-icons/cg";
-// import { FaFileAlt, FaRegStar, FaStar } from "react-icons/fa";
-// import OptionsModal from "./OptionsModal";
 import ResearchRow from "./ResearchRow";
+import { Research } from "@/app/(tools)/research/page";
 
 interface TableProps {
-  documents: DocumentInfo[];
+  documents: Research[];
+  setDocData: (data: Research) => void;
   toggleShowEditor: () => void;
-  seEditorDocData: (doc: DocumentInfo) => void;
+  setSelectedDoc: (n: number) => void;
   handleFavouriteUpdate: (id: string) => void;
-  handleDeleteData: (id: string) => void;
+  handleDeleteData: (id: string, index: number) => void;
 }
 
 export default function ResearchTable({
   documents,
+  setDocData,
   toggleShowEditor,
-  // seEditorDocData,
-  // handleFavouriteUpdate,
-  // handleDeleteData,
+  setSelectedDoc,
+  handleFavouriteUpdate,
+  handleDeleteData,
 }: TableProps) {
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
-
-  const favouritesON = params.get("favourites") === "true";
-
-  const filteredDocuments = favouritesON
-    ? documents.filter((doc) => doc.favourite)
-    : documents;
-
   const { currentPage, setCurrentPage, firstIndex, lastIndex, totalPages } =
-    usePagination(filteredDocuments.length);
-  const currentDocuments = filteredDocuments.slice(firstIndex, lastIndex);
+    usePagination(documents.length);
+  const currentDocuments = documents.slice(firstIndex, lastIndex);
 
-  // const openEditor = (doc: DocumentInfo) => {
-  //   toggleShowEditor();
-  //   seEditorDocData(doc);
-  // };
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [favouritesON, setCurrentPage]);
+  const openEditor = (doc: Research, index: number) => {
+    toggleShowEditor();
+    setDocData(doc);
+    setSelectedDoc(index);
+  };
 
   return (
     <>
       <div className="element flex-1 p-4 text-white overflow-y-scroll w-full rounded-md bg-primary-light">
-        {filteredDocuments.length === 0 ? (
+        {currentDocuments.length === 0 ? (
           <div className="w-3/5 mx-auto h-full flex flex-col items-center justify-center gap-2 text-center">
             <h4 className="text-white text-xl font-bold">No Documents Found</h4>
             <p className="text-white text-wrap">
@@ -70,11 +55,18 @@ export default function ResearchTable({
                 <Th className="text-left pl-4 sm:pl-10">Topic</Th>
                 <Th className="text-center">Documents</Th>
                 <Th className="text-center">Modified</Th>
+                {/* <Th className="text-center">Favourite</Th> */}
               </tr>
             </thead>
             <tbody className="divide-gray-200">
-              {currentDocuments.map((item, i) => (
-                <ResearchRow key={i} item={item} />
+              {currentDocuments.map((data, i) => (
+                <ResearchRow
+                  key={i}
+                  docData={data}
+                  onClick={(i: number) => openEditor(data, i)}
+                  handleDeleteData={handleDeleteData}
+                  handleFavouriteUpdate={handleFavouriteUpdate}
+                />
               ))}
             </tbody>
           </table>
