@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Research } from "@/app/(tools)/research/page";
+import useLocalStorage from "./useLocalStorage";
 
 interface Props {
   setDocuments: (documents: Research[]) => void;
 }
 const useFetchResearchDocuments = (setDocuments: Props["setDocuments"]) => {
   const [isLoading, setIsLoading] = useState(true);
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE3MzA4ODkxOTR9.8gQdAc1MKkb4XW-KYEg6FqEktYqDRru9puxcw4q7GoE";
+
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const accessToken = user?.accessToken;
+
   useEffect(() => {
     const fetchDocuments = async () => {
       if (accessToken) {

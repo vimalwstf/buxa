@@ -5,6 +5,7 @@ import Dropdown from "@/components/sidebar/Dropdown";
 import Form from "@/components/sidebar/Form";
 import Input from "@/components/sidebar/Input";
 import ProgressBar from "@/components/sidebar/ProgressBar";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
 import axios from "axios";
@@ -79,13 +80,8 @@ export default function WriteSidebar({
 
   const dispatch = useAppDispatch();
 
-  // const { data: session } = useSession();
-  // const accessToken = session?.user?.accessToken;
-  // const accessToken = localStorage.getItem("token");
-
-  const user = localStorage.getItem("user");
-  const parsedUser = user ? JSON.parse(user) : null;
-  const accessToken = parsedUser?.accessToken;
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const accessToken = user?.accessToken;
 
   const setDropdown = (name: string) => {
     setState((prev) => ({ ...prev, dropdown: name }));
@@ -110,8 +106,8 @@ export default function WriteSidebar({
               ? prev.personalityTags.filter((t) => t !== tag)
               : [...prev.personalityTags, tag]
             : prev.toneTags.includes(tag)
-            ? []
-            : [tag];
+              ? []
+              : [tag];
 
         return {
           ...prev,
@@ -155,7 +151,7 @@ export default function WriteSidebar({
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            }
+            },
           );
 
           if (response?.data?.status) {
@@ -175,7 +171,7 @@ export default function WriteSidebar({
               anchorOrigin: {
                 vertical: "top",
                 horizontal: "center",
-              }
+              },
             });
           }
         } catch (error) {
@@ -185,7 +181,7 @@ export default function WriteSidebar({
             anchorOrigin: {
               vertical: "top",
               horizontal: "center",
-            }
+            },
           });
         } finally {
           setLoading(false);

@@ -6,6 +6,7 @@ import ToggleButton from "../sidebar/ToggleButton";
 import { enqueueSnackbar } from "notistack";
 import axios from "axios";
 import { Research } from "@/app/(tools)/research/page";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const allFormats = ["Article", "Blog Post", "Book", "Course", "Podcast"];
 const focusAreas = ["Business", "Marketing", "Tech"];
@@ -43,8 +44,9 @@ export default function ResearchSidebar({
     dropdown,
   } = state;
 
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE3MzA4ODkxOTR9.8gQdAc1MKkb4XW-KYEg6FqEktYqDRru9puxcw4q7GoE";
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const accessToken = user?.accessToken;
+
   const setDropdown = (name: string) => {
     setState((prev) => ({ ...prev, dropdown: name }));
   };

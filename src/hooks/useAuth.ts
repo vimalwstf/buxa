@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { logIn } from "@/lib/user/userSlice";
+import useLocalStorage from "./useLocalStorage";
 
 const TokenVerify = async () => {
   const user = localStorage.getItem("user");
@@ -19,11 +20,11 @@ const TokenVerify = async () => {
           Authorization: `Bearer ${token}`,
           "ngrok-skip-browser-warning": true,
         },
-      }
+      },
     );
     return response;
   } catch (err) {
-    const error = err as Error
+    const error = err as Error;
     return error.message;
   }
 };
@@ -34,27 +35,23 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [callCount, setCallCount] = useState(0);
 
-  const checkUser = async () => {
-    if (typeof window !== "undefined") {
-      const user = localStorage.getItem("user");
-      const parsedUser = user ? JSON.parse(user) : null;
-      const token = parsedUser?.accessToken;
-      // console.log(token);  
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const accessToken = user?.accessToken;
 
-      if (token) {
-        let data : any = await TokenVerify();
-        console.log("sjbs", data)
-        if (data?.status) {
-          dispatch(logIn(data?.data));
-          setCallCount(1);
-          setIsLoading(false);
-        } else {
-          setIsLoading(false);
-        }
+  const checkUser = async () => {
+    if (accessToken) {
+      let data: any = await TokenVerify();
+      // console.log("sjbs", data)
+      if (data?.status) {
+        dispatch(logIn(data?.data));
+        setCallCount(1);
+        setIsLoading(false);
       } else {
         setIsLoading(false);
-        router.push("/");
       }
+    } else {
+      setIsLoading(false);
+      // router.push("/");
     }
   };
 
