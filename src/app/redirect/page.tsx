@@ -4,6 +4,7 @@ import React, { Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { logIn } from "@/lib/user/userSlice";
+import Loading from "../loading";
 
 interface Credentials {
   firstName: string;
@@ -47,7 +48,7 @@ function GoogleRedirectPage() {
 
   return (
     <>
-      {/* <div className="min-h-[90vh] p-8">Redirecting you to homepage...</div>; */}
+      <Loading />
     </>
   );
 }
