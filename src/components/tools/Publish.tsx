@@ -161,6 +161,17 @@ function Publish({ docData }: OptionsModalProps) {
                   name="url"
                   className="p-2 rounded-md outline-none text-black mb-4"
                 />
+                  <select
+                  name="site"
+                  required
+                  className="p-2 rounded-md outline-none text-black"
+                >
+                  <option value="" disabled selected hidden>
+                    Status
+                  </option>
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                </select>
                 <button
                   type="submit"
                   className="bg-primary-green text-black p-2 rounded-md hover:scale-105 duration-200"
