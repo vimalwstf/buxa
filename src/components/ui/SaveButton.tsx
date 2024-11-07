@@ -7,7 +7,7 @@ export default function SaveButton({
 }) {
   return (
     <button
-      className="text-black flex items-center gap-2 top-10 bg-primary-green  px-4 py-2 text-sm rounded-md shadow-md"
+      className="text-black flex items-center gap-2 top-10 bg-primary-green  px-4 py-2 text-sm rounded-md"
       onClick={handleClick}
     >
       <IoMdDocument />

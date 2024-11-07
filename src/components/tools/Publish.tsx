@@ -1,6 +1,7 @@
 import useClickOutside from "@/hooks/useClickOutisde";
 import { DocumentInfo } from "@/types/type";
 import { useRef, useState } from "react";
+import { IoShareSocialSharp } from "react-icons/io5";
 
 type OptionsModalProps = {
   docData: DocumentInfo;
@@ -21,17 +22,18 @@ function Publish({ docData }: OptionsModalProps) {
       <div className="relative" ref={modalRef}>
         <button
           type="button"
-          className="text-black flex items-center gap-2 top-10 bg-text-third  px-4 py-2 text-sm rounded-md font-medium"
+          className="bg-secondary-default text-white flex items-center gap-2 top-10 px-4 py-2 text-sm rounded-md font-medium"
           onClick={(e) => {
             e.stopPropagation();
             setModalOpen(!modalOpen);
           }}
         >
-          Share
+          <IoShareSocialSharp />
+          <span>Share</span>
         </button>
         {modalOpen && (
           <div
-            className="absolute top-full right-0 rounded-lg flex flex-col gap-2 overflow-y-auto px-4 py-2 bg-gray-200 shadow-lg z-10"
+            className="absolute top-full right-0 rounded-lg flex flex-col gap-2 overflow-y-auto px-4 py-2 bg-secondary-default shadow-lg z-10"
             onClick={(e) => e.stopPropagation()}
           >
             <form className="w-fit h-fit flex gap-2 flex-col cursor-pointer z-10">
