@@ -1,7 +1,7 @@
 import useClickOutside from "@/hooks/useClickOutisde";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { DocumentInfo } from "@/types/type";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useRef, useState } from "react";
 
@@ -14,7 +14,11 @@ function Publish({ docData }: OptionsModalProps) {
   const [isPublishing, setIsPublishing] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const { value: user } = useLocalStorage("user", {
+    accessToken: "",
+    blogUrl: "",
+    userBlogApiKey: "",
+  });
   const accessToken = user?.accessToken;
 
   const closeModal = () => {
@@ -39,8 +43,6 @@ function Publish({ docData }: OptionsModalProps) {
         tag: docData.tag,
       };
 
-      console.log("---------------blog---------------", metadata);
-
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/blog`,
@@ -49,10 +51,10 @@ function Publish({ docData }: OptionsModalProps) {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
 
-        if (response?.data?.status) {
+        if (response?.data?.status === 200) {
           enqueueSnackbar("Document published successfully", {
             variant: "success",
             anchorOrigin: {
@@ -74,7 +76,7 @@ function Publish({ docData }: OptionsModalProps) {
               vertical: "top",
               horizontal: "center",
             },
-          }
+          },
         );
       } finally {
         setIsPublishing(false);
@@ -120,6 +122,7 @@ function Publish({ docData }: OptionsModalProps) {
                 <input
                   required
                   type="text"
+                  defaultValue={user?.userBlogApiKey}
                   placeholder="Enter API key here"
                   name="api-key"
                   className="p-2 rounded-md outline-none text-black"
@@ -139,6 +142,7 @@ function Publish({ docData }: OptionsModalProps) {
                   type="url"
                   required
                   placeholder="Enter URL here"
+                  defaultValue={user?.blogUrl}
                   name="url"
                   className="p-2 rounded-md outline-none text-black mb-4"
                 />
