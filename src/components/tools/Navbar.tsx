@@ -66,7 +66,7 @@ const Navbar = () => {
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
-              {credits ? ".." : credits} credits
+              {credits ? credits : "..."} credits
             </span>
           </div>
           {/* LogoutBtn  */}

@@ -4,6 +4,7 @@ import { DocumentInfo } from "@/types/type";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useRef, useState } from "react";
+import { IoShareSocialSharp } from "react-icons/io5";
 
 type OptionsModalProps = {
   docData: DocumentInfo;
@@ -43,7 +44,7 @@ function Publish({ docData }: OptionsModalProps) {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
 
         if (response?.data?.status) {
@@ -58,14 +59,16 @@ function Publish({ docData }: OptionsModalProps) {
       } catch (err) {
         const error = err as any;
         enqueueSnackbar(
-          `Failed to publish document: ${error?.response?.data?.error as string}`,
+          `Failed to publish document: ${
+            error?.response?.data?.error as string
+          }`,
           {
             variant: "error",
             anchorOrigin: {
               vertical: "top",
               horizontal: "center",
             },
-          },
+          }
         );
       }
     }

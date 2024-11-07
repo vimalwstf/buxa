@@ -1,4 +1,4 @@
-import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
+// import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
 import { parseHtml } from "@/lib/utils";
 import { DocumentInfo } from "@/types/type";
 import axios from "axios";
@@ -20,11 +20,13 @@ import Publish from "./Publish";
 
 export default function WriteList({
   newAIDoc,
+  newAIDoc,
   showEditor,
   toggleShowEditor,
   editorDocData,
   seEditorDocData,
 }: {
+  newAIDoc: boolean;
   newAIDoc: boolean;
   showEditor: boolean;
   toggleShowEditor: () => void;
@@ -90,7 +92,7 @@ export default function WriteList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =
@@ -134,6 +136,10 @@ export default function WriteList({
         <>
           <div className="flex justify-between items-baseline">
             <ListButton handleClick={toggleShowEditor} label="Document List" />
+            <div className="flex gap-2">
+              {newAIDoc && <Publish docData={editorDocData} />}
+              <SaveButton handleClick={handleEditorSubmit} />
+            </div>
             <div className="flex gap-2">
               {newAIDoc && <Publish docData={editorDocData} />}
               <SaveButton handleClick={handleEditorSubmit} />
