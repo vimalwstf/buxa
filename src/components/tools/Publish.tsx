@@ -4,6 +4,7 @@ import { DocumentInfo } from "@/types/type";
 import axios, { AxiosError } from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useRef, useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 type OptionsModalProps = {
   docData: DocumentInfo;
@@ -12,6 +13,7 @@ type OptionsModalProps = {
 function Publish({ docData }: OptionsModalProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
+  const [showApiKey, setShowApiKey] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const { value: user } = useLocalStorage("user", {
@@ -51,7 +53,7 @@ function Publish({ docData }: OptionsModalProps) {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
 
         if (response?.data?.status === 200) {
@@ -62,7 +64,7 @@ function Publish({ docData }: OptionsModalProps) {
               horizontal: "center",
             },
           });
-          setModalOpen(false); // Close modal after successful publish
+          setModalOpen(false);
         }
       } catch (err) {
         const error = err as any;
@@ -76,7 +78,7 @@ function Publish({ docData }: OptionsModalProps) {
               vertical: "top",
               horizontal: "center",
             },
-          },
+          }
         );
       } finally {
         setIsPublishing(false);
@@ -95,17 +97,17 @@ function Publish({ docData }: OptionsModalProps) {
       </button>
       {modalOpen && (
         <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"></div>
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"
-            //  ref={modalRef}
-          ></div>
-          <div
-            className="fixed inset-0 flex items-center justify-center z-20 "
+            className="fixed inset-0 flex items-center justify-center z-20"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative bg-primary-light rounded-lg flex flex-col gap-2 p-6 pt-10 shadow-lg w-96 border-2 border-gray-200">
+            <div
+              ref={modalRef}
+              className="relative bg-primary-light rounded-lg flex flex-col gap-2 p-6 pt-10 shadow-lg w-96 border-2 border-gray-200"
+            >
               <button
-                className="absolute top-0 px-2 py-1  right-4 text-white text-xl font-bold hover:text-red-500 duration-200"
+                className="absolute top-0 px-2 py-1 right-4 text-white text-xl font-bold hover:text-red-500 duration-200"
                 onClick={closeModal}
               >
                 &times;
@@ -117,16 +119,29 @@ function Publish({ docData }: OptionsModalProps) {
               </div>
               <form
                 onSubmit={handleSubmit}
-                className="w-full h-full flex gap-4 flex-col cursor-pointer "
+                className="w-full h-full flex gap-4 flex-col cursor-pointer"
               >
-                <input
-                  required
-                  type="text"
-                  defaultValue={user?.userBlogApiKey}
-                  placeholder="Enter API key here"
-                  name="api-key"
-                  className="p-2 rounded-md outline-none text-black"
-                />
+                <div className="relative">
+                  <input
+                    required
+                    type={showApiKey ? "text" : "password"}
+                    placeholder="Enter API key here"
+                    defaultValue={user?.userBlogApiKey}
+                    name="api-key"
+                    className="p-2 rounded-md outline-none text-black w-full"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowApiKey(!showApiKey)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-black"
+                  >
+                    {showApiKey ? (
+                      <AiFillEyeInvisible size={20} />
+                    ) : (
+                      <AiFillEye size={20} />
+                    )}
+                  </button>
+                </div>
                 <select
                   name="site"
                   required
