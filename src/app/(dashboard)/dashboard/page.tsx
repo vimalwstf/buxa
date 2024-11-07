@@ -46,7 +46,7 @@ export default function Dashboard() {
             <MobileNav credits={credits} />
           </div>
 
-          {isLoading ? (
+          {statsLoading ? (
             <div className="flex mx-auto justify-center items-center h-[90vh]">
               <Loader />
             </div>

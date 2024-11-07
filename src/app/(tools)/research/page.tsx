@@ -2,7 +2,6 @@
 
 import ResearchList from "@/components/tools/ResearchList";
 import ResearchSidebar from "@/components/tools/ResearchSidebar";
-// import { DocumentInfo } from "@/types/type";
 import { useState } from "react";
 
 export type Research = {

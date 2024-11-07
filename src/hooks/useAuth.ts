@@ -20,7 +20,7 @@ const TokenVerify = async () => {
           Authorization: `Bearer ${token}`,
           "ngrok-skip-browser-warning": true,
         },
-      },
+      }
     );
     return response;
   } catch (err) {
@@ -41,7 +41,6 @@ export const useAuth = () => {
   const checkUser = async () => {
     if (accessToken) {
       let data: any = await TokenVerify();
-
       if (data?.status) {
         dispatch(logIn(data?.data));
         setCallCount(1);
