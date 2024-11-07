@@ -1,6 +1,5 @@
 // hooks/useAuth.js
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { logIn } from "@/lib/user/userSlice";
@@ -19,7 +18,7 @@ const TokenVerify = async () => {
           Authorization: `Bearer ${token}`,
           "ngrok-skip-browser-warning": true,
         },
-      }
+      },
     );
     return response;
   } catch (err) {
@@ -30,7 +29,6 @@ const TokenVerify = async () => {
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [callCount, setCallCount] = useState(0);
 
@@ -50,7 +48,6 @@ export const useAuth = () => {
       }
     } else {
       setIsLoading(false);
-      // router.push("/");
     }
   };
 
