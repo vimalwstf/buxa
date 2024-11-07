@@ -1,10 +1,10 @@
 import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
 import { parseHtml } from "@/lib/utils";
-import { DataObject, DocumentInfo } from "@/types/type";
+import { DocumentInfo } from "@/types/type";
 import axios from "axios";
 // import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const MyEditor = dynamic(() => import("../editor/Editor"), {
   ssr: false,
 });
@@ -16,86 +16,33 @@ import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import Publish from "./Publish";
 
 export default function WriteList({
+  newAIDoc,
   showEditor,
   toggleShowEditor,
   editorDocData,
   seEditorDocData,
 }: {
+  newAIDoc: boolean;
   showEditor: boolean;
   toggleShowEditor: () => void;
   editorDocData: DocumentInfo;
   seEditorDocData: (data: DocumentInfo) => void;
 }) {
   const [documents, setDocuments] = useState<DocumentInfo[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const { value: user } = useLocalStorage("user", { accessToken: "" });
   const accessToken = user?.accessToken;
 
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      if (accessToken) {
-        try {
-          const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "ngrok-skip-browser-warning": true,
-              },
-            }
-          );
-          if (response?.data?.status) {
-            const data: DocumentInfo[] = response.data.data.map(
-              (doc: DataObject) => {
-                return {
-                  id: doc.id,
-                  name: doc.content,
-                  words: doc.words,
-                  modified: doc.updatedAt,
-                  favourite: doc.isFavorite,
-                };
-              }
-            );
-            data.sort(
-              (a, b) =>
-                new Date(b.modified).getTime() - new Date(a.modified).getTime()
-            );
-            setDocuments(data);
-          }
-        } catch (error) {
-          console.log("document fetch", error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-    fetchDocuments();
-  }, [accessToken, setDocuments]);
+  const { isLoading } = useFetchWriterDocuments(setDocuments);
 
   const handleFavouriteUpdate = async (id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
-
-    if (accessToken) {
-      try {
-        const res = await axios.put(url, null, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        if (res.status === 200) {
-          const updatedDocuments = [...documents];
-          const index = updatedDocuments.findIndex((doc) => doc.id === id);
-          updatedDocuments[index].favourite =
-            !updatedDocuments[index].favourite;
-          setDocuments(updatedDocuments);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    const updatedDocuments = [...documents];
+    const index = updatedDocuments.findIndex((doc) => doc.id === id);
+    updatedDocuments[index].favourite = !updatedDocuments[index].favourite;
+    setDocuments(updatedDocuments);
   };
 
   const handleDeleteData = async (id: string) => {
@@ -143,7 +90,7 @@ export default function WriteList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =
@@ -187,7 +134,10 @@ export default function WriteList({
         <>
           <div className="flex justify-between items-baseline">
             <ListButton handleClick={toggleShowEditor} label="Document List" />
-            <SaveButton handleClick={handleEditorSubmit} />
+            <div className="flex gap-2">
+              {newAIDoc && <Publish docData={editorDocData} />}
+              <SaveButton handleClick={handleEditorSubmit} />
+            </div>
           </div>
           <MyEditor
             value={editorDocData.name}

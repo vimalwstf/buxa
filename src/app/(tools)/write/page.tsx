@@ -5,8 +5,6 @@ import WriteList from "@/components/tools/WriteList";
 import WriteSidebar from "@/components/tools/WriteSidebar";
 import { DocumentInfo } from "@/types/type";
 
-// import { useAuth } from "@/hooks/useAuth";
-
 const DEFAULT_DOCUMENT: DocumentInfo = {
   id: "0",
   name: "",
@@ -17,26 +15,27 @@ const DEFAULT_DOCUMENT: DocumentInfo = {
 
 export default function Write() {
   const [showEditor, setShowEditor] = useState(false);
+  const [newAIDoc, setNewAIDoc] = useState(false);
+
   const [editorDocData, seEditorDocData] =
     useState<DocumentInfo>(DEFAULT_DOCUMENT);
 
   const toggleShowEditor = () => setShowEditor(!showEditor);
 
   const handleDocumentSubmit = (data: DocumentInfo) => {
+    if (editorDocData.id === "0") {
+      setNewAIDoc(true);
+    }
     toggleShowEditor();
     seEditorDocData(data);
   };
-
-  // const { isLoading, checkUser } = useAuth();
-  // useEffect(() => {
-  //   checkUser();
-  // }, []);
 
   return (
     <>
       <WriteSidebar handleDocumentSubmit={handleDocumentSubmit} />
       <div className="w-full md:w-[70%] lg:w-[75%]">
         <WriteList
+          newAIDoc={newAIDoc}
           showEditor={showEditor}
           toggleShowEditor={toggleShowEditor}
           editorDocData={editorDocData}
