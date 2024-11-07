@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import WriteList from "@/components/tools/WriteList";
 import WriteSidebar from "@/components/tools/WriteSidebar";
 import { DocumentInfo } from "@/types/type";
 
-import { useAuth } from "@/hooks/useAuth";
-
+// import { useAuth } from "@/hooks/useAuth";
 
 
 const DEFAULT_DOCUMENT: DocumentInfo = {
@@ -29,15 +28,10 @@ export default function Write() {
     seEditorDocData(data);
   };
 
- 
- 
-
-  const { isLoading, checkUser } = useAuth();
-  useEffect(() => {
-    checkUser();
-  }, []);
-
-
+  // const { isLoading, checkUser } = useAuth();
+  // useEffect(() => {
+  //   checkUser();
+  // }, []);
 
 
   return (

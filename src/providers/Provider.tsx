@@ -3,7 +3,7 @@
 
 import { SnackbarProvider } from "notistack";
 import StoreProvider from "@/providers/StoreProvider";
-import { Session } from "next-auth";
+// import { Session } from "next-auth";
 
 type CustomSessionProviderProps = {
   children: React.ReactNode;

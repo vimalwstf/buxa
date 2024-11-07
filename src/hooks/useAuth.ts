@@ -41,7 +41,6 @@ export const useAuth = () => {
   const checkUser = async () => {
     if (accessToken) {
       let data: any = await TokenVerify();
-      // console.log("sjbs", data)
       if (data?.status) {
         dispatch(logIn(data?.data));
         setCallCount(1);

@@ -4,12 +4,12 @@ import { logOut } from "@/lib/user/userSlice";
 import { useCallback } from "react";
 export default function useLogout() {
   const dispatch = useAppDispatch();
-
+  
   const handleLogout = useCallback(async () => {
     localStorage.removeItem("user");
     await signOut({ callbackUrl: "/" });
     dispatch(logOut());
-    
+
   },[dispatch]);
   return handleLogout;
 };
