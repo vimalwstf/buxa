@@ -4,18 +4,17 @@ import { useDispatch } from "react-redux";
 import { logIn } from "@/lib/user/userSlice";
 import useLogout from "./useLogout";
 import useLocalStorage from "./useLocalStorage";
-// import { useSession } from "next-auth/react";
 
 const useFetchUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const handleLogout = useLogout();
-  // const {data: session} = useSession();
-  // const accessToken = session?.user?.accessToken;
 
   const { value: user, setValue: setUser } = useLocalStorage("user", {
     accessToken: "",
     credits: 0,
+    blogUrl: "",
+    userBlogApiKey: "",
   });
   const accessToken = user?.accessToken;
 
@@ -30,16 +29,16 @@ const useFetchUser = () => {
               Authorization: `Bearer ${accessToken}`,
               "ngrok-skip-browser-warning": true,
             },
-          }
+          },
         );
         if (response?.data?.status) {
-          console.log("--------user data----------", response?.data?.data);
-
-          let updatedUser = user;
+          const updatedUser = user;
           updatedUser.credits = response?.data?.data?.credits;
+          updatedUser.blogUrl = response?.data?.data?.blogUrl;
+          updatedUser.userBlogApiKey = response?.data?.data?.userBlogApiKey;
           setUser(updatedUser);
 
-          // dispatch(logIn(response?.data?.data));
+          dispatch(logIn(response?.data?.data));
         } else if (response.status === 400) {
           handleLogout();
         }

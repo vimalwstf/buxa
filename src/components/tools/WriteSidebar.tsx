@@ -80,7 +80,10 @@ export default function WriteSidebar({
 
   const dispatch = useAppDispatch();
 
-  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const { value: user, setValue: setUser } = useLocalStorage("user", {
+    accessToken: "",
+    credits: 0,
+  });
   const accessToken = user?.accessToken;
 
   const setDropdown = (name: string) => {
@@ -106,8 +109,8 @@ export default function WriteSidebar({
               ? prev.personalityTags.filter((t) => t !== tag)
               : [...prev.personalityTags, tag]
             : prev.toneTags.includes(tag)
-            ? []
-            : [tag];
+              ? []
+              : [tag];
 
         return {
           ...prev,
@@ -151,17 +154,24 @@ export default function WriteSidebar({
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            }
+            },
           );
 
           if (response?.data?.status) {
             dispatch(updateCredit(response?.data?.credits));
-            const data = {
+            const updatedUser = user;
+            updatedUser.credits = response?.data?.data?.credits;
+            setUser(updatedUser);
+
+            const data: DocumentInfo = {
               id: response.data.data.id,
               name: response.data.data.content,
               modified: response.data.data.updatedAt,
               favourite: response.data.data.isFavorite,
               words: response.data.data.wordCount,
+              keyword: response.data.data.keyword,
+              tag: response.data.data.tag,
+              metadata: response.data.data.metadata,
             };
             handleDocumentSubmit(data);
             // Reset all state variables
@@ -177,14 +187,14 @@ export default function WriteSidebar({
         } catch (err) {
           const error = err as any;
           enqueueSnackbar(
-            `Failed to generate document: ${error?.response?.data?.error}`,
+            `Failed to generate document: ${error?.response?.data?.error as string}`,
             {
               variant: "error",
               anchorOrigin: {
                 vertical: "top",
                 horizontal: "center",
               },
-            }
+            },
           );
         } finally {
           setLoading(false);

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import { useSession } from "next-auth/react";
 import { DocumentInfo, DataObject } from "@/types/type";
-import useLocalStorage from "./useLocalStorage";
 import useLocalStorage from "./useLocalStorage";
 
 interface Props {
@@ -25,7 +23,7 @@ const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
                 Authorization: `Bearer ${accessToken}`,
                 "ngrok-skip-browser-warning": true,
               },
-            }
+            },
           );
           if (response?.data?.status) {
             const data: DocumentInfo[] = response.data.data.map(
@@ -37,11 +35,11 @@ const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
                   modified: doc.updatedAt,
                   favourite: doc.isFavorite,
                 };
-              }
+              },
             );
             data.sort(
               (a, b) =>
-                new Date(b.modified).getTime() - new Date(a.modified).getTime()
+                new Date(b.modified).getTime() - new Date(a.modified).getTime(),
             );
             setDocuments(data);
           }

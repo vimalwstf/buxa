@@ -23,8 +23,8 @@ export type Stats = {
 const useGetStatistics = () => {
   const [stats, setStats] = useState<Stats>();
   const [isLoading, setIsLoading] = useState(true);
-  const { value: user } = useLocalStorage("user", { accessToken: "" });
 
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
   const accessToken = user?.accessToken;
 
   useEffect(() => {
