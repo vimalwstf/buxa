@@ -44,7 +44,7 @@ function Publish({ docData }: OptionsModalProps) {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
 
         if (response?.data?.status) {
@@ -68,7 +68,7 @@ function Publish({ docData }: OptionsModalProps) {
               vertical: "top",
               horizontal: "center",
             },
-          }
+          },
         );
       }
     }
@@ -78,13 +78,13 @@ function Publish({ docData }: OptionsModalProps) {
     <div className="relative" ref={modalRef}>
       <button
         type="button"
-        className="text-black flex items-center gap-2 top-10 bg-cyan-400  px-4 py-2 text-sm rounded-md shadow-md"
+        className="bg-secondary-default text-white flex items-center gap-2 top-10 px-4 py-2 text-sm rounded-md font-medium"
         onClick={(e) => {
           e.stopPropagation();
           setModalOpen(!modalOpen);
         }}
       >
-        Share
+        <span>Publish to Site</span>
       </button>
       {modalOpen && (
         <div
@@ -92,27 +92,40 @@ function Publish({ docData }: OptionsModalProps) {
           onClick={(e) => e.stopPropagation()}
         >
           <form
-            className="w-fit h-fit flex gap-2 flex-col text-black cursor-pointer"
-            // onSubmit={(e) => e.preventDefault()}
             action={handleSubmit}
+            className="w-fit h-fit flex gap-2 flex-col cursor-pointer z-10"
           >
             <input
               required
               type="text"
               placeholder="Enter API here"
               name="api-key"
+              className="p-2 rounded-md outline-none text-black"
             />
-            <select required name="site">
+            <select
+              name="site"
+              required
+              className="p-2 rounded-md outline-none text-black "
+            >
+              <option value="" disabled selected hidden>
+                Choose a site
+              </option>
               <option value="ghost">Ghost</option>
               <option value="wordpress">Wordpress</option>
             </select>
             <input
+              type="url"
               required
-              type="text"
               placeholder="Enter URL here"
               name="url"
+              className="p-2 rounded-md outline-none text-black"
             />
-            <button type="submit">Publish</button>
+            <button
+              type="submit"
+              className="bg-primary-default text-white p-2 rounded-md hover:font-bold"
+            >
+              Publish
+            </button>
           </form>
         </div>
       )}
