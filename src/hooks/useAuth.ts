@@ -1,5 +1,6 @@
 // hooks/useAuth.js
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { logIn } from "@/lib/user/userSlice";
@@ -10,6 +11,7 @@ const TokenVerify = async () => {
   const parsedUser = user ? JSON.parse(user) : null;
   const token = parsedUser.accessToken;
 
+  // const accessToken = localStorage.(token);
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
@@ -29,6 +31,7 @@ const TokenVerify = async () => {
 
 export const useAuth = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [callCount, setCallCount] = useState(0);
 
@@ -38,7 +41,7 @@ export const useAuth = () => {
   const checkUser = async () => {
     if (accessToken) {
       let data: any = await TokenVerify();
-      // console.log("sjbs", data)
+
       if (data?.status) {
         dispatch(logIn(data?.data));
         setCallCount(1);
@@ -48,6 +51,7 @@ export const useAuth = () => {
       }
     } else {
       setIsLoading(false);
+      router.push("/");
     }
   };
 

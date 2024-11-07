@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import Input from "@/components/sidebar/Input";
 import Form from "@/components/sidebar/Form";
-// import FrequencyAlert from "../sidebar/FrequencyAlert";
 import AlertFrequency from "../sidebar/alertSiderbar/alertFrequency";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
@@ -61,7 +59,7 @@ export default function AlertSidebar() {
         setValue={setTopic}
       />
 
-      {/* TODO: Alert frequency */}
+      {/* Alert frequency */}
       {/* <FrequencyAlert /> */}
       <AlertFrequency />
 

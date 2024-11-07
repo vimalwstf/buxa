@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaCreditCard } from "react-icons/fa6";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import PaymentModal from "@/components/credits/PaymentModal";
@@ -8,13 +8,8 @@ import PaymentModal from "@/components/credits/PaymentModal";
 import Image from "next/image";
 import Link from "next/link";
 import LogoutBtn from "@/components/LogoutBtn";
-import { useAuth } from "@/hooks/useAuth";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import useFetchUser from "@/hooks/useFetchUser";
-
-interface User {
-  credits: number;
-}
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,17 +20,17 @@ const Navbar = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const { isLoading, checkUser } = useAuth();
-  const { isLoading: userLoading } = useFetchUser();
+  // const { isLoading, checkUser } = useAuth();
+  const { isLoading } = useFetchUser();
 
   const { value: user } = useLocalStorage("user", {
     credits: "",
   });
-  const credits = user?.credits ?? 0;
+  const credits = user?.credits;
 
-  useEffect(() => {
-    checkUser();
-  }, []);
+  // useEffect(() => {
+  //   checkUser();
+  // });
 
   return (
     <div>
@@ -74,14 +69,12 @@ const Navbar = () => {
               Dashboard
             </span>
           </Link> */}
-
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
               {isLoading ? "..." : credits} credits
             </span>
           </div>
-
           {/* LogoutBtn  */}
           <LogoutBtn />
         </div>
