@@ -130,6 +130,7 @@ body {
   color: black !important;
   display: flex !important;
   justify-content: center !important;
+  z-index: 0 !important;
 }
 
 

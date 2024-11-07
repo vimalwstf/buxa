@@ -1,4 +1,4 @@
-import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
+// import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
 import { parseHtml } from "@/lib/utils";
 import { DataObject, DocumentInfo } from "@/types/type";
 import axios from "axios";
@@ -16,13 +16,16 @@ import NewButton from "../ui/NewButton";
 import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import Publish from "@/components/tools/Publish";
 
 export default function WriteList({
+  newAIDoc,
   showEditor,
   toggleShowEditor,
   editorDocData,
   seEditorDocData,
 }: {
+  newAIDoc: boolean;
   showEditor: boolean;
   toggleShowEditor: () => void;
   editorDocData: DocumentInfo;
@@ -187,7 +190,10 @@ export default function WriteList({
         <>
           <div className="flex justify-between items-baseline">
             <ListButton handleClick={toggleShowEditor} label="Document List" />
-            <SaveButton handleClick={handleEditorSubmit} />
+            <div className="flex gap-2">
+              {newAIDoc && <Publish docData={editorDocData} />}
+              <SaveButton handleClick={handleEditorSubmit} />
+            </div>
           </div>
           <MyEditor
             value={editorDocData.name}

@@ -18,10 +18,10 @@ function Publish({ docData }: OptionsModalProps) {
 
   return (
     <>
-      <div className="relative">
+      <div className="relative" ref={modalRef}>
         <button
           type="button"
-          className="text-black flex items-center gap-2 top-10 bg-cyan-400  px-4 py-2 text-sm rounded-md shadow-md"
+          className="text-black flex items-center gap-2 top-10 bg-text-third  px-4 py-2 text-sm rounded-md font-medium"
           onClick={(e) => {
             e.stopPropagation();
             setModalOpen(!modalOpen);
@@ -31,18 +31,38 @@ function Publish({ docData }: OptionsModalProps) {
         </button>
         {modalOpen && (
           <div
-            className="absolute top-full right-0 rounded-lg flex flex-col gap-2 overflow-y-auto px-4 py-2 bg-secondary-default shadow-lg z-10"
+            className="absolute top-full right-0 rounded-lg flex flex-col gap-2 overflow-y-auto px-4 py-2 bg-gray-200 shadow-lg z-10"
             onClick={(e) => e.stopPropagation()}
-            ref={modalRef}
           >
-            <form className="w-fit h-fit flex gap-2 flex-col cursor-pointer">
-              <input type="text" placeholder="Enter API here" name="api-key" />
-              <select name="site">
+            <form className="w-fit h-fit flex gap-2 flex-col cursor-pointer z-10">
+              <input
+                type="text"
+                placeholder="Enter API here"
+                name="api-key"
+                className="p-2 rounded-md outline-none text-black"
+              />
+              <select
+                name="site"
+                className="p-2 rounded-md outline-none text-black "
+              >
+                <option value="" disabled selected hidden>
+                  Choose a site
+                </option>
                 <option value="1">Ghost</option>
                 <option value="2">Wordpress</option>
               </select>
-              <input type="url" placeholder="Enter URL here" name="url" />
-              <button type="submit">Publish</button>
+              <input
+                type="url"
+                placeholder="Enter URL here"
+                name="url"
+                className="p-2 rounded-md outline-none text-black"
+              />
+              <button
+                type="submit"
+                className="bg-primary-default text-white p-2 rounded-md hover:font-bold"
+              >
+                Publish
+              </button>
             </form>
           </div>
         )}
