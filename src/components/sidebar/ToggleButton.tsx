@@ -15,8 +15,8 @@ export default function ToggleButton({
 
       <div className="flex items-center justify-center  ">
         <div
-          className={`relative w-9 h-4 flex items-center bg-[#695fb0] border  rounded-full cursor-pointer transition duration-300 ${
-            isOn && "bg-[#000000]"
+          className={`relative w-9 h-4 flex items-center  border rounded-full cursor-pointer transition duration-300 ${
+            isOn ? "bg-[#000000]" : "bg-[#695fb0]"
           }`}
           onClick={toggle}
         >
