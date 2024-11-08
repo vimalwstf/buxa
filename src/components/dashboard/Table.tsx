@@ -3,34 +3,6 @@ import Glass from "../ui/Glass";
 import { StatDocs } from "@/hooks/useGetStatistics";
 
 const Table = ({ data }: { data: StatDocs[] }) => {
-  const mockData = [
-    {
-      title: "Lorem ipsum dolor sit amet",
-      type: "Research",
-      date: "Sep 27, 2024 6:57 PM",
-    },
-    {
-      title: "Dolor sit amet consectetur",
-      type: "Content",
-      date: "Sep 27, 2024 6:58 PM",
-    },
-    {
-      title: "Amet lorem ipsum dolor",
-      type: "Research",
-      date: "Sep 27, 2024 6:59 PM",
-    },
-    {
-      title: "Sit amet consectetur lorem",
-      type: "Content",
-      date: "Sep 27, 2024 7:00 PM",
-    },
-    {
-      title: "Consectetur dolor sit amet",
-      type: "Research",
-      date: "Sep 27, 2024 7:01 PM",
-    },
-  ];
-
   return (
     <div className="m-3">
       <Glass>
