@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { parse } from "cookie";
+import { cookies } from "next/headers";
+// import { parse } from "cookie";
 
-export function middleware(req: NextRequest) {
-  const cookies = parse(req.headers.get("cookie") || "");
-  const user = cookies.user ? JSON.parse(cookies.user) : null;
+export async function middleware(req: NextRequest) {
+  const cookieStore = await cookies();
+  const user = cookieStore.get("user");
 
   // Check if user data exists in cookies; if not, redirect to homepage
   if (!user) {
