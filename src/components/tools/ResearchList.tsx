@@ -108,7 +108,11 @@ export default function ResearchList({
               <span
                 key={index}
                 onClick={() => setSelectedDoc(index)}
-                className="bg-primary-light px-2 py-1 flex justify-center items-center gap-2 rounded-md border cursor-pointer whitespace-nowrap"
+                className={`px-2 py-1 flex justify-center items-center gap-2 rounded-md border cursor-pointer whitespace-nowrap ${
+                  selectedDoc === index
+                    ? "bg-primary-green text-black"
+                    : "bg-primary-light text-white"
+                }`}
               >
                 Variant {index + 1}
                 <DeleteButton
