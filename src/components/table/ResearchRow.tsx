@@ -55,7 +55,7 @@ export default function ResearchRow({
         <DeleteButton
           id={docData.id}
           onDelete={() => handleDeleteData(docData.id, -1)}
-        />
+        /> 
       </Td>
       {isOpen && (
         <ContentTable
@@ -106,8 +106,8 @@ function ContentTable({
                 index={index}
                 onDelete={() => handleDelete(id, index)}
               />
-              {/* <button
-                className="flex items-center justify-center w-full h-full gap-2"
+               {/* <button
+               className="flex items-center justify-center w-full h-full gap-2"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDelete(index);
