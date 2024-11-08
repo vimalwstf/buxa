@@ -1,5 +1,6 @@
 import useClickOutside from "@/hooks/useClickOutisde";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { snackBar } from "@/lib/utils";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useRef, useState } from "react";
@@ -7,6 +8,7 @@ import { CgAdd } from "react-icons/cg";
 
 function SettingsForm() {
   const [selected, setSelected] = useState<"ghost" | "wordpress">("ghost");
+
   const [modalOpen, setModalOpen] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -23,56 +25,51 @@ function SettingsForm() {
   };
   useClickOutside(modalRef, closeModal);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (formData: FormData) => {
     if (accessToken) {
       setIsPublishing(true);
-      const formData = new FormData(e.target as HTMLFormElement);
       const metadata = {
-        apiKey: formData.get("api-key") as string,
-        postOn: formData.get("site") as string,
-        ghostURL: formData.get("url") as string,
-        status: formData.get("status") as string,
+        blogType: selected,
+        blogSite:
+          selected === "ghost"
+            ? {
+                ghostApi: formData.get("api-key") as string,
+                ghostURL: formData.get("url") as string,
+              }
+            : {
+                username: formData.get("username") as string,
+                password: formData.get("password") as string,
+                URL: formData.get("url") as string,
+              },
       };
+      console.log(metadata);
+      // try {
+      //   const response = await axios.post(
+      //     `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/blog`,
+      //     { data: metadata },
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${accessToken}`,
+      //       },
+      //     },
+      //   );
 
-      try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/blog`,
-          { data: metadata },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        );
-
-        if (response?.status === 200) {
-          enqueueSnackbar("Document published successfully", {
-            variant: "success",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          });
-          setModalOpen(false);
-        }
-      } catch (err) {
-        const error = err as any;
-        enqueueSnackbar(
-          `Failed to publish document: ${
-            error?.response?.data?.error as string
-          }`,
-          {
-            variant: "error",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          },
-        );
-      } finally {
-        setIsPublishing(false);
-      }
+      //   if (response?.status === 200) {
+      //     enqueueSnackbar("Document published successfully", {
+      //       variant: "success",
+      //       anchorOrigin: {
+      //         vertical: "top",
+      //         horizontal: "center",
+      //       },
+      //     });
+      //     setModalOpen(false);
+      //   }
+      // } catch (err) {
+      //   const error = err as any;
+      //   snackBar("Failed to update blog data", "error");
+      // } finally {
+      //   setIsPublishing(false);
+      // }
     }
   };
 
@@ -109,31 +106,32 @@ function SettingsForm() {
               </div>
 
               <h3 className="text-text-light">Select a blogging platform</h3>
-              <div className="flex gap-2">
-                <label className="text-text-light">
-                  <span>Wordpress</span>
+              <div className="flex gap-6">
+                <label className="text-text-light flex gap-2">
                   <input
                     required
                     type="radio"
-                    name="radio"
-                    value="wordpress"
-                    onChange={() => setSelected("wordpress")}
-                  />
-                </label>
-
-                <label className="text-text-light">
-                  <span>Ghost</span>
-                  <input
-                    required
-                    type="radio"
+                    checked={selected === "ghost"}
                     name="radio"
                     value="ghost"
                     onChange={() => setSelected("ghost")}
                   />
+                  <span>Ghost</span>
+                </label>
+                <label className="text-text-light flex gap-2">
+                  <input
+                    required
+                    type="radio"
+                    checked={selected === "wordpress"}
+                    name="radio"
+                    value="wordpress"
+                    onChange={() => setSelected("wordpress")}
+                  />
+                  <span>Wordpress</span>
                 </label>
               </div>
               <form
-                onSubmit={handleSubmit}
+                action={handleSubmit}
                 className="w-full h-full flex gap-4 flex-col cursor-pointer"
               >
                 <div className="flex flex-col gap-2">
@@ -160,8 +158,20 @@ function SettingsForm() {
 function Ghost() {
   return (
     <>
-      <input required name="apiKey" type="text" placeholder="Enter api key" />
-      <input required name="url" type="url" placeholder="Enter your url" />
+      <input
+        required
+        name="apiKey"
+        type="text"
+        placeholder="Enter api key"
+        className="p-2 rounded-md outline-none text-black"
+      />
+      <input
+        required
+        name="url"
+        type="url"
+        placeholder="Enter your url"
+        className="p-2 rounded-md outline-none text-black"
+      />
     </>
   );
 }
@@ -174,14 +184,22 @@ function Wordpress() {
         name="username"
         type="text"
         placeholder="Enter username"
+        className="p-2 rounded-md outline-none text-black"
       />
       <input
         required
         name="password"
         type="text"
         placeholder="Enter password"
+        className="p-2 rounded-md outline-none text-black"
       />
-      <input required name="url" type="url" placeholder="Enter your url" />
+      <input
+        required
+        name="url"
+        type="url"
+        placeholder="Enter your url"
+        className="p-2 rounded-md outline-none text-black"
+      />
     </>
   );
 }
