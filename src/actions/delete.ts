@@ -11,6 +11,8 @@ export async function deleteDocument(
 ) {
   const URL =
     BackendURL + "/documents/" + id + (index ? `?index=${index}` : "");
+
+  console.log("----------------URL-------------------", URL);
   try {
     const response = await axios.delete(URL, {
       headers: { Authorization: `Bearer ${accessToken}` },
