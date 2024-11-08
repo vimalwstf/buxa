@@ -54,7 +54,7 @@ function Publish({ docData }: OptionsModalProps) {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
 
         if (response?.status === 200) {
@@ -79,7 +79,7 @@ function Publish({ docData }: OptionsModalProps) {
               vertical: "top",
               horizontal: "center",
             },
-          },
+          }
         );
       } finally {
         setIsPublishing(false);
@@ -124,6 +124,14 @@ function Publish({ docData }: OptionsModalProps) {
               >
                 <div className="relative">
                   <input
+                    type="url"
+                    required
+                    placeholder="Enter URL here"
+                    defaultValue={user?.blogUrl}
+                    name="url"
+                    className="p-2 rounded-md outline-none text-black"
+                  />
+                  <input
                     required
                     type={showApiKey ? "text" : "password"}
                     placeholder="Enter API key here"
@@ -154,8 +162,9 @@ function Publish({ docData }: OptionsModalProps) {
                   <option value="ghost">Ghost</option>
                   <option value="wordpress">Wordpress</option>
                 </select>
-                <input
-                  type="url"
+
+                <select
+                  name="status"
                   required
                   placeholder="Enter URL here"
                   defaultValue={user?.blogUrl}
