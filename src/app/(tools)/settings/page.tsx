@@ -18,6 +18,14 @@ const data = {
   },
 };
 
+const Data = [
+  { url: "qwertyuiop", apiKey: "asdfghjkl" },
+  { url: "qwertyuiop", apiKey: "asdfghjkl" },
+  { url: "qwertyuiop", apiKey: "asdfghjkl" },
+  { url: "qwertyuiop", apiKey: "asdfghjkl" },
+  { url: "qwertyuiop", apiKey: "asdfghjkl" },
+];
+
 const Page = () => {
   const [selected, setSelected] = useState<"ghost" | "wordpress">("ghost");
 
@@ -26,6 +34,17 @@ const Page = () => {
       <h1 className="text-center text-4xl font-bold text-text-light">
         Settings
       </h1>
+
+      <ul>
+        {Data.map(({ url, apiKey }, index) => (
+          <li key={index} className="flex gap-4">
+            <span>{url}</span>
+            <span>{apiKey}</span>
+            <button className="text-red-500">Delete</button>
+          </li>
+        ))}
+      </ul>
+
       <>
         <h3 className="text-text-light">Select a blogging platform</h3>
         <div className="flex gap-2">
