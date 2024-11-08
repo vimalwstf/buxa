@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect } from "react";
 import { useState } from "react";
 import Logo from "../../../public/images/logo.svg";
 import Image from "next/image";
@@ -8,24 +7,15 @@ import Link from "next/link";
 import Hamburger from "../../../public/images/Hamburger.svg";
 import GoogleSignup from "../GoogleSignup";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { useAuth } from "@/hooks/useAuth";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useFetchUser from "@/hooks/useFetchUser";
 
 const Navbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
-  const { isLoading, checkUser } = useAuth();
-
-  // const loggedIn = localStorage.getItem("");
-  // const user = localStorage.getItem("user");
-  // const parsedUser = user ? JSON.parse(user) : null;
-  // const loggedIn = parsedUser?.accessToken;
+  useFetchUser();
 
   const { value: user } = useLocalStorage("user", { accessToken: "" });
   const loggedIn = user?.accessToken;
-
-  useEffect(() => {
-    checkUser();
-  }, []);
 
   const Links = [
     {
