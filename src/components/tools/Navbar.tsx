@@ -4,18 +4,34 @@ import React, { useState } from "react";
 import { FaCreditCard } from "react-icons/fa6";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import PaymentModal from "@/components/credits/PaymentModal";
-import { MdDashboard } from "react-icons/md";
+// import { MdDashboard } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
 import LogoutBtn from "@/components/LogoutBtn";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import useFetchUser from "@/hooks/useFetchUser";
+import { LiaPenNibSolid } from "react-icons/lia";
+import { TbListSearch } from "react-icons/tb";
+// import { BsBellFill } from "react-icons/bs";
+import { usePathname } from "next/navigation";
+
+const navLinks = [
+  // { icon: <MdDashboard size={24} />, href: "/dashboard", name: "Dashboard" },
+  { icon: <LiaPenNibSolid size={24} />, href: "/write", name: "Write with AI" },
+  {
+    icon: <TbListSearch size={24} />,
+    href: "/research",
+    name: "Research with AI",
+  },
+  // { icon: <BsBellFill size={24}  />, href: "/alert", name: "Alert with AI" },
+];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { isLoading } = useFetchUser();
+  const pathname = usePathname();
 
   // Handle opening and closing the modal
   const toggleModal = () => {
@@ -55,7 +71,7 @@ const Navbar = () => {
               isMenuOpen ? "translate-x-0" : "translate-x-full"
             } md:translate-x-0`}
         >
-          <Link
+          {/* <Link
             className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer"
             href="/dashboard"
           >
@@ -63,7 +79,23 @@ const Navbar = () => {
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
               Dashboard
             </span>
-          </Link>
+          </Link> */}
+          {navLinks.map(({ icon, href, name }, index) => {
+            return (
+              <Link
+                key={index}
+                href={href}
+                className={`flex items-center md:mt-0 mt-10 space-x-2 cursor-pointer hover:text-primary-green ${
+                  href === pathname ? "text-primary-green" : "text-text-third"
+                }`}
+              >
+                <span>{icon}</span>
+                <span className="sm:inline-block text-lg sm:text-xl font-medium">
+                  {name}
+                </span>
+              </Link>
+            );
+          })}
 
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
