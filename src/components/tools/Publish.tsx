@@ -23,6 +23,11 @@ function Publish({ docData }: OptionsModalProps) {
   });
   const accessToken = user?.accessToken;
 
+  const { value: apiData } = useLocalStorage("apiData", {
+    ghostBlogs: [],
+    wordpressBlogs: [],
+  });
+
   const closeModal = () => {
     if (!isPublishing) {
       setModalOpen(false);
@@ -54,7 +59,7 @@ function Publish({ docData }: OptionsModalProps) {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
 
         if (response?.status === 200) {
@@ -79,7 +84,7 @@ function Publish({ docData }: OptionsModalProps) {
               vertical: "top",
               horizontal: "center",
             },
-          }
+          },
         );
       } finally {
         setIsPublishing(false);

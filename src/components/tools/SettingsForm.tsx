@@ -2,7 +2,6 @@ import useClickOutside from "@/hooks/useClickOutisde";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { snackBar } from "@/lib/utils";
 import axios from "axios";
-import { enqueueSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import { CgAdd } from "react-icons/cg";
 
@@ -26,50 +25,49 @@ function SettingsForm() {
   useClickOutside(modalRef, closeModal);
 
   const handleSubmit = async (formData: FormData) => {
-    if (accessToken) {
-      setIsPublishing(true);
-      const metadata = {
-        blogType: selected,
-        blogSite:
-          selected === "ghost"
-            ? {
-                ghostApi: formData.get("api-key") as string,
-                ghostURL: formData.get("url") as string,
-              }
-            : {
-                username: formData.get("username") as string,
-                password: formData.get("password") as string,
-                URL: formData.get("url") as string,
-              },
-      };
-      console.log(metadata);
-      // try {
-      //   const response = await axios.post(
-      //     `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/blog`,
-      //     { data: metadata },
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${accessToken}`,
-      //       },
-      //     },
-      //   );
+    // if (accessToken) {
+    // setIsPublishing(true);
+    const metadata = {
+      blogType: selected,
+      blogSite:
+        selected === "ghost"
+          ? {
+              ghostApi: formData.get("api-key") as string,
+              ghostURL: formData.get("url") as string,
+            }
+          : {
+              username: formData.get("username") as string,
+              password: formData.get("password") as string,
+              URL: formData.get("url") as string,
+            },
+    };
+    console.log(metadata);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/blog-api`,
+        { data: metadata },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
 
-      //   if (response?.status === 200) {
-      //     enqueueSnackbar("Document published successfully", {
-      //       variant: "success",
-      //       anchorOrigin: {
-      //         vertical: "top",
-      //         horizontal: "center",
-      //       },
-      //     });
-      //     setModalOpen(false);
-      //   }
-      // } catch (err) {
-      //   const error = err as any;
-      //   snackBar("Failed to update blog data", "error");
-      // } finally {
-      //   setIsPublishing(false);
-      // }
+      if (response?.status === 200) {
+        // enqueueSnackbar("Document published successfully", {
+        //   variant: "success",
+        //   anchorOrigin: {
+        //     vertical: "top",
+        //     horizontal: "center",
+        //   },
+        // });
+        setModalOpen(false);
+      }
+    } catch (err) {
+      const error = err as any;
+      snackBar("Failed to update blog data", "error");
+    } finally {
+      setIsPublishing(false);
     }
   };
 
@@ -160,7 +158,7 @@ function Ghost() {
     <>
       <input
         required
-        name="apiKey"
+        name="api-key"
         type="text"
         placeholder="Enter api key"
         className="p-2 rounded-md outline-none text-black"
