@@ -121,6 +121,14 @@ function Publish({ docData }: OptionsModalProps) {
                 className="w-full h-full flex gap-4 flex-col cursor-pointer"
               >
                 <div className="relative">
+                <input
+                  type="url"
+                  required
+                  placeholder="Enter URL here"
+                  defaultValue={user?.blogUrl}
+                  name="url"
+                  className="p-2 rounded-md outline-none text-black"
+                />
                   <input
                     required
                     type={showApiKey ? "text" : "password"}
@@ -148,18 +156,11 @@ function Publish({ docData }: OptionsModalProps) {
                   <option value="ghost">Ghost</option>
                   <option value="wordpress">Wordpress</option>
                 </select>
-                <input
-                  type="url"
-                  required
-                  placeholder="Enter URL here"
-                  defaultValue={user?.blogUrl}
-                  name="url"
-                  className="p-2 rounded-md outline-none text-black mb-4"
-                />
+               
                   <select
-                  name="site"
+                  name="status"
                   required
-                  className="p-2 rounded-md outline-none text-black"
+                  className="p-2 rounded-md outline-none text-black mb-4"
                 >
                   <option value="" disabled selected hidden>
                     Status
