@@ -6,8 +6,10 @@ import { DocumentInfo } from "@/types/type";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { CgFileAdd } from "react-icons/cg";
-import { FaFileAlt, FaRegStar, FaStar } from "react-icons/fa";
+import { FaFileAlt } from "react-icons/fa";
 import OptionsModal from "./OptionsModal";
+import ToggleFavouriteButton from "../ui/ToggleFavouriteButton";
+import DeleteButton from "../ui/DeleteButton";
 
 interface TableProps {
   documents: DocumentInfo[];
@@ -41,7 +43,6 @@ export default function DocumentsTable({
     toggleShowEditor();
     seEditorDocData(doc);
   };
- 
 
   useEffect(() => {
     setCurrentPage(1);
@@ -95,25 +96,24 @@ export default function DocumentsTable({
                     </span>
                   </Td>
                   <Td>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleFavouriteUpdate(item.id);
-                      }}
-                    >
-                      {item.favourite ? (
-                        <FaStar size={18} className="text-primary-green" />
-                      ) : (
-                        <FaRegStar size={18} className="text-white" />
-                      )}
-                    </button>
+                    <ToggleFavouriteButton
+                      id={item.id}
+                      isFavourite={item.favourite}
+                      onToggle={handleFavouriteUpdate}
+                    />
                   </Td>
                   <Td>
+                    <DeleteButton
+                      id={item.id}
+                      onDelete={() => handleDeleteData(item.id)}
+                    />
+                  </Td>
+                  {/* <Td>
                     <OptionsModal
                       handleDeleteData={handleDeleteData}
                       id={item.id}
                     />
-                  </Td>
+                  </Td> */}
                 </tr>
               ))}
             </tbody>

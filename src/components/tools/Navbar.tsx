@@ -15,6 +15,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { isLoading } = useFetchUser();
+
   // Handle opening and closing the modal
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -66,7 +68,7 @@ const Navbar = () => {
           <div className="flex items-center md:mt-0 mt-10 text-white space-x-2 cursor-pointer">
             <FaCreditCard size={24} className="text-primary-green" />
             <span className="sm:inline-block text-lg sm:text-xl font-medium">
-              {credits ? credits : "..."} credits
+              {isLoading ? "..." : credits} credits
             </span>
           </div>
           {/* LogoutBtn  */}

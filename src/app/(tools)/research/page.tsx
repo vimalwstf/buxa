@@ -11,18 +11,17 @@ export type Research = {
   updatedAt: string;
 };
 
-export const DefaultResearch = {
+const DefaultResearch: Research = {
   id: "0",
   content: [""],
   isFavorite: false,
   updatedAt: "",
 };
+export { DefaultResearch };
 
 export default function Research() {
   const [showEditor, setShowEditor] = useState(false);
   const [docData, setDocData] = useState<Research>(DefaultResearch);
-
-  const toggleShowEditor = () => setShowEditor(!showEditor);
 
   const handleDocumentSubmit = (data: Research) => {
     setShowEditor(true);
@@ -38,7 +37,7 @@ export default function Research() {
       <div className="flex-1">
         <ResearchList
           showEditor={showEditor}
-          toggleShowEditor={toggleShowEditor}
+          setShowEditor={setShowEditor}
           docData={docData}
           setDocData={setDocData}
         />

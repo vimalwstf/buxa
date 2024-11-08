@@ -1,7 +1,7 @@
 export type DataObject = {
   id: string;
   content: string;
-  words: number;
+  wordCount: number;
   isFavorite: boolean;
   updatedAt: string;
 };

@@ -4,9 +4,10 @@ import { useDispatch } from "react-redux";
 import { logIn } from "@/lib/user/userSlice";
 import useLogout from "./useLogout";
 import useLocalStorage from "./useLocalStorage";
+import { snackBar } from "@/lib/utils";
 
 const useFetchUser = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const handleLogout = useLogout();
 
@@ -20,7 +21,6 @@ const useFetchUser = () => {
 
   const fetchUser = async () => {
     if (accessToken) {
-      setIsLoading(true);
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_SOURCE_URL}/user`,
@@ -31,6 +31,7 @@ const useFetchUser = () => {
             },
           },
         );
+
         if (response?.data?.status) {
           const updatedUser = user;
           updatedUser.credits = response?.data?.data?.credits;
@@ -39,10 +40,14 @@ const useFetchUser = () => {
           setUser(updatedUser);
 
           dispatch(logIn(response?.data?.data));
-        } else if (response.status === 400) {
+        } else if (response.status === 401) {
+          console.log("User not authenticated");
+          snackBar("Session expired. Please login again.", "error");
           handleLogout();
         }
       } catch (error) {
+        snackBar("Something went wrong. Please login again.", "error");
+        handleLogout();
         console.error("Error fetching user:", error);
       } finally {
         setIsLoading(false);

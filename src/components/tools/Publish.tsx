@@ -1,7 +1,7 @@
 import useClickOutside from "@/hooks/useClickOutisde";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { DocumentInfo } from "@/types/type";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -39,6 +39,7 @@ function Publish({ docData }: OptionsModalProps) {
         apiKey: formData.get("api-key") as string,
         postOn: formData.get("site") as string,
         ghostURL: formData.get("url") as string,
+        status: formData.get("status") as string,
         content: docData.name,
         metadata: docData.metadata,
         keyword: docData.keyword,
@@ -53,10 +54,10 @@ function Publish({ docData }: OptionsModalProps) {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
 
-        if (response?.data?.status === 200) {
+        if (response?.status === 200) {
           enqueueSnackbar("Document published successfully", {
             variant: "success",
             anchorOrigin: {
@@ -78,7 +79,7 @@ function Publish({ docData }: OptionsModalProps) {
               vertical: "top",
               horizontal: "center",
             },
-          }
+          },
         );
       } finally {
         setIsPublishing(false);
@@ -128,7 +129,7 @@ function Publish({ docData }: OptionsModalProps) {
                     placeholder="Enter API key here"
                     defaultValue={user?.userBlogApiKey}
                     name="api-key"
-                    className="p-2 rounded-md outline-none text-black w-full"
+                    className="p-2 pr-10 rounded-md outline-none text-black w-full"
                   />
                   <button
                     type="button"
@@ -159,12 +160,12 @@ function Publish({ docData }: OptionsModalProps) {
                   placeholder="Enter URL here"
                   defaultValue={user?.blogUrl}
                   name="url"
-                  className="p-2 rounded-md outline-none text-black mb-4"
+                  className="p-2 rounded-md outline-none text-black "
                 />
-                  <select
-                  name="site"
+                <select
+                  name="status"
                   required
-                  className="p-2 rounded-md outline-none text-black"
+                  className="p-2 rounded-md outline-none text-black mb-4"
                 >
                   <option value="" disabled selected hidden>
                     Status

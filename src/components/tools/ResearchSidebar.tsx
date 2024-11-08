@@ -7,6 +7,8 @@ import { enqueueSnackbar } from "notistack";
 import axios from "axios";
 import { Research } from "@/app/(tools)/research/page";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { updateCredit } from "@/lib/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const allFormats = ["Article", "Blog Post", "Book", "Course", "Podcast"];
 const focusAreas = ["Business", "Marketing", "Tech"];
@@ -43,8 +45,12 @@ export default function ResearchSidebar({
     // researchFromWeb,
     dropdown,
   } = state;
+  const dispatch = useDispatch();
 
-  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const { value: user, setValue: setUser } = useLocalStorage("user", {
+    accessToken: "",
+    credits: 0,
+  });
   const accessToken = user?.accessToken;
 
   const setDropdown = (name: string) => {
@@ -99,8 +105,11 @@ export default function ResearchSidebar({
           );
 
           if (response?.data?.status) {
-            //     console.log(response.data);
-            // dispatch(updateCredit(response?.data?.credits));
+            dispatch(updateCredit(response?.data?.credits));
+            const updatedUser = user;
+            updatedUser.credits = response?.data?.data?.credits;
+            setUser(updatedUser);
+
             const resData = response.data.data[0];
             console.log("resData", resData);
             const data: Research = {

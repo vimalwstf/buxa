@@ -8,7 +8,7 @@ import ProgressBar from "@/components/sidebar/ProgressBar";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 // import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
@@ -146,7 +146,6 @@ export default function WriteSidebar({
 
         setLoading(true);
         try {
-          // console.log("hsjfdg")
           const response = await axios.post(
             `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents`,
             { metadata },
@@ -163,7 +162,7 @@ export default function WriteSidebar({
             updatedUser.credits = response?.data?.data?.credits;
             setUser(updatedUser);
 
-            const data: DocumentInfo = {
+            const data = {
               id: response.data.data.id,
               name: response.data.data.content,
               modified: response.data.data.updatedAt,

@@ -1,3 +1,5 @@
+import { enqueueSnackbar } from "notistack";
+
 export function formatDate(dateString: string): string {
   const options: Intl.DateTimeFormatOptions = {
     month: "short",
@@ -16,4 +18,18 @@ export function parseHtml(HTMLString: string): string {
   const html = parser.parseFromString(HTMLString, "text/html");
   const text = html.body.textContent || "";
   return text;
+}
+
+export function snackBar(
+  message: string,
+  variant: "default" | "error" | "success" | "warning" | "info" | undefined,
+) {
+  enqueueSnackbar(message, {
+    variant: variant,
+    anchorOrigin: {
+      vertical: "top",
+      horizontal: "center",
+    },
+    autoHideDuration: 3000,
+  });
 }

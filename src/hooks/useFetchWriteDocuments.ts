@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { DocumentInfo, DataObject } from "@/types/type";
 import useLocalStorage from "./useLocalStorage";
+import useLogout from "./useLogout";
 
 interface Props {
   setDocuments: (documents: DocumentInfo[]) => void;
 }
 const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
   const [isLoading, setIsLoading] = useState(true);
+  const handleLogout = useLogout();
 
   const { value: user } = useLocalStorage("user", { accessToken: "" });
   const accessToken = user?.accessToken;
@@ -31,7 +33,7 @@ const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
                 return {
                   id: doc.id,
                   name: doc.content,
-                  words: doc.words,
+                  words: doc.wordCount,
                   modified: doc.updatedAt,
                   favourite: doc.isFavorite,
                 };
@@ -42,9 +44,11 @@ const useFetchWriterDocuments = (setDocuments: Props["setDocuments"]) => {
                 new Date(b.modified).getTime() - new Date(a.modified).getTime(),
             );
             setDocuments(data);
+          } else if (response.status === 401) {
+            handleLogout();
           }
         } catch (error) {
-          console.log("document fetch", error);
+          console.log("Documents fetch error: ", error);
         } finally {
           setIsLoading(false);
         }

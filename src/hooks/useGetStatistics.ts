@@ -66,7 +66,7 @@ const useGetStatistics = () => {
             });
           }
         } catch (error) {
-          console.log("document fetch", error);
+          console.log("Error fetching statistics: ", error);
         } finally {
           setIsLoading(false);
         }

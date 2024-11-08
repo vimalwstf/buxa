@@ -11,14 +11,12 @@ export default function AlertFrequency() {
   const [weekDay, setWeekDay] = useState("");
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
 
-  const schedule = {
-    selectedFrequency,
-    selectedDate,
-    weekDay,
-    timeSlots,
-  };
-
-  console.log(schedule);
+  // const schedule = {
+  //   selectedFrequency,
+  //   selectedDate,
+  //   weekDay,
+  //   timeSlots,
+  // };
 
   const onDateChange = (value: number) => {
     setSelectedDate(value);
@@ -27,7 +25,7 @@ export default function AlertFrequency() {
   const onTimeChange = (
     index: number,
     type: "start" | "end",
-    value: string
+    value: string,
   ) => {
     const updatedSlots = timeSlots.map((slot, i) => {
       if (i === index) {

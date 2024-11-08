@@ -17,16 +17,15 @@ import SaveButton from "../ui/SaveButton";
 import dynamic from "next/dynamic";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import Publish from "./Publish";
+import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
 
 export default function WriteList({
-  newAIDoc,
   newAIDoc,
   showEditor,
   toggleShowEditor,
   editorDocData,
   seEditorDocData,
 }: {
-  newAIDoc: boolean;
   newAIDoc: boolean;
   showEditor: boolean;
   toggleShowEditor: () => void;
@@ -48,24 +47,8 @@ export default function WriteList({
   };
 
   const handleDeleteData = async (id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
-
-    if (accessToken) {
-      try {
-        const res = await axios.delete(url, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (res.status === 200) {
-          const updatedDocuments = documents.filter((doc) => doc.id !== id);
-          setDocuments(updatedDocuments);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    const updatedDocuments = documents.filter((doc) => doc.id !== id);
+    setDocuments(updatedDocuments);
   };
 
   const handleEditorSubmit = async () => {
@@ -92,7 +75,7 @@ export default function WriteList({
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         if (res.status === 200) {
           const { id, content, wordCount, updatedAt, isFavorite } =
@@ -136,10 +119,6 @@ export default function WriteList({
         <>
           <div className="flex justify-between items-baseline">
             <ListButton handleClick={toggleShowEditor} label="Document List" />
-            <div className="flex gap-2">
-              {newAIDoc && <Publish docData={editorDocData} />}
-              <SaveButton handleClick={handleEditorSubmit} />
-            </div>
             <div className="flex gap-2">
               {newAIDoc && <Publish docData={editorDocData} />}
               <SaveButton handleClick={handleEditorSubmit} />

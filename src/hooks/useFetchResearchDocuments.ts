@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Research } from "@/app/(tools)/research/page";
 import useLocalStorage from "./useLocalStorage";
+import useLogout from "./useLogout";
 
 interface Props {
   setDocuments: (documents: Research[]) => void;
 }
 const useFetchResearchDocuments = (setDocuments: Props["setDocuments"]) => {
   const [isLoading, setIsLoading] = useState(true);
+  const handleLogout = useLogout();
 
   const { value: user } = useLocalStorage("user", { accessToken: "" });
   const accessToken = user?.accessToken;
@@ -40,9 +42,11 @@ const useFetchResearchDocuments = (setDocuments: Props["setDocuments"]) => {
                 new Date(a.updatedAt).getTime(),
             );
             setDocuments(data);
+          } else if (response.status === 400) {
+            handleLogout();
           }
         } catch (error) {
-          console.log("document fetch", error);
+          console.log("Research fetch error: ", error);
         } finally {
           setIsLoading(false);
         }

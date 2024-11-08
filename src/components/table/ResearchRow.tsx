@@ -1,11 +1,12 @@
 import { formatDate, parseHtml } from "@/lib/utils";
 import Td from "./Td";
-import { FaStar } from "react-icons/fa6";
-import { FaFileAlt, FaRegStar, FaTrashAlt } from "react-icons/fa";
+import { FaFileAlt } from "react-icons/fa";
 import { Research } from "@/app/(tools)/research/page";
 import { useRef, useState } from "react";
 import Th from "./Th";
 import useClickOutside from "@/hooks/useClickOutisde";
+import ToggleFavouriteButton from "../ui/ToggleFavouriteButton";
+import DeleteButton from "../ui/DeleteButton";
 
 export default function ResearchRow({
   docData,
@@ -20,77 +21,67 @@ export default function ResearchRow({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleDelete = (id: string) => {
-    return (index: number) => {
-      handleDeleteData(id, index);
-    };
-  };
-
-
-
-  const tableRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLTableRowElement>(null);
 
   const closeTable = () => {
-   setIsOpen(false)
+    setIsOpen(false);
   };
   useClickOutside(tableRef, closeTable);
 
   return (
-    <>
-      <tr
-        onClick={() => setIsOpen(!isOpen)}
-        className={`${isOpen ? "bg-gray-200" : ""}  hover:bg-gray-200 relative cursor-pointer`}
-      >
-        <Td className="flex !whitespace-normal items-center">
-          {/* <FaFileAlt className="inline mr-2 hover:cursor-pointer text-white" /> */}
-          <span className="max-w-[8ch] sm:max-w-[16ch] md:max-w-[25ch] lg:max-w-[50ch] truncate">
-            {docData.id}
-          </span>
-        </Td>
-        <Td className="text-center text-white">{docData.content.length}</Td>
-        <Td className="text-center !max-w-fit">
-          {formatDate(docData.updatedAt)}
-        </Td>
-        <Td className="text-center">
-          <button
-            className=""
-            onClick={(e) => {
-              e.stopPropagation();
-              handleFavouriteUpdate(docData.id);
-            }}
-          >
-            {docData.isFavorite ? (
-              <FaStar size={18} className="text-primary-green" />
-            ) : (
-              <FaRegStar size={18} className="text-white" />
-            )}
-          </button>
-        </Td>
-        {isOpen && (
-         <div ref={tableRef} >
-           <ContentTable
-            content={docData.content}
-            onclick={onClick}
-            handleDelete={handleDelete(docData.id)}
-          />
-         </div>
-        )}
-      </tr>
-    </>
+    <tr
+      ref={tableRef}
+      onClick={() => setIsOpen(!isOpen)}
+      className={` hover:bg-gray-200 relative cursor-pointer`}
+    >
+      <Td className="flex !whitespace-normal items-center">
+        {/* <FaFileAlt className="inline mr-2 hover:cursor-pointer text-white" /> */}
+        <span className="max-w-[8ch] sm:max-w-[16ch] md:max-w-[25ch] lg:max-w-[50ch] truncate">
+          {docData.id}
+        </span>
+      </Td>
+      <Td className="text-center text-white">{docData.content.length}</Td>
+      <Td className="text-center !max-w-fit">
+        {formatDate(docData.updatedAt)}
+      </Td>
+      <Td className="text-center">
+        <ToggleFavouriteButton
+          id={docData.id}
+          isFavourite={docData.isFavorite}
+          onToggle={handleFavouriteUpdate}
+        />
+      </Td>
+      <Td className="text-center">
+        <DeleteButton
+          id={docData.id}
+          onDelete={() => handleDeleteData(docData.id, -1)}
+        />
+      </Td>
+      {isOpen && (
+        <ContentTable
+          id={docData.id}
+          content={docData.content}
+          onclick={onClick}
+          handleDelete={handleDeleteData}
+        />
+      )}
+    </tr>
   );
 }
 
 function ContentTable({
+  id,
   content,
   onclick,
   handleDelete,
 }: {
+  id: string;
   content: string[];
   onclick: (i: number) => void;
-  handleDelete: (index: number) => void;
+  handleDelete: (id: string, index: number) => void;
 }) {
   return (
-    <table className="absolute top-12 z-40 left-0 w-full h-fit bg-primary-light border rounded-md border-gray-200">
+    <table className="absolute cursor-default top-12 z-40 left-0 w-full h-fit bg-primary-light border rounded-md border-gray-200">
       <thead className="bg-gray-200">
         <tr>
           <Th className="text-left pl-4 sm:pl-10">Content</Th>
@@ -99,15 +90,23 @@ function ContentTable({
       </thead>
       <tbody>
         {content.map((str, index) => (
-          <tr key={index} onClick={() => onclick(index)} className="hover:bg-gray-200">
-            <Td className="flex !whitespace-normal items-center">
-              <FaFileAlt className="inline mr-2 hover:cursor-pointer text-white" />
+          <tr key={index} className="hover:bg-gray-200">
+            <Td
+              onClick={() => onclick(index)}
+              className="flex !whitespace-normal !min-w-full items-center cursor-pointer"
+            >
+              <FaFileAlt className="inline mr-2 text-white" />
               <span className="max-w-[8ch] sm:max-w-[16ch] md:max-w-[25ch] lg:max-w-[50ch] truncate">
                 {parseHtml(str)}
               </span>
             </Td>
-            <Td>
-              <button
+            <Td className="!max-w-fit">
+              <DeleteButton
+                id={id}
+                index={index}
+                onDelete={() => handleDelete(id, index)}
+              />
+              {/* <button
                 className="flex items-center justify-center w-full h-full gap-2"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -116,7 +115,7 @@ function ContentTable({
               >
                 <FaTrashAlt size={18} className="text-red-500" />
                 <span>Delete</span>
-              </button>
+              </button> */}
             </Td>
           </tr>
         ))}

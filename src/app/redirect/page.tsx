@@ -73,12 +73,15 @@ import Cookies from "js-cookie";
 import { logIn } from "@/lib/user/userSlice";
 import Loading from "../loading";
 
-interface Credentials {
+export interface Credentials {
   firstName: string;
   lastName: string;
   id: string;
   credits: number;
   email: string;
+  blogUrl: string;
+  userBlogApiKey: string;
+  accessToken: string;
 }
 
 function GoogleRedirectPage() {
@@ -95,12 +98,15 @@ function GoogleRedirectPage() {
 
   const getMe = async () => {
     if (user) {
-      let credentials: Credentials = {
+      const credentials: Credentials = {
         firstName: user?.firstName ?? "",
         lastName: user?.lastName ?? "",
         id: user?.id ?? "",
         credits: user?.credits ?? 0,
         email: user?.email ?? "",
+        blogUrl: user?.blogUrl ?? "",
+        userBlogApiKey: user?.userBlogApiKey ?? "",
+        accessToken: user?.accessToken ?? "",
       };
 
       //store user data in local storage
