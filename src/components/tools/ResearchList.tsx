@@ -9,7 +9,6 @@ import ResearchTable from "../table/ResearchTable";
 import ListButton from "../ui/ListButton";
 import SaveButton from "../ui/SaveButton";
 import FavouritesButton from "../ui/FavouritesButton";
-import NewButton from "../ui/NewButton";
 import DeleteButton from "../ui/DeleteButton";
 import { DefaultResearch, Research } from "@/app/(tools)/research/page";
 
@@ -35,8 +34,8 @@ export default function ResearchList({
   const handleFavouriteUpdate = (id: string) => {
     setDocuments((prevDocs) =>
       prevDocs.map((doc) =>
-        doc.id === id ? { ...doc, isFavorite: !doc.isFavorite } : doc,
-      ),
+        doc.id === id ? { ...doc, isFavorite: !doc.isFavorite } : doc
+      )
     );
   };
 
@@ -70,7 +69,7 @@ export default function ResearchList({
         const res = await axios.put(
           url,
           { content: docData.content },
-          { headers: { Authorization: `Bearer ${accessToken}` } },
+          { headers: { Authorization: `Bearer ${accessToken}` } }
         );
         if (res.status === 200) {
           setShowEditor(false);
@@ -142,10 +141,6 @@ export default function ResearchList({
             </h2>
             <div className="flex gap-4">
               <FavouritesButton />
-              <NewButton
-                label="New Research"
-                createNewDocument={() => setShowEditor(true)}
-              />
             </div>
           </div>
 
