@@ -14,28 +14,28 @@ const Data = [
 
 const Page = () => {
   return (
-    <div className="w-full flex flex-col items-center justify-start">
-      <h1 className="text-center text-4xl font-bold text-text-light">
-        Settings
-      </h1>
-      <SettingsForm />
-      <ul className="flex flex-col gap-4 w-full max-w-md bg-gray-200">
-        {Data.map(({ url, apiKey }, index) => (
-          <li key={index} className="flex gap-4">
-            <span>{url}</span>
-            <span>{apiKey}</span>
-            <button className="text-red-500">Delete</button>
-          </li>
-        ))}
-      </ul>
-
-      {/* <>
-
-      </>
-      <form className="element w-full max-w-md aspect-video flex flex-col justify-between rounded-md bg-primary-light p-4">
-
-        <PublishSubmit disabled={false} loading={false} />
-      </form> */}
+    <div className="w-full flex flex-col justify-center bg-primary-light/80 h-full p-8">
+      <div className="flex justify-between items-center pb-6">
+        <h1 className="text-4xl font-bold">Blog API Settings</h1>
+        <SettingsForm />
+      </div>
+      <div className="relative overflow-x-auto rounded-lg border">
+        <table className="element w-full border">
+          <tr className="border text-3xl font-bold">
+            <th>URL</th>
+            <th>API Key</th>
+          </tr>
+          <tbody className="text-center">
+            {[...Data, ...Data, ...Data].map((item, index) => (
+              <tr key={index} className="border">
+                <td className="  text-xl font-medium">{item.url}</td>
+                <td className="  text-xl font-medium">{item.apiKey}</td>
+                <td className="  text-xl font-medium">DELETE</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
