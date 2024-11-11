@@ -1,4 +1,5 @@
-import { useState } from "react";
+import useClickOutside from "@/hooks/useClickOutisde";
+import { useRef, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaEllipsisVertical } from "react-icons/fa6";
 
@@ -9,6 +10,13 @@ type OptionsModalProps = {
 
 function OptionsModal({ id, handleDeleteData }: OptionsModalProps) {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  useClickOutside(modalRef, closeModal);
 
   return (
     <>
@@ -24,6 +32,7 @@ function OptionsModal({ id, handleDeleteData }: OptionsModalProps) {
         <div
           className="absolute rounded-lg flex flex-col gap-2 overflow-y-auto px-4 py-2 bg-secondary-default shadow-lg z-10"
           onClick={() => setModalOpen(false)}
+          ref={modalRef}
         >
           <div
             className="flex gap-2 cursor-pointer"

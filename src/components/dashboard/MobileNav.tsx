@@ -21,7 +21,7 @@ const sidebarLinks = [
   { icon: <BsBellFill />, href: "/alert", name: "Alert with AI" },
 ];
 
-const MobileNav: React.FC = () => {
+const MobileNav = ({ credits }: { credits: number }) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -52,9 +52,11 @@ const MobileNav: React.FC = () => {
       >
         <div className="flex items-center space-x-2">
           <FaCreditCard size={24} className="text-primary-green" />
-          <span className="text-lg font-medium text-text-third">90 Credits</span>
+          <span className="text-lg font-medium text-text-third">
+            {credits} Credits
+          </span>
         </div>
-      
+
         {sidebarLinks.map(({ icon, href, name }, index) => (
           <div key={index} className="flex flex-col pt-[26px]">
             <Link href={href} className="flex justify-between items-center">
@@ -72,9 +74,11 @@ const MobileNav: React.FC = () => {
             </Link>
           </div>
         ))}
-          <div className="mt-6 flex gap-2 items-center text-text-third!">
+        <div className="mt-6 flex gap-2 items-center text-text-third!">
           <LogoutBtn />
-          <span className="md:inline hidden lg:hidden font-medium text-text-third">Logout</span>
+          <span className="md:inline hidden lg:hidden font-medium text-text-third">
+            Logout
+          </span>
         </div>
       </div>
     </div>

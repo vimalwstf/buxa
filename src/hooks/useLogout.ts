@@ -1,14 +1,26 @@
-import { signOut } from "next-auth/react";
 import { useAppDispatch } from "@/lib/hooks";
 import { logOut } from "@/lib/user/userSlice";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import Cookies from "js-cookie";
+
 export default function useLogout() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleLogout = useCallback(async () => {
-    await signOut({ callbackUrl: "/" });
+    // Remove user data from localStorage
+    localStorage.removeItem("user");
+
+    // Remove user data from cookies
+    Cookies.remove("user");
+
+    // Dispatch logOut action to update Redux state
     dispatch(logOut());
-    
-  },[dispatch,]);
+
+    // Redirect user to the home or login page
+    router.replace("/");
+  }, [dispatch, router]);
+
   return handleLogout;
-};
+}

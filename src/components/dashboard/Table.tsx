@@ -1,36 +1,8 @@
-import { FC } from "react";
 import TableRow from "@/components/dashboard/TableRow";
 import Glass from "../ui/Glass";
+import { StatDocs } from "@/hooks/useGetStatistics";
 
-const Table: FC = () => {
-  const mockData = [
-    {
-      title: "Lorem ipsum dolor sit amet",
-      type: "Research",
-      date: "Sep 27, 2024 6:57 PM",
-    },
-    {
-      title: "Dolor sit amet consectetur",
-      type: "Content",
-      date: "Sep 27, 2024 6:58 PM",
-    },
-    {
-      title: "Amet lorem ipsum dolor",
-      type: "Research",
-      date: "Sep 27, 2024 6:59 PM",
-    },
-    {
-      title: "Sit amet consectetur lorem",
-      type: "Content",
-      date: "Sep 27, 2024 7:00 PM",
-    },
-    {
-      title: "Consectetur dolor sit amet",
-      type: "Research",
-      date: "Sep 27, 2024 7:01 PM",
-    },
-  ];
-
+const Table = ({ data }: { data: StatDocs[] }) => {
   return (
     <div className="m-3">
       <Glass>
@@ -48,12 +20,12 @@ const Table: FC = () => {
 
             {/* Scrollable Rows */}
             <div className="element overflow-y-auto max-h-[400px] md:max-h-[200px]">
-              {[...mockData, ...mockData, ...mockData].map((doc, index) => (
+              {data.map((doc, index) => (
                 <TableRow
                   key={index}
-                  title={doc.title}
-                  type={doc.type}
-                  date={doc.date}
+                  title={doc.content}
+                  type={doc.documentType}
+                  date={doc.createdAt}
                 />
               ))}
             </div>

@@ -5,13 +5,14 @@ import Dropdown from "@/components/sidebar/Dropdown";
 import Form from "@/components/sidebar/Form";
 import Input from "@/components/sidebar/Input";
 import ProgressBar from "@/components/sidebar/ProgressBar";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateCredit } from "@/lib/user/userSlice";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import ToggleButton from "../sidebar/ToggleButton";
+// import ToggleButton from "../sidebar/ToggleButton";
 
 const useCases = [
   "Blog Ideas and outlines",
@@ -66,6 +67,7 @@ export default function WriteSidebar({
 
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState<boolean>(false);
+  // const [writeFromMyContent, setWriteFromMyContent] = useState(true);
   const {
     useCase,
     keywords,
@@ -78,8 +80,11 @@ export default function WriteSidebar({
 
   const dispatch = useAppDispatch();
 
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
+  const { value: user, setValue: setUser } = useLocalStorage("user", {
+    accessToken: "",
+    credits: 0,
+  });
+  const accessToken = user?.accessToken;
 
   const setDropdown = (name: string) => {
     setState((prev) => ({ ...prev, dropdown: name }));
@@ -104,8 +109,8 @@ export default function WriteSidebar({
               ? prev.personalityTags.filter((t) => t !== tag)
               : [...prev.personalityTags, tag]
             : prev.toneTags.includes(tag)
-            ? []
-            : [tag];
+              ? []
+              : [tag];
 
         return {
           ...prev,
@@ -148,17 +153,24 @@ export default function WriteSidebar({
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            }
+            },
           );
 
           if (response?.data?.status) {
             dispatch(updateCredit(response?.data?.credits));
+            const updatedUser = user;
+            updatedUser.credits = response?.data?.data?.credits;
+            setUser(updatedUser);
+
             const data = {
               id: response.data.data.id,
               name: response.data.data.content,
               modified: response.data.data.updatedAt,
               favourite: response.data.data.isFavorite,
               words: response.data.data.wordCount,
+              keyword: response.data.data.keyword,
+              tag: response.data.data.tag,
+              metadata: response.data.data.metadata,
             };
             handleDocumentSubmit(data);
             // Reset all state variables
@@ -168,18 +180,21 @@ export default function WriteSidebar({
               anchorOrigin: {
                 vertical: "top",
                 horizontal: "center",
-              }
+              },
             });
           }
-        } catch (error) {
-          console.log(error);
-          enqueueSnackbar("Failed to generate document", {
-            variant: "error",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            }
-          });
+        } catch (err) {
+          const error = err as any;
+          enqueueSnackbar(
+            `Failed to generate document: ${error?.response?.data?.error as string}`,
+            {
+              variant: "error",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            },
+          );
         } finally {
           setLoading(false);
         }
@@ -189,74 +204,74 @@ export default function WriteSidebar({
 
   return (
     // <div className="">
-      <Form
-        heading="Write with AI"
-        variant="write"
-        loading={loading}
-        allFilled={allFieldsFilled}
-        onSubmit={handleSubmit}
-      >
-        {/* UseCase Drop-down */}
-        <Dropdown
-          name="use case"
-          selected={useCase}
-          options={useCases}
-          label="Choose use case"
-          handleSelect={handleDropdownSelect("useCase")}
-          dropdown={dropdown}
-          setDropdown={setDropdown}
-        />
+    <Form
+      heading="Write with AI"
+      variant="write"
+      loading={loading}
+      allFilled={allFieldsFilled}
+      onSubmit={handleSubmit}
+    >
+      {/* UseCase Drop-down */}
+      <Dropdown
+        name="use case"
+        selected={useCase}
+        options={useCases}
+        label="Choose use case"
+        handleSelect={handleDropdownSelect("useCase")}
+        dropdown={dropdown}
+        setDropdown={setDropdown}
+      />
 
-        {/* primaryKeyword input */}
-        <Input
-          label="Primary Keywords"
-          placeholder="AI writing assistant"
-          value={keywords}
-          setValue={setKeywords}
-        />
+      {/* primaryKeyword input */}
+      <Input
+        label="Primary Keywords"
+        placeholder="AI writing assistant"
+        value={keywords}
+        setValue={setKeywords}
+      />
 
-        {/* Research level slider */}
-        <ProgressBar
-          researchLevel={researchLevel}
-          setResearchLevel={setResearchLevel}
-        />
+      {/* Research level slider */}
+      <ProgressBar
+        researchLevel={researchLevel}
+        setResearchLevel={setResearchLevel}
+      />
 
-        {/* Personality dropdown */}
-        <ComboDropdown
-          name="personality"
-          searchLabel="Search another personality"
-          selectedTags={personalityTags}
-          allTags={personalities}
-          handleSelect={handleTagSelect("personality")}
-          dropdown={dropdown}
-          setDropdown={setDropdown}
-        />
+      {/* Personality dropdown */}
+      <ComboDropdown
+        name="personality"
+        searchLabel="Search another personality"
+        selectedTags={personalityTags}
+        allTags={personalities}
+        handleSelect={handleTagSelect("personality")}
+        dropdown={dropdown}
+        setDropdown={setDropdown}
+      />
 
-        {/* Tone dropdown */}
-        <ComboDropdown
-          name="tone"
-          searchLabel="Search another tone"
-          selectedTags={toneTags}
-          allTags={tones}
-          handleSelect={handleTagSelect("tone")}
-          dropdown={dropdown}
-          setDropdown={setDropdown}
-        />
+      {/* Tone dropdown */}
+      <ComboDropdown
+        name="tone"
+        searchLabel="Search another tone"
+        selectedTags={toneTags}
+        allTags={tones}
+        handleSelect={handleTagSelect("tone")}
+        dropdown={dropdown}
+        setDropdown={setDropdown}
+      />
 
-        {/* Language dropdown */}
-        <Dropdown
-          name="language"
-          selected={language}
-          options={languages}
-          label="Set language"
-          handleSelect={handleDropdownSelect("language")}
-          dropdown={dropdown}
-          setDropdown={setDropdown}
-        />
+      {/* Language dropdown */}
+      <Dropdown
+        name="language"
+        selected={language}
+        options={languages}
+        label="Set language"
+        handleSelect={handleDropdownSelect("language")}
+        dropdown={dropdown}
+        setDropdown={setDropdown}
+      />
 
-        {/*  Write from my content component */}
-        <ToggleButton label="Write from my content" />
-      </Form>
+      {/*  Write from my content component */}
+      {/* <ToggleButton label="Write from my content" /> */}
+    </Form>
     // </div>
   );
 }

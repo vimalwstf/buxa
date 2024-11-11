@@ -26,20 +26,32 @@ import { GoBell } from "react-icons/go";
 import { TbListSearch } from "react-icons/tb";
 import { LiaPenNibSolid } from "react-icons/lia";
 
-export default function Stats() {
+export default function Stats({
+  totalAlerts,
+  totalContent,
+  totalResearch,
+}: {
+  totalAlerts: number;
+  totalContent: number;
+  totalResearch: number;
+}) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 m-3 mt-6">
       <StatCard
         icon={LiaPenNibSolid}
         title="Total no. of content written"
-        count={1254}
+        count={totalAlerts}
       />
       <StatCard
         icon={TbListSearch}
         title="Total no. of research generated"
-        count={452}
+        count={totalContent}
       />
-      <StatCard icon={GoBell} title="Total no. of alerts" count={48} />
+      <StatCard
+        icon={GoBell}
+        title="Total no. of alerts"
+        count={totalResearch}
+      />
     </div>
   );
 }

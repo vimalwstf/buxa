@@ -1,15 +1,26 @@
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaStar } from "react-icons/fa6";
 
-export default function FavouritesButton({
-  favouritesON,
-  setFavouritesON,
-}: {
-  favouritesON: boolean;
-  setFavouritesON: (b: boolean) => void;
-}) {
+export default function FavouritesButton() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const params = new URLSearchParams(searchParams);
+
+  const favouritesON = params.get("favourites") === "true";
+
+  const toggleFavourite = () => {
+    if (favouritesON) {
+      params.delete("favourites");
+    } else {
+      params.set("favourites", "true");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <button
-      onClick={() => setFavouritesON(!favouritesON)}
+      onClick={toggleFavourite}
       className={`${
         favouritesON
           ? "bg-primary-green text-black"

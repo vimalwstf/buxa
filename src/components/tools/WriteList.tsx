@@ -1,8 +1,8 @@
-import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
+// import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
 import { parseHtml } from "@/lib/utils";
 import { DocumentInfo } from "@/types/type";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import DocumentsTable from "@/components/table/DocumentsTable";
@@ -12,75 +12,43 @@ import FavouritesButton from "@/components/ui/FavouritesButton";
 import NewButton from "@/components/ui/NewButton";
 import SaveButton from "@/components/ui/SaveButton";
 import dynamic from "next/dynamic";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import Publish from "./Publish";
+import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
 
 const MyEditor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
 });
 export default function WriteList({
+  newAIDoc,
   showEditor,
   toggleShowEditor,
   editorDocData,
   seEditorDocData,
 }: {
+  newAIDoc: boolean;
   showEditor: boolean;
   toggleShowEditor: () => void;
   editorDocData: DocumentInfo;
   seEditorDocData: (data: DocumentInfo) => void;
 }) {
   const [documents, setDocuments] = useState<DocumentInfo[]>([]);
-  const [favouritesON, setFavouritesON] = useState(false);
+
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const accessToken = user?.accessToken;
 
   const { isLoading } = useFetchWriterDocuments(setDocuments);
 
-  const filteredDocuments = favouritesON
-    ? documents.filter((doc) => doc.favourite)
-    : documents;
-
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
-
   const handleFavouriteUpdate = async (id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
-
-    if (accessToken) {
-      try {
-        const res = await axios.put(url, null, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        if (res.status === 200) {
-          const updatedDocuments = [...documents];
-          const index = updatedDocuments.findIndex((doc) => doc.id === id);
-          updatedDocuments[index].favourite =
-            !updatedDocuments[index].favourite;
-          setDocuments(updatedDocuments);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    const updatedDocuments = [...documents];
+    const index = updatedDocuments.findIndex((doc) => doc.id === id);
+    updatedDocuments[index].favourite = !updatedDocuments[index].favourite;
+    setDocuments(updatedDocuments);
   };
 
   const handleDeleteData = async (id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
-
-    if (accessToken) {
-      try {
-        const res = await axios.delete(url, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (res.status === 200) {
-          const updatedDocuments = documents.filter((doc) => doc.id !== id);
-          setDocuments(updatedDocuments);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    const updatedDocuments = documents.filter((doc) => doc.id !== id);
+    setDocuments(updatedDocuments);
   };
 
   const handleEditorSubmit = async () => {
@@ -92,7 +60,9 @@ export default function WriteList({
       return;
     }
 
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${editorDocData?.id}`;
+    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${
+      editorDocData?.id || 0
+    }`;
 
     if (accessToken && editorDocData) {
       try {
@@ -149,7 +119,10 @@ export default function WriteList({
         <>
           <div className="flex justify-between items-baseline">
             <ListButton handleClick={toggleShowEditor} label="Document List" />
-            <SaveButton handleClick={handleEditorSubmit} />
+            <div className="flex gap-2">
+              {newAIDoc && <Publish docData={editorDocData} />}
+              <SaveButton handleClick={handleEditorSubmit} />
+            </div>
           </div>
           <MyEditor
             value={editorDocData.name}
@@ -165,10 +138,7 @@ export default function WriteList({
               Document List
             </h2>
             <div className="flex gap-4">
-              <FavouritesButton
-                favouritesON={favouritesON}
-                setFavouritesON={setFavouritesON}
-              />
+              <FavouritesButton />
               <NewButton
                 label="New Document"
                 createNewDocument={toggleShowEditor}
@@ -180,7 +150,7 @@ export default function WriteList({
             <LoadingDocs />
           ) : (
             <DocumentsTable
-              documents={filteredDocuments}
+              documents={documents}
               seEditorDocData={seEditorDocData}
               toggleShowEditor={toggleShowEditor}
               handleFavouriteUpdate={handleFavouriteUpdate}

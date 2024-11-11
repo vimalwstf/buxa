@@ -7,10 +7,10 @@ import BuyCreditsDropdown from "./BuyCreditsDropdown";
 //@ts-expect-error cashfree
 import { load } from "@cashfreepayments/cashfree-js";
 import { enqueueSnackbar } from "notistack";
-import { useSession } from "next-auth/react";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 interface PaymentModalProps {
-  creditBalance: number | undefined;
+  creditBalance: number | string;
   isModalOpen: boolean;
   toggleModal: () => void;
 }
@@ -27,30 +27,28 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [cashfree, setCashfree] = useState<any>(null);
   const [errors, setErrors] = useState<{ phone?: string; credits?: string }>(
-    {}
+    {},
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
-  const options = [1, 10, 25, 50, 100];
 
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const accessToken = user?.accessToken;
+
+  const options = [1, 10, 25, 50, 100];
   useEffect(() => {
     const loadCashfree = async () => {
       const cashfreeInstance = await load({
-        mode: "sandbox", // Switch to 'production' for production
+        mode: "sandbox",
       });
       setCashfree(cashfreeInstance);
     };
     loadCashfree();
   }, []);
-
   const validateInputs = () => {
     const newErrors: { phone?: string; credits?: string } = {};
-
     if (!credits) {
       newErrors.credits = "Please select the number of credits.";
     }
-
     if (paymentMethod === "cashfree") {
       if (!customerPhone) {
         newErrors.phone = "Please enter your phone number.";
@@ -58,21 +56,16 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         newErrors.phone = "Please enter a valid 10-digit phone number.";
       }
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const handlePayment = async () => {
     if (!validateInputs()) return;
-
     setIsLoading(true);
     let result;
-
     if (paymentMethod === "cashfree") {
       try {
         const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/user/cashfree`;
-
         if (accessToken) {
           const response = await axios.post(
             url,
@@ -84,9 +77,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-            }
+            },
           );
-
           result = response?.data;
           initiateCashfreePayment(result.data);
         } else {
@@ -104,7 +96,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       }
     }
   };
-
   const initiateCashfreePayment = (data: {
     sessionId?: string;
     orderId?: string;
@@ -115,7 +106,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       // redirectTarget: "_modal",
       returnUrl: `${process.env.NEXT_PUBLIC_SOURCE_URL}/user/status/${data?.orderId}`,
     };
-
     if (cashfree) {
       cashfree
         .checkout(checkoutOptions)
@@ -133,9 +123,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         });
     }
   };
-
   if (!isModalOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-[380px] p-6 relative">
@@ -146,10 +134,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         >
           <span>x</span>
         </button>
-
         {/* Title */}
         <h2 className="text-xl font-semibold text-black mb-4">Buy Credits</h2>
-
         {/* Credit Balance */}
         <div className="text-gray-700 mb-6">
           <div>
@@ -157,7 +143,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             <p className="text-2xl font-bold text-black">{creditBalance}</p>
           </div>
         </div>
-
         {/* Input Fields */}
         <div className="space-y-4">
           <BuyCreditsDropdown
@@ -172,10 +157,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             <p className="text-red-500 text-sm">{errors.credits}</p>
           )}
         </div>
-
         {/* Divider */}
         <div className="border-t my-6 mx-8"></div>
-
         {/* Payment Options */}
         <div className="space-y-2">
           <label className="flex items-center justify-between space-x-2 cursor-pointer border p-1.5 rounded">
@@ -195,7 +178,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             />
           </label>
         </div>
-
         {/* Mobile Number Input (conditional) */}
         {paymentMethod && (
           <div className="mt-4">
@@ -223,7 +205,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             )}
           </div>
         )}
-
         {/* Buy Credits Button */}
         <div className="mt-6">
           <button

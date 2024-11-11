@@ -1,20 +1,21 @@
 "use client";
 
-import React from "react";
 import { useState } from "react";
 import Logo from "../../../public/images/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Hamburger from "../../../public/images/Hamburger.svg";
 import GoogleSignup from "../GoogleSignup";
-import { useSession } from "next-auth/react";
-// import { MdDashboard } from "react-icons/md";
 import { MdOutlineArrowOutward } from "react-icons/md";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import useFetchUser from "@/hooks/useFetchUser";
 
 const Navbar = () => {
   const [mobileNavigation, setMobileNavigation] = useState(false);
-  const { data: session } = useSession();
-  const loggedIn = !!session?.user?.accessToken;
+  useFetchUser();
+
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const loggedIn = user?.accessToken;
 
   const Links = [
     {
@@ -47,7 +48,7 @@ const Navbar = () => {
           className="md:hidden cursor-pointer"
           onClick={() => setMobileNavigation(!mobileNavigation)}
         >
-          <Image src={Hamburger} width={40} height={40} alt="" />
+          <Image src={Hamburger} width={30} height={30} alt="hamburger" />
         </div>
         <div className="w-24 sm:w-40 ">
           <Link href="/">
@@ -69,22 +70,14 @@ const Navbar = () => {
               className="flex group items-center md:gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
               href="/write"
             >
-              {/* <MdDashboard size={24} className="text-primary-green" /> */}
               <span className=" text-sm sm:inline-block md:text-xl font-medium">
                 Dashboard
               </span>
-              <MdOutlineArrowOutward className="group-hover:scale-150 group-hover:text-primary-green ease-in-out" size={26} />
+              <MdOutlineArrowOutward
+                className="group-hover:scale-150 group-hover:text-primary-green ease-in-out"
+                size={26}
+              />
             </Link>
-            // <Link
-            //   className="flex items-center -mt-2  gap-2 cursor-pointer hover:scale-110 ease-in-out duration-150"
-            //   href="/dashboard"
-            // >
-            //   {/* <MdDashboard size={24} className="text-primary-green" /> */}
-            //   <span className="sm:inline-block text-xl font-medium">
-            //     Dashboard
-            //   </span>
-            //   <MdOutlineArrowOutward size={24} />
-            // </Link>
           ) : (
             <div className="bg-white rounded-lg text-black hover:scale-110 ease-in-out duration-150">
               <GoogleSignup />

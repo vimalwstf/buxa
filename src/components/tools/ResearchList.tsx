@@ -1,163 +1,145 @@
-import useFetchWriterDocuments from "@/hooks/useFetchWriteDocuments";
-import { parseHtml } from "@/lib/utils";
-import { DocumentInfo } from "@/types/type";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import DocumentsTable from "@/components/table/DocumentsTable";
-import LoadingDocs from "@/components/table/LoadingDocs";
-import ListButton from "@/components/ui/ListButton";
-import FavouritesButton from "@/components/ui/FavouritesButton";
-import NewButton from "@/components/ui/NewButton";
-import SaveButton from "@/components/ui/SaveButton";
+
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 import dynamic from "next/dynamic";
+import useFetchResearchDocuments from "@/hooks/useFetchResearchDocuments";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import LoadingDocs from "../table/LoadingDocs";
+import ResearchTable from "../table/ResearchTable";
+import ListButton from "../ui/ListButton";
+import SaveButton from "../ui/SaveButton";
+import FavouritesButton from "../ui/FavouritesButton";
+import DeleteButton from "../ui/DeleteButton";
+import { DefaultResearch, Research } from "@/app/(tools)/research/page";
+
+const MyEditor = dynamic(() => import("../editor/Editor"), { ssr: false });
 
 const MyEditor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
 });
 export default function ResearchList({
   showEditor,
-  toggleShowEditor,
-  editorDocData,
-  seEditorDocData,
+  setShowEditor,
+  docData,
+  setDocData,
 }: {
   showEditor: boolean;
-  toggleShowEditor: () => void;
-  editorDocData: DocumentInfo;
-  seEditorDocData: (data: DocumentInfo) => void;
+  setShowEditor: (b: boolean) => void;
+  docData: Research;
+  setDocData: (data: Research) => void;
 }) {
-  const [documents, setDocuments] = useState<DocumentInfo[]>([]);
-  const [favouritesON, setFavouritesON] = useState(false);
+  const [documents, setDocuments] = useState<Research[]>([]);
+  const [selectedDoc, setSelectedDoc] = useState(0);
+  const { isLoading } = useFetchResearchDocuments(setDocuments);
+  const { value: user } = useLocalStorage("user", { accessToken: "" });
+  const accessToken = user?.accessToken;
 
-  const { isLoading } = useFetchWriterDocuments(setDocuments);
-
-  const filteredDocuments = favouritesON
-    ? documents.filter((doc) => doc.favourite)
-    : documents;
-
-  const { data: session } = useSession();
-  const accessToken = session?.user?.accessToken;
-
-  const handleFavouriteUpdate = async (id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
-
-    if (accessToken) {
-      try {
-        const res = await axios.put(url, null, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        if (res.status === 200) {
-          const updatedDocuments = [...documents];
-          const index = updatedDocuments.findIndex((doc) => doc.id === id);
-          updatedDocuments[index].favourite =
-            !updatedDocuments[index].favourite;
-          setDocuments(updatedDocuments);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  const handleFavouriteUpdate = (id: string) => {
+    setDocuments((prevDocs) =>
+      prevDocs.map((doc) =>
+        doc.id === id ? { ...doc, isFavorite: !doc.isFavorite } : doc,
+      ),
+    );
   };
 
-  const handleDeleteData = async (id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${id}`;
-
-    if (accessToken) {
-      try {
-        const res = await axios.delete(url, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (res.status === 200) {
-          const updatedDocuments = documents.filter((doc) => doc.id !== id);
-          setDocuments(updatedDocuments);
-        }
-      } catch (error) {
-        console.log(error);
+  const handleDeleteData = (id: string, index: number) => {
+    setDocuments((prevDocs) => {
+      const docIndex = prevDocs.findIndex((doc) => doc.id === id);
+      if (docIndex === -1) return prevDocs;
+      if (index === -1) {
+        return prevDocs.filter((doc) => doc.id !== id);
       }
-    }
+
+      const updatedDocs = [...prevDocs];
+      const doc = updatedDocs[docIndex];
+
+      if (doc.content.length > 1) {
+        doc.content.splice(index, 1);
+      } else {
+        gotoList();
+        updatedDocs.splice(docIndex, 1);
+      }
+
+      return updatedDocs;
+    });
   };
 
   const handleEditorSubmit = async () => {
-    const text = parseHtml(editorDocData.name);
-    if (text.trim() === "") {
-      enqueueSnackbar("Document is empty!", {
-        variant: "error",
-      });
-      return;
-    }
+    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/research/${docData.id}`;
 
-    const url = `${process.env.NEXT_PUBLIC_SOURCE_URL}/documents/${editorDocData?.id}`;
-
-    if (accessToken && editorDocData) {
+    if (accessToken && docData) {
       try {
-        const res = await axios.post(
+        const res = await axios.put(
           url,
-          {
-            content: editorDocData.name,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
+          { content: docData.content },
+          { headers: { Authorization: `Bearer ${accessToken}` } },
         );
         if (res.status === 200) {
-          const { id, content, wordCount, updatedAt, isFavorite } =
-            res.data.data;
-
-          setDocuments((prev) => [
-            {
-              id,
-              name: content,
-              words: wordCount,
-              modified: updatedAt,
-              favourite: isFavorite,
-            },
-            ...prev,
-          ]);
-          toggleShowEditor();
+          setShowEditor(false);
+          setDocData(DefaultResearch);
           enqueueSnackbar("Document saved successfully", {
             variant: "success",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
+            anchorOrigin: { vertical: "top", horizontal: "center" },
           });
         }
       } catch (error) {
-        console.log(error);
         enqueueSnackbar("Failed to save document", {
           variant: "error",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "center",
-          },
+          anchorOrigin: { vertical: "top", horizontal: "center" },
           autoHideDuration: 1000,
         });
       }
     }
   };
 
+  function gotoList() {
+    setShowEditor(false);
+    setDocData(DefaultResearch);
+  }
+
   return (
-    <div className="w-full h-full flex flex-col gap-2 md:gap-4 ">
+    <div className="w-full h-full flex flex-col gap-2 md:gap-4">
       {showEditor ? (
         <>
           <div className="flex justify-between mb-4 items-baseline">
-            <ListButton handleClick={toggleShowEditor} label="Research List" />
+            <ListButton handleClick={gotoList} label="Research List" />
             <SaveButton handleClick={handleEditorSubmit} />
           </div>
-          <MyEditor
-            value={editorDocData.name}
-            onChange={(content: string) =>
-              seEditorDocData({ ...editorDocData, name: content })
-            }
-          />
+
+          <div className="element flex gap-2 overflow-x-auto">
+            {docData.content.map((doc: string, index: number) => (
+              <span
+                key={index}
+                onClick={() => setSelectedDoc(index)}
+                className={`px-2 py-1 flex justify-center items-center gap-2 rounded-md border cursor-pointer whitespace-nowrap ${
+                  selectedDoc === index
+                    ? "bg-primary-green text-black"
+                    : "bg-primary-light text-white"
+                }`}
+              >
+                Variant {index + 1}
+                <DeleteButton
+                  id={docData.id}
+                  index={index}
+                  onDelete={() => handleDeleteData(docData.id, index)}
+                />
+              </span>
+            ))}
+          </div>
+
+          {MyEditor ? (
+            <MyEditor
+              value={docData.content[selectedDoc]}
+              onChange={(content: string) => {
+                const updatedContent = [...docData.content];
+                updatedContent[selectedDoc] = content;
+                setDocData({ ...docData, content: updatedContent });
+              }}
+            />
+          ) : (
+            <div>Loading...</div>
+          )}
         </>
       ) : (
         <>
@@ -166,24 +148,18 @@ export default function ResearchList({
               Research List
             </h2>
             <div className="flex gap-4">
-              <FavouritesButton
-                favouritesON={favouritesON}
-                setFavouritesON={setFavouritesON}
-              />
-              <NewButton
-                label="New Research"
-                createNewDocument={toggleShowEditor}
-              />
+              <FavouritesButton />
             </div>
           </div>
 
           {isLoading ? (
             <LoadingDocs />
           ) : (
-            <DocumentsTable
-              documents={filteredDocuments}
-              seEditorDocData={seEditorDocData}
-              toggleShowEditor={toggleShowEditor}
+            <ResearchTable
+              documents={documents}
+              setSelectedDoc={setSelectedDoc}
+              setDocData={setDocData}
+              toggleShowEditor={() => setShowEditor(true)}
               handleFavouriteUpdate={handleFavouriteUpdate}
               handleDeleteData={handleDeleteData}
             />

@@ -27,48 +27,58 @@ export default function Dropdown({
     setDropdown("");
   };
 
-  const toggleDropdown = (e: React.MouseEvent<HTMLDivElement>) => {
+  const toggleDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setDropdown(dropdownOpen ? "" : name);
   };
 
   return (
-    <div
-      className={` mb-4 ${dropdownOpen ? "shadow-lg rounded-md bg-black" : ""}`}
+    <fieldset
+      className={`mb-4 text-text-third ${dropdownOpen ? "shadow-lg rounded-md" : ""}`}
     >
-      <div
-        className={`flex justify-between  items-center cursor-pointer ${
-          dropdownOpen
-            ? "bg-primary-green p-2 rounded-t-md text-black"
-            : "text-text-third"
-        }`}
-        onClick={toggleDropdown}
-      >
-        <label className="block mb-1 font-medium">{label}</label>
-        {dropdownOpen ? <FiChevronUp /> : <FiChevronDown />}
+      <button type="button" className="w-full" onClick={toggleDropdown}>
+        <legend className="font-medium w-full mb-2 flex justify-between items-center">
+          <span>{label}</span>
+          {dropdownOpen ? <FiChevronUp /> : <FiChevronDown />}
+        </legend>
+        {selected && (
+          <p
+            className={`w-full text-left ${
+              dropdownOpen
+                ? "bg-primary-green p-2 rounded-t-md text-black"
+                : "text-text-third p-2 rounded-md border border-gray-200"
+            }`}
+          >
+            {selected}
+          </p>
+        )}
+      </button>
+      <div className="relative">
+        {dropdownOpen && (
+          <ul
+            id={`${name}-options`}
+            className="custom-scrollbar bg-primary-light mt-2 rounded-md max-h-40 overflow-y-auto overflow-x-hidden absolute w-full z-40 border border-gray-200"
+            style={{
+              top: "100%",
+            }}
+          >
+            {options.map((opt, i) => (
+              <li key={i}>
+                <button
+                  type="button"
+                  className="block w-full text-left px-2 py-1 rounded-md m-1 hover:bg-primary-green hover:text-black"
+                  onClick={() => handleOptionSelect(opt)}
+                >
+                  {opt}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-      {dropdownOpen && (
-        <div className="custom-scrollbar mt-2 rounded-md max-h-40 overflow-y-auto scrollbar-hidden">
-          {options.map((opt, i) => (
-            <button
-              type="button"
-              key={i}
-              className="block w-[95%] text-left px-2 py-1 rounded-md m-1 hover:bg-primary-green hover:text-black"
-              onClick={() => handleOptionSelect(opt)}
-            >
-              {opt}
-            </button>
-          ))}
-        </div>
-      )}
-      {!dropdownOpen && selected && (
-        <div
-          onClick={toggleDropdown}
-          className="mt-2 border border-gray-200 rounded-md p-2"
-        >
-          {selected}
-        </div>
-      )}
-    </div>
+
+      {/* Hidden Input to Capture the Selected Value */}
+      <input type="hidden" name={name} value={selected} />
+    </fieldset>
   );
 }

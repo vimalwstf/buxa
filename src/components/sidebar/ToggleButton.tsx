@@ -1,25 +1,24 @@
-import { useState } from "react";
 interface ToggleButtonProps {
   label: string;
+  isOn: boolean;
+  toggle: () => void;
 }
 
-export default function ToggleButton({ label }: ToggleButtonProps) {
-  const [isOn, setIsOn] = useState<boolean>(false);
-
-  const handleToggle = () => {
-    setIsOn(!isOn);
-  };
-
+export default function ToggleButton({
+  label,
+  isOn,
+  toggle,
+}: ToggleButtonProps) {
   return (
     <div className="flex items-center justify-between text-text-third hover:text-white mb-4">
       <span className="block font-medium ">{label}</span>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center  ">
         <div
-          className={`relative w-9 h-4 flex items-center bg-[#120F25] rounded-full cursor-pointer transition duration-300 ${
-            isOn && "bg-[#695fb0]"
+          className={`relative w-9 h-4 flex items-center  border rounded-full cursor-pointer transition duration-300 ${
+            isOn ? "bg-[#000000]" : "bg-[#695fb0]"
           }`}
-          onClick={handleToggle}
+          onClick={toggle}
         >
           <div className="flex gap-4 w-full"></div>
           {/* The circle */}

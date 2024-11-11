@@ -15,12 +15,17 @@ const DEFAULT_DOCUMENT: DocumentInfo = {
 
 export default function Write() {
   const [showEditor, setShowEditor] = useState(false);
+  const [newAIDoc, setNewAIDoc] = useState(false);
+
   const [editorDocData, seEditorDocData] =
     useState<DocumentInfo>(DEFAULT_DOCUMENT);
 
   const toggleShowEditor = () => setShowEditor(!showEditor);
 
   const handleDocumentSubmit = (data: DocumentInfo) => {
+    if (editorDocData.id === "0") {
+      setNewAIDoc(true);
+    }
     toggleShowEditor();
     seEditorDocData(data);
   };
@@ -30,6 +35,7 @@ export default function Write() {
       <WriteSidebar handleDocumentSubmit={handleDocumentSubmit} />
       <div className="w-full md:w-[70%] lg:w-[75%]">
         <WriteList
+          newAIDoc={newAIDoc}
           showEditor={showEditor}
           toggleShowEditor={toggleShowEditor}
           editorDocData={editorDocData}
